@@ -1,0 +1,20 @@
+{
+  "name": "eureka",
+  "description": "Research rigor skills for Claude Code: hypothesis pre-registration, statistical rigor, claims audit, and reproducibility gates for scientific workflows",
+  "version": "1.0.0",
+  "author": {
+    "name": "jeonnoin-alt"
+  },
+  "homepage": "https://github.com/jeonnoin-alt/Eureka",
+  "repository": "https://github.com/jeonnoin-alt/Eureka",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "research",
+    "reproducibility",
+    "pre-registration",
+    "scientific-rigor",
+    "hypothesis-testing",
+    "workflows"
+  ]
+}

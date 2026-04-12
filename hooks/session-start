@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# SessionStart hook for Eureka research rigor plugin
+
+set -euo pipefail
+
+# Determine plugin root directory
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+# Read using-eureka content
+using_eureka_content=$(cat "${PLUGIN_ROOT}/skills/using-eureka/SKILL.md" 2>&1 || echo "Error reading using-eureka skill")
+
+# Escape string for JSON embedding using bash parameter substitution.
+escape_for_json() {
+    local s="$1"
+    s="${s//\\/\\\\}"
+    s="${s//\"/\\\"}"
+    s="${s//$'\n'/\\n}"
+    s="${s//$'\r'/\\r}"
+    s="${s//$'\t'/\\t}"
+    printf '%s' "$s"
+}
+
+using_eureka_escaped=$(escape_for_json "$using_eureka_content")
+session_context="<EXTREMELY_IMPORTANT>\nYou have Eureka — a research rigor plugin.\n\n**Below is the full content of your 'eureka:using-eureka' skill - your introduction to using Eureka research skills. For all other skills, use the 'Skill' tool:**\n\n${using_eureka_escaped}\n</EXTREMELY_IMPORTANT>"
+
+# Output context injection as JSON.
+# Cursor hooks expect additional_context.
+# Claude Code hooks expect hookSpecificOutput.additionalContext.
+if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
+  printf '{\n  "additional_context": "%s"\n}\n' "$session_context"
+elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+  printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context"
+else
+  printf '{\n  "additional_context": "%s"\n}\n' "$session_context"
+fi
+
+exit 0
