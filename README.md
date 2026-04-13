@@ -53,6 +53,36 @@ Start a new Claude Code session and ask for something that should trigger a skil
 
 The agent should automatically announce which skill it is using.
 
+## Quick Start
+
+You just installed Eureka and want to try it on a real project. The shortest path:
+
+### 1. Start with `whats-next`
+
+You don't need to memorize the skill list. Just open a new session and say:
+
+> "I just installed Eureka. I'm working on [your project]. What should I do next?"
+
+The `whats-next` skill scans your project state (git log, `results/`, existing docs), asks 2–3 diagnostic questions, identifies which research phase you're currently in, and recommends one specific next skill to invoke. It then hands off to that skill.
+
+### 2. End the session with `research-journal`
+
+When you stop for the day, say:
+
+> "Log this session before I stop."
+
+The `research-journal` skill drafts a structured entry capturing the decisions you made, what failed, what's blocking you, and — most importantly — what your **next session should start with**. It saves to `docs/eureka/journal/YYYY-MM-DD.md`.
+
+When you return days or weeks later, the next `whats-next` invocation reads that entry and picks up exactly where you left off. This is how Eureka stops you from losing context across gaps.
+
+### 3. Let everything else trigger automatically
+
+You don't need to learn the other nine skills up front. They announce themselves and walk you through their own checklists when the moment comes. Keep doing your research — the discipline layer activates on its own.
+
+### Eureka does not require restructuring your existing project
+
+It's strictly additive. New artifacts (design docs, hypothesis registrations, experiment plans, journal entries, audit reports) land under `docs/eureka/...` as you use the skills. Your existing `notes/`, `experiments/`, `results/`, and `manuscript/` directories stay exactly where they are — Eureka reads them as context but never modifies them.
+
 ## The Research Workflow
 
 1. **research-brainstorming** — Activates when a research question is detected. Explores the idea through nine mandatory questions (H0, falsifiability, primary outcome, confounds + data leakage, power, alternative explanation, prior work, contradictory evidence, data provenance). Presents the design in sections for validation. Saves a research design document.
@@ -73,9 +103,17 @@ The agent should automatically announce which skill it is using.
 
 **The agent checks for relevant skills before any task.** Mandatory workflows, not suggestions.
 
+Two orthogonal skills run alongside the linear workflow above:
+
+- **`whats-next`** — Triage / dispatcher. Runs when you're stuck or disoriented. Scans project state, diagnoses which phase you're in, and routes to the right specialist skill from the list above.
+- **`research-journal`** — Narrative writer. Runs at session end, or after significant decisions and failures. Appends structured entries to `docs/eureka/journal/YYYY-MM-DD.md` so the next session has context instead of starting cold.
+
 ## What's Inside
 
 ### Skills Library
+
+**Triage**
+- **whats-next** — Scan project state, diagnose which phase you're in, route to the right specialist skill
 
 **Design & Registration**
 - **research-brainstorming** — Nine-question Socratic design refinement
@@ -94,6 +132,9 @@ The agent should automatically announce which skill it is using.
 - **verification-before-publication** — Fresh evidence for every claim before submission
 - **submission-readiness** — Four-option decision gate for finished work
 
+**Continuity**
+- **research-journal** — Append structured narrative entries capturing decisions, failures, blockers, and next-session handoff
+
 **Meta**
 - **using-eureka** — Bootstrap skill that teaches the agent to auto-invoke Eureka skills
 
@@ -110,6 +151,7 @@ The agent should automatically announce which skill it is using.
 
 - **docs/templates/research-design-doc.md** — Output of `research-brainstorming`
 - **docs/templates/research-review-report.md** — Output of `research-reviewer`
+- **docs/templates/research-journal-entry.md** — Output of `research-journal`
 
 ## Philosophy
 
@@ -133,6 +175,43 @@ Eureka and Superpowers are designed to work side by side. They share the same pl
 | Scientific review | `eureka:research-reviewer` |
 
 Use the namespace that matches the artifact: **code → Superpowers**, **science → Eureka**.
+
+## FAQ
+
+**I already have an ongoing project. Do I need to migrate or restructure anything?**
+
+No. Eureka is strictly additive. It never requires you to move, rename, or delete files. New artifacts (designs, registrations, plans, journal entries, audit reports) are saved under `docs/eureka/...` with specific filenames. Your existing project structure stays untouched.
+
+**I've already run experiments without pre-registration. Is that a problem?**
+
+No. Label those experiments as exploratory in your eventual writeup — which is scientifically honest — and apply `hypothesis-first` to the **next** confirmatory analysis you run. Retroactive pre-registration is not a thing; exploratory-then-confirmatory-replication is the right workflow in the scientific literature, and Eureka models it directly.
+
+**I have a `CLAUDE.md` in my project. Does Eureka override my instructions?**
+
+No. Your instructions always win. The priority order is:
+
+1. Your explicit instructions (`CLAUDE.md`, direct requests) — highest
+2. Eureka skills — override default agent behavior
+3. Default system prompt — lowest
+
+If your `CLAUDE.md` says "skip pre-registration for this sandbox project," Eureka honors that.
+
+**The mandatory questions feel like overkill for exploratory work.**
+
+Two options:
+
+1. **Label the session as exploratory.** `hypothesis-first` has an explicit Exploratory Track — you can proceed without full pre-registration as long as the exploratory label is preserved in any eventual writeup. The discipline exists to prevent confirmatory claims from being smuggled in through the exploratory door, not to block legitimate exploration.
+2. **Add a standing rule to `CLAUDE.md`.** Example: `For scratch analyses under notebooks/exploratory/, skip research-brainstorming's mandatory questions.`
+
+**How do I disable a specific skill temporarily?**
+
+Add an override to `CLAUDE.md`. Example:
+
+```
+Do not invoke eureka:claims-audit during drafting — only when the manuscript is complete.
+```
+
+The instruction-priority rule ensures this beats the skill's default behavior. Eureka skills are opinionated but never insubordinate.
 
 ## Contributing
 
