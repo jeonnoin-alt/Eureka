@@ -90,6 +90,7 @@ digraph research_lifecycle {
     rankdir=TB;
     node [shape=box];
 
+    stuck [label="STUCK — Don't know what to do?\neureka:whats-next\n(diagnoses state + routes to right skill)", shape=ellipse, style=dashed];
     rq [label="Research Question\neureka:research-brainstorming\n(includes literature gap +\nDevil's Advocate)"];
     hr [label="Hypothesis Registration\neureka:hypothesis-first\n(includes statistical plan)"];
     plan [label="Experiment Planning\neureka:experiment-design"];
@@ -113,6 +114,15 @@ digraph research_lifecycle {
     pub -> write [label="FAIL: revise"];
     pub -> submit [label="PASS"];
     exp -> rq [label="pivot needed"];
+
+    stuck -> rq [style=dashed, label="route"];
+    stuck -> hr [style=dashed];
+    stuck -> plan [style=dashed];
+    stuck -> trouble [style=dashed];
+    stuck -> rev [style=dashed];
+    stuck -> write [style=dashed];
+    stuck -> pub [style=dashed];
+    stuck -> submit [style=dashed];
 }
 ```
 
@@ -139,12 +149,14 @@ These thoughts mean STOP — you're rationalizing skipping a skill:
 
 When multiple skills could apply, use this order:
 
-1. **Process skills first** (research-brainstorming, hypothesis-first) — these determine HOW to approach the research
-2. **Review skills second** (requesting-research-review, claims-audit) — these validate execution
-3. **Gate skills last** (verification-before-publication) — these approve transitions
+1. **Triage first** (whats-next) — when the user is stuck or unsure which phase they are in, route through `whats-next` to identify the right specialist
+2. **Process skills second** (research-brainstorming, hypothesis-first) — these determine HOW to approach the research
+3. **Review skills third** (requesting-research-review, claims-audit) — these validate execution
+4. **Gate skills last** (verification-before-publication) — these approve transitions
 
 "I want to test whether X causes Y" → research-brainstorming first, not experiment execution.
 "My experiments are done" → requesting-research-review first, not manuscript writing.
+"I don't know what to do next" → whats-next first, then whatever it routes you to.
 
 ## Skill Types
 
@@ -161,6 +173,7 @@ When multiple skills could apply, use this order:
 - requesting-research-review
 - receiving-research-review
 - submission-readiness
+- whats-next
 
 The skill itself tells you which type it is.
 
