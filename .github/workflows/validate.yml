@@ -21,7 +21,7 @@ jobs:
       - name: Validate JSON files
         run: |
           set -e
-          for f in package.json .claude-plugin/plugin.json .claude-plugin/marketplace.json hooks/hooks.json; do
+          for f in package.json .claude-plugin/plugin.json .claude-plugin/marketplace.json .cursor-plugin/plugin.json gemini-extension.json hooks/hooks.json hooks/hooks-cursor.json; do
             echo "Validating $f..."
             python3 -m json.tool "$f" > /dev/null
           done
@@ -31,6 +31,11 @@ jobs:
         run: |
           bash -n hooks/session-start
           echo "hooks/session-start: bash syntax OK"
+
+      - name: Validate OpenCode plugin JS syntax
+        run: |
+          node --check .opencode/plugins/eureka.js
+          echo ".opencode/plugins/eureka.js: JS syntax OK"
 
       - name: Validate skill frontmatter
         run: python3 .github/scripts/validate-skills.py

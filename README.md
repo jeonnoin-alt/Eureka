@@ -24,6 +24,8 @@ Eureka is modeled directly on [Superpowers](https://github.com/obra/superpowers)
 
 ## Installation
 
+**Note:** Installation differs by platform. Claude Code and Cursor have built-in plugin marketplaces. Codex and OpenCode require manual setup. Gemini CLI uses its own extension system.
+
 ### Claude Code (via Plugin Marketplace)
 
 In Claude Code, register this repository as a marketplace, then install:
@@ -33,7 +35,7 @@ In Claude Code, register this repository as a marketplace, then install:
 /plugin install eureka
 ```
 
-### Manual Installation
+### Claude Code (Manual Installation)
 
 Clone this repository into your Claude Code plugins cache:
 
@@ -42,6 +44,60 @@ git clone https://github.com/jeonnoin-alt/Eureka ~/.claude/plugins/cache/eureka/
 ```
 
 Then restart Claude Code. The `SessionStart` hook will automatically inject the `using-eureka` bootstrap skill at the start of every new session.
+
+### Cursor
+
+In Cursor Agent chat, install from the plugin marketplace:
+
+```text
+/add-plugin eureka
+```
+
+Cursor uses `.cursor-plugin/plugin.json` to discover the skills, agents, and session-start hooks. The bootstrap injection mechanism is the same as Claude Code's.
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/jeonnoin-alt/Eureka
+```
+
+Gemini CLI loads Eureka via `gemini-extension.json` and the `GEMINI.md` context file, which `@`-imports the `using-eureka` bootstrap skill at session start. Tool name mappings (e.g. `Skill` → `activate_skill`) are documented in `skills/using-eureka/references/gemini-tools.md`.
+
+To update:
+
+```bash
+gemini extensions update eureka
+```
+
+### Codex
+
+Tell Codex:
+
+```
+Fetch and follow instructions from https://raw.githubusercontent.com/jeonnoin-alt/Eureka/main/.codex/INSTALL.md
+```
+
+Or install manually:
+
+```bash
+git clone https://github.com/jeonnoin-alt/Eureka ~/.codex/eureka
+mkdir -p ~/.agents/skills
+ln -s ~/.codex/eureka/skills ~/.agents/skills/eureka
+```
+
+Then restart Codex. To enable the `research-reviewer` subagent, add `multi_agent = true` under `[features]` in `~/.codex/config.toml`. Full instructions: [`.codex/INSTALL.md`](.codex/INSTALL.md).
+
+### OpenCode
+
+Add Eureka to the `plugin` array in your `opencode.json`:
+
+```json
+{
+  "plugin": ["eureka@git+https://github.com/jeonnoin-alt/Eureka.git"]
+}
+```
+
+Restart OpenCode. The `.opencode/plugins/eureka.js` plugin auto-registers the skills directory and injects the bootstrap context via a system prompt transform. Full instructions: [`.opencode/INSTALL.md`](.opencode/INSTALL.md).
 
 ### Verify Installation
 
