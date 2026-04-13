@@ -10,10 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **whats-next** skill — Triage / dispatcher skill for researchers who are stuck or unsure of the next step. Scans project state (designs, registrations, plans, results, manuscripts), asks diagnostic questions, maps the user to a research lifecycle phase, and recommends 2–3 next actions linked to specific Eureka skills. Always hands off — does not do the work itself. Triggered by phrases like "what should I do next?", "I'm stuck", "where am I?", or any equivalent. Fills the gap that other Eureka skills leave: every other skill has a specific trigger condition, but "I don't know which phase I'm in" is a meta-state with no specialist owner. `whats-next` is that meta-router.
+- **research-journal** skill — Writer counterpart to `whats-next`'s reader role. Appends structured narrative entries to `docs/eureka/journal/YYYY-MM-DD.md` capturing decisions, failed attempts, surprises, insights, blockers, and a "Next session starts with" handoff field. Triggered by explicit user request ("기록해둬", "log this", "memo"), session wind-down signals, post-decision moments, post-failure moments, or pre-phase transitions. Complements `experiment-log.md` (metric-focused) with WHY-focused narrative. Identifies cross-project insights and suggests promoting them to Claude Code auto-memory without writing to it directly. Fills the narrative continuity gap: Eureka had rich file persistence (registrations, audits, experiment-log) but no writer for mid-project decision rationale and blocker state.
+- **docs/templates/research-journal-entry.md** — Template consumed by `research-journal`. Required sections: `Worked on`, `Next session starts with`. Optional sections: `Decisions`, `Failed attempts`, `Surprises`, `Insights`, `Blockers`, `References`. Includes a concrete worked example and length/specificity rules.
 
 ### Changed
 
-- **using-eureka** — Lifecycle diagram now includes `whats-next` as an alternative entry point that routes to any other skill. Skill Priority section adds triage as the new "step 0" — when the user is stuck, route through `whats-next` first.
+- **using-eureka** — Lifecycle diagram now includes `whats-next` as an alternative entry point and `research-journal` as a cross-phase continuous overlay. Skill Priority section adds triage as step 0 and continuity (research-journal) as step 5. Both new skills listed under FLEXIBLE types.
+- **whats-next** — Step 1 project state scan now explicitly includes `docs/eureka/journal/*.md` (most recent entry) as a strong signal. Step 2 reads the `Next session starts with` field from the latest journal entry and quotes it back to the user as the primary continuity signal. Step 6 hand-off ends with a soft reminder that `research-journal` can capture the current session at the end.
 
 ## [1.0.0] - 2026-04-12
 

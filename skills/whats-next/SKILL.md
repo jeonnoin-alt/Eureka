@@ -56,9 +56,10 @@ Before asking anything, scan the project files to gather objective evidence:
 | `results/` directory with files | Experiments have been run |
 | `docs/eureka/records/experiment-log.md` | Structured experiment tracking exists |
 | `docs/eureka/audits/*.md` | Claims have been audited |
+| `docs/eureka/journal/*.md` (most recent) | Narrative context from last session — decisions, failures, blockers, and the "Next session starts with" hint. This is your strongest continuity signal. |
 | Recent `git log` (last 5–10 commits) | What the user actually did most recently |
 | `*.tex`, `manuscript/`, `paper/` | Manuscript writing is in progress |
-| `notes/` or research journal files | Free-form thinking that may reveal blockers |
+| `notes/` or other free-form files | Additional free-form thinking that may reveal context |
 
 If the project does not use Eureka conventions yet (no `docs/eureka/` structure), the user is likely at the very beginning. That is its own diagnosis — the answer will probably be `eureka:research-brainstorming`.
 
@@ -66,9 +67,15 @@ If the project does not use Eureka conventions yet (no `docs/eureka/` structure)
 
 Look at the latest commits, the newest files in `results/`, the most recently modified document. State what you found:
 
-> "I see your most recent activity: 3 baseline experiment results in `results/run_20260411_*/`, last commit was `Run baseline NDM model` from 2 days ago. The design doc exists but no review report yet."
+> "I see your most recent activity: 3 baseline experiment results in `results/run_20260411_*/`, last commit was `Run baseline model` from 2 days ago. The design doc exists but no review report yet."
 
 This is not an interpretation — it is a factual report. The user can correct it if you read the state wrong.
+
+**If `docs/eureka/journal/` exists**, read the most recent entry (latest date file, last `##` session block within it). The `Next session starts with` field is your strongest single signal for what to recommend — it is a message from past-user to future-user specifically about the next action. Quote it back to the user:
+
+> "Your last journal entry (2026-03-22, 18:00 session) says next session starts with: 'Re-run Model A with per-subject normalization'. Is that still the right starting point, or has anything changed since?"
+
+The journal also surfaces `Blockers` and `Failed attempts` from prior sessions, which tell you what to avoid recommending.
 
 ## Step 3: Ask Diagnostic Questions
 
@@ -128,6 +135,12 @@ Lead with **one** clear recommendation. The alternatives exist for cases where t
 After the user picks, invoke the chosen skill via the `Skill` tool. Do NOT try to do that skill's job inside `whats-next`.
 
 If the user picks the recommended skill, just invoke it. If they pick an alternative, invoke that one — they have context you don't.
+
+After the hand-off, gently remind the user:
+
+> "At the end of this session, `eureka:research-journal` can capture today's decisions and what to start with next time."
+
+This is a soft reminder, not a requirement. The user decides whether to journal at session end.
 
 ## Output Format
 

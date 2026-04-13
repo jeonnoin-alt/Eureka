@@ -91,6 +91,7 @@ digraph research_lifecycle {
     node [shape=box];
 
     stuck [label="STUCK — Don't know what to do?\neureka:whats-next\n(diagnoses state + routes to right skill)", shape=ellipse, style=dashed];
+    journal [label="Session Journal\neureka:research-journal\n(narrative state writer)", shape=note, style=filled, fillcolor="#ffffcc"];
     rq [label="Research Question\neureka:research-brainstorming\n(includes literature gap +\nDevil's Advocate)"];
     hr [label="Hypothesis Registration\neureka:hypothesis-first\n(includes statistical plan)"];
     plan [label="Experiment Planning\neureka:experiment-design"];
@@ -123,6 +124,14 @@ digraph research_lifecycle {
     stuck -> write [style=dashed];
     stuck -> pub [style=dashed];
     stuck -> submit [style=dashed];
+
+    rq -> journal [style=dashed, label="capture"];
+    hr -> journal [style=dashed];
+    plan -> journal [style=dashed];
+    trouble -> journal [style=dashed];
+    rev -> journal [style=dashed];
+    write -> journal [style=dashed];
+    journal -> stuck [style=dashed, label="informs"];
 }
 ```
 
@@ -152,11 +161,13 @@ When multiple skills could apply, use this order:
 1. **Triage first** (whats-next) — when the user is stuck or unsure which phase they are in, route through `whats-next` to identify the right specialist
 2. **Process skills second** (research-brainstorming, hypothesis-first) — these determine HOW to approach the research
 3. **Review skills third** (requesting-research-review, claims-audit) — these validate execution
-4. **Gate skills last** (verification-before-publication) — these approve transitions
+4. **Gate skills fourth** (verification-before-publication) — these approve transitions
+5. **Continuity skills last** (research-journal) — run at session end or after major events to preserve narrative state for the next session
 
 "I want to test whether X causes Y" → research-brainstorming first, not experiment execution.
 "My experiments are done" → requesting-research-review first, not manuscript writing.
 "I don't know what to do next" → whats-next first, then whatever it routes you to.
+"Session is wrapping up" → research-journal to capture decisions before context is lost.
 
 ## Skill Types
 
@@ -174,6 +185,7 @@ When multiple skills could apply, use this order:
 - receiving-research-review
 - submission-readiness
 - whats-next
+- research-journal
 
 The skill itself tells you which type it is.
 
