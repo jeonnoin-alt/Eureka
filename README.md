@@ -174,6 +174,38 @@ Two orthogonal skills run alongside the linear workflow above:
 - **`whats-next`** — Triage / dispatcher. Runs when you're stuck or disoriented. Scans project state, diagnoses which phase you're in, and routes to the right specialist skill from the list above.
 - **`research-journal`** — Narrative writer. Runs at session end, or after significant decisions and failures. Appends structured entries to `docs/eureka/journal/YYYY-MM-DD.md` so the next session has context instead of starting cold.
 
+### Why `hypothesis-first` comes before `experiment-design`
+
+If you're coming from Superpowers, the skill ordering may look unfamiliar. Superpowers has a 3-step flow:
+
+```
+brainstorming  →  writing-plans  →  executing-plans (TDD per task)
+  (design)      (bite-sized tasks)    (test → code → verify)
+```
+
+Eureka has a **4-step flow** with an extra step inserted between design and planning:
+
+```
+research-brainstorming  →  hypothesis-first  →  experiment-design  →  run experiments
+      (design)             (pre-registration)     (bite-sized tasks)      (your work)
+```
+
+The new step is `hypothesis-first`, and it is **not the equivalent of `writing-plans`**. It is the equivalent of **"write the failing test first"** from Superpowers' `test-driven-development` skill. The scientific TDD cycle:
+
+| TDD (software) | Scientific analog (`hypothesis-first`) |
+|---|---|
+| **RED** — write failing test | **REGISTER** — commit H1, H0, statistical test, threshold, data version (before seeing data) |
+| **GREEN** — minimal code to pass | **EXECUTE** — run the pre-specified analysis exactly |
+| **REFACTOR** — clean up | **INTERPRET** — compare to prediction, report all results including nulls |
+
+The **registration** produced by `hypothesis-first` is analogous to a failing test — a committed prediction you make *before* you can possibly know the answer. That is what prevents HARKing and p-hacking.
+
+`experiment-design` is Eureka's actual equivalent of Superpowers' `writing-plans`. It comes **after** `hypothesis-first` and produces the bite-sized, checkbox-tracked, version-hashed task list you run the experiments from.
+
+**Why register before planning (not planning before registering)?** If you plan first, the temptation is to shape the hypothesis to fit convenient experiments — a subtle form of HARKing. Registering first locks the hypothesis, then the plan is forced to operationalize it honestly. The order is scientifically deliberate, not an accident of organization.
+
+So if you have just finished `research-brainstorming` and are being transitioned to `hypothesis-first`, expect a registration document, not a task list. The task list comes in the next step via `experiment-design`.
+
 ## What's Inside
 
 ### Skills Library
