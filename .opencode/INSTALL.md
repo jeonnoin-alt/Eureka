@@ -39,7 +39,7 @@ To lock to a specific release (recommended for production research projects wher
 
 ```json
 {
-  "plugin": ["eureka@git+https://github.com/jeonnoin-alt/Eureka.git#v1.1.2"]
+  "plugin": ["eureka@git+https://github.com/jeonnoin-alt/Eureka.git#v1.2.0"]
 }
 ```
 

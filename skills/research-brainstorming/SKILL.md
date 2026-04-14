@@ -33,8 +33,9 @@ You MUST create a task for each of these items and complete them in order:
 10. **Present the research design** — in sections, get approval after each section
 11. **Write the research design document** — save to `docs/eureka/designs/YYYY-MM-DD-<topic>-design.md`
 12. **Design self-review** — check for placeholders, internal consistency, scope, ambiguity, and verify that null hypothesis and falsifiability criterion both exist
-13. **User reviews written design** — ask user to review before proceeding
-14. **Transition** — invoke `eureka:hypothesis-first` to register the hypothesis
+13. **Dispatch `design-document-reviewer` subagent** — fresh-eyes review of the design document against the 9 mandatory questions and placeholder/consistency checks. Block progression on `Issues Found`; fix and re-dispatch until `Approved`
+14. **User reviews written design** — ask user to review before proceeding
+15. **Transition** — invoke `eureka:hypothesis-first` to register the hypothesis
 
 ## Process Flow
 
@@ -65,7 +66,9 @@ digraph research_brainstorming {
     "User approves design?" -> "Present design sections" [label="no, revise"];
     "User approves design?" -> "Write design document" [label="yes"];
     "Write design document" -> "Design self-review";
-    "Design self-review" -> "User reviews document?";
+    "Design self-review" -> "Dispatch design-document-reviewer\n(fresh subagent)" [shape=box];
+    "Dispatch design-document-reviewer\n(fresh subagent)" -> "Write design document" [label="Issues Found"];
+    "Dispatch design-document-reviewer\n(fresh subagent)" -> "User reviews document?" [label="Approved"];
     "User reviews document?" -> "Write design document" [label="changes requested"];
     "User reviews document?" -> "Invoke hypothesis-registration\nor conclude" [label="approved"];
 }
@@ -168,6 +171,22 @@ After writing the design document, review it with fresh eyes:
 6. **Falsifiability check:** Is there a specific result that would disprove H1?
 
 Fix any issues inline. No need to re-review — just fix and move on.
+
+**Dispatching the Design Document Reviewer:**
+
+After the inline self-review is clean, dispatch a fresh subagent reviewer to catch blind spots that the main agent's self-review misses. Inline self-review is the writer checking their own work in the same session — a fresh subagent brings fresh eyes.
+
+1. Locate the reviewer prompt at `skills/research-brainstorming/design-document-reviewer-prompt.md`
+2. Fill the `{DESIGN_DOC_PATH}` placeholder with the path to the design document you just wrote
+3. Dispatch via the Task tool (`general-purpose` subagent) with the filled prompt
+4. Wait for the reviewer to return with `Status: Approved` or `Status: Issues Found`
+
+**Acting on the reviewer's response:**
+
+- **`Status: Approved`** → proceed to the User Review Gate below
+- **`Status: Issues Found`** → fix each issue in the design document. Then re-dispatch the reviewer to verify the fixes. Repeat until `Approved`. Do NOT present the document to the user until the reviewer approves — the user should see a document that has already passed independent review.
+
+If the reviewer finds the same issue on a second dispatch after an attempted fix, escalate to the user: describe the issue, the fix attempted, and ask for guidance.
 
 **User Review Gate:**
 

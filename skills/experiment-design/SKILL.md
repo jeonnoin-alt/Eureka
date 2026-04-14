@@ -161,6 +161,27 @@ If any issues are found, fix them before presenting the final plan.
 
 ---
 
+## Dispatching the Experiment Plan Reviewer
+
+After the inline Self-Review Checklist passes, dispatch a fresh subagent reviewer to verify the plan is executable by someone with no prior context. Inline self-review is the writer checking their own work in the same session — a fresh subagent brings fresh eyes and catches placeholder/coverage/buildability issues that the main agent overlooked.
+
+1. Locate the reviewer prompt at `skills/experiment-design/experiment-plan-reviewer-prompt.md`
+2. Fill the placeholders:
+   - `{PLAN_PATH}` → the path to the plan file you just wrote
+   - `{DESIGN_DOC_PATH}` → the approved design document from `research-brainstorming`
+   - `{REGISTRATION_PATH}` → the registration file from `hypothesis-first` (if applicable)
+3. Dispatch via the Task tool (`general-purpose` subagent) with the filled prompt
+4. Wait for the reviewer to return with `Status: Approved` or `Status: Issues Found`
+
+**Acting on the reviewer's response:**
+
+- **`Status: Approved`** → proceed to the Save Location step and report the plan complete to the user
+- **`Status: Issues Found`** → address each issue in the plan document (fill missing commands, add seeds, fix paths, add missing experiments for uncovered hypotheses, correct header fields). Re-dispatch the reviewer. Repeat until `Approved`. Do NOT report the plan complete to the user until the reviewer approves.
+
+If the reviewer flags the same issue twice after attempted fixes, escalate to the user: describe the issue and ask for guidance.
+
+---
+
 ## Save Location
 
 Save the completed plan to:

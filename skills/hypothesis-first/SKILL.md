@@ -49,8 +49,10 @@ Register first, then run. Period.
 ```dot
 digraph hypothesis_first_cycle {
     rankdir=LR;
-    register [label="REGISTER\nState H1, H0, outcome,\ntest, threshold.\nCommit to VCS.", shape=box, style=filled, fillcolor="#ffcccc"];
-    verify_register [label="Verify registration\nis complete", shape=diamond];
+    register [label="REGISTER\nState H1, H0, outcome,\ntest, threshold.", shape=box, style=filled, fillcolor="#ffcccc"];
+    verify_register [label="Inline verify\nregistration\nis complete", shape=diamond];
+    subagent_review [label="Dispatch\nregistration-reviewer\n(fresh subagent)", shape=box, style=filled, fillcolor="#ffaaaa"];
+    commit [label="git commit\n(only if Approved)", shape=box, style=filled, fillcolor="#ff8888"];
     execute [label="EXECUTE\nRun pre-specified\nanalysis exactly.\nNo deviations.", shape=box, style=filled, fillcolor="#ccffcc"];
     verify_execute [label="Any deviation\nfrom plan?", shape=diamond];
     document_deviation [label="Document as\nEXPLORATORY\nlabel deviation", shape=box, style=filled, fillcolor="#ffffcc"];
@@ -58,8 +60,11 @@ digraph hypothesis_first_cycle {
     next [label="Next\nhypothesis", shape=ellipse];
 
     register -> verify_register;
-    verify_register -> execute [label="complete"];
+    verify_register -> subagent_review [label="complete"];
     verify_register -> register [label="incomplete:\nfinish it"];
+    subagent_review -> register [label="Issues Found:\nfix and re-review"];
+    subagent_review -> commit [label="Approved"];
+    commit -> execute;
     execute -> verify_execute;
     verify_execute -> document_deviation [label="yes"];
     verify_execute -> interpret [label="no"];
@@ -87,11 +92,32 @@ This is the equivalent of writing a failing test. You commit to what you expect 
 8. **Preprocessing Version:** The exact preprocessing pipeline version that produced the analysis-ready data (git tag or commit hash). If the preprocessing is re-run after registration, the registration is invalidated.
 9. **Commit hash:** The registration is only valid once it is committed to version control. A file on your laptop is not a registration.
 
-**What "committed to version control" means concretely:**
+**Dispatching the Registration Reviewer (PRE-COMMIT GATE — NON-NEGOTIABLE):**
+
+Before running `git add` or `git commit`, dispatch a fresh subagent reviewer to verify the registration is complete, specific, and consistent with the approved design document. **This is the strictest gate in Eureka.** Registrations are immutable after commit — any change after commit counts as HARKing or undisclosed protocol deviation. This reviewer is your last line of defense against permanent scientific debt.
+
+1. Locate the reviewer prompt at `skills/hypothesis-first/registration-reviewer-prompt.md`
+2. Fill the placeholders:
+   - `{REGISTRATION_PATH}` → the draft registration file path (not yet committed)
+   - `{DESIGN_DOC_PATH}` → the approved design document from `research-brainstorming`
+3. Dispatch via the Task tool (`general-purpose` subagent) with the filled prompt
+4. Wait for the reviewer to return with `Status: Approved` or `Status: Issues Found`
+
+**Acting on the reviewer's response:**
+
+- **`Status: Approved`** → proceed to `git add` and `git commit` below
+- **`Status: Issues Found`** → **STOP. DO NOT COMMIT.** Fix each issue in the registration file. Re-dispatch the reviewer. Repeat until `Approved`. There is no exception to this rule — committing an unreviewed registration, or committing a registration the reviewer rejected, produces permanent scientific debt that cannot be retracted without a HARKing disclosure.
+
+If the reviewer rejects the same issue twice after attempted fixes, escalate to the user: describe the issue, the attempted fix, and ask for guidance. Do not commit.
+
+**What "committed to version control" means concretely (only after reviewer approval):**
 
 ```bash
 # Create the registration file
 docs/eureka/registrations/YYYY-MM-DD-<study-id>-registration.md
+
+# Dispatch the registration-reviewer subagent FIRST (see above)
+# Only after Status: Approved, proceed with:
 
 # Stage and commit BEFORE running any analysis
 git add docs/eureka/registrations/YYYY-MM-DD-<study-id>-registration.md
@@ -261,7 +287,8 @@ Before treating any analysis as confirmatory:
 - [ ] Missing value handling policy specified before analysis
 - [ ] Data version locked (tag or hash) and input file hashes recorded
 - [ ] Preprocessing pipeline version (git commit or tag) recorded
-- [ ] Registration committed to version control
+- [ ] `registration-reviewer` subagent dispatched and returned `Status: Approved`
+- [ ] Registration committed to version control (ONLY after reviewer approval)
 - [ ] Commit timestamp demonstrably precedes analysis run
 - [ ] Analysis ran exactly as specified (or deviations documented)
 - [ ] All pre-registered results reported, including nulls

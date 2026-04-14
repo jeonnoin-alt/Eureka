@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-04-14
+
+### Added
+
+- **Three subagent document reviewers** — Eureka now dispatches a fresh subagent reviewer at the end of each design-phase skill, matching the pattern Superpowers uses with its `spec-document-reviewer` and `plan-document-reviewer`. Previously Eureka relied on inline self-reviews, which miss blind spots because the writer reviews their own work in the same context.
+  - **`design-document-reviewer`** (`skills/research-brainstorming/design-document-reviewer-prompt.md`) — dispatched from `research-brainstorming`. Verifies all 9 mandatory questions are answered, H0 is specific, falsifiability is concrete, confounds have named control mechanisms, data provenance is locked, and no placeholders remain. Runs between the inline self-review and the user approval gate.
+  - **`registration-reviewer`** (`skills/hypothesis-first/registration-reviewer-prompt.md`) — the critical gate. Verifies all 9 REGISTER items are complete, specific, and consistent with the approved design document BEFORE the VCS commit. This reviewer is intentionally stricter than the others because registrations are immutable post-commit — errors become permanent scientific debt that cannot be corrected without HARKing disclosures. Blocks commit on `Issues Found`.
+  - **`experiment-plan-reviewer`** (`skills/experiment-design/experiment-plan-reviewer-prompt.md`) — dispatched from `experiment-design`. Verifies the plan is buildable: no placeholder commands, all experiments have exact inputs/outputs/configs/seeds/commit steps, path consistency holds, every hypothesis has at least one experiment, and input version hashes match the registration. Runs between the inline Self-Review Checklist and reporting the plan complete to the user.
+
+### Changed
+
+- **`research-brainstorming`** — Checklist adds a new step 13 "Dispatch design-document-reviewer subagent" between inline self-review (step 12) and user approval (now step 14). Process flow diagram updated. New "Dispatching the Design Document Reviewer" section documents the fill-and-dispatch protocol and how to act on `Issues Found`.
+- **`hypothesis-first`** — REGISTER phase now has an explicit pre-commit gate. New "Dispatching the Registration Reviewer (PRE-COMMIT GATE — NON-NEGOTIABLE)" section is inserted between the 9-item draft and the `git add` / `git commit` step. The flowchart now shows the three-node sequence `register → inline verify → subagent review → commit`, with `Issues Found` looping back to the drafting step. The verification checklist adds a new item: `registration-reviewer subagent dispatched and returned Status: Approved`.
+- **`experiment-design`** — New "Dispatching the Experiment Plan Reviewer" section inserted between the Self-Review Checklist and the Save Location step. Plan is not reported complete to the user until the reviewer approves.
+
+### Rationale
+
+This closes a real architectural gap versus Superpowers. Main agent context was previously doing write + review + execute in the same session, which pollutes context and misses blind spots. Fresh subagent reviews catch things inline reviews cannot.
+
+Research-specific justification: `hypothesis-first`'s registration is immutable once committed. A bad registration that slips through becomes permanent scientific debt — any retroactive correction counts as HARKing or undisclosed protocol deviation. The `registration-reviewer` is the last line of defense before that commit becomes permanent, and is therefore the strictest of the three reviewers. It's the scientific equivalent of `superpowers:verification-before-completion` applied to the registration step: **evidence before commit, always.**
+
+No per-task execution subagents (Superpowers' `implementer`, `spec-compliance-reviewer`, `code-quality-reviewer`) are added in this release. Research experiments are user-executed (data loading, model training, GPU jobs) and an automated experiment runner does not fit the research workflow model. `experiment-design` already produces a plan the user follows manually.
+
 ## [1.1.2] - 2026-04-14
 
 ### Fixed
@@ -129,7 +152,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.1.2...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.2.0
 [1.1.2]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.2
 [1.1.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.1
 [1.1.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.0
