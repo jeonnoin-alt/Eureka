@@ -7,26 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-04-13
+
 ### Added
 
 - **whats-next** skill — Triage / dispatcher skill for researchers who are stuck or unsure of the next step. Scans project state (designs, registrations, plans, results, manuscripts), asks diagnostic questions, maps the user to a research lifecycle phase, and recommends 2–3 next actions linked to specific Eureka skills. Always hands off — does not do the work itself. Triggered by phrases like "what should I do next?", "I'm stuck", "where am I?", or any equivalent. Fills the gap that other Eureka skills leave: every other skill has a specific trigger condition, but "I don't know which phase I'm in" is a meta-state with no specialist owner. `whats-next` is that meta-router.
-- **research-journal** skill — Writer counterpart to `whats-next`'s reader role. Appends structured narrative entries to `docs/eureka/journal/YYYY-MM-DD.md` capturing decisions, failed attempts, surprises, insights, blockers, and a "Next session starts with" handoff field. Triggered by explicit user request ("기록해둬", "log this", "memo"), session wind-down signals, post-decision moments, post-failure moments, or pre-phase transitions. Complements `experiment-log.md` (metric-focused) with WHY-focused narrative. Identifies cross-project insights and suggests promoting them to Claude Code auto-memory without writing to it directly. Fills the narrative continuity gap: Eureka had rich file persistence (registrations, audits, experiment-log) but no writer for mid-project decision rationale and blocker state.
+- **research-journal** skill — Writer counterpart to `whats-next`'s reader role. Appends structured narrative entries to `docs/eureka/journal/YYYY-MM-DD.md` capturing decisions, failed attempts, surprises, insights, blockers, and a "Next session starts with" handoff field. Triggered by explicit user request, session wind-down signals, post-decision moments, post-failure moments, or pre-phase transitions. Complements `experiment-log.md` (metric-focused) with WHY-focused narrative. Identifies cross-project insights and suggests promoting them to Claude Code auto-memory without writing to it directly. Fills the narrative continuity gap: Eureka had rich file persistence (registrations, audits, experiment-log) but no writer for mid-project decision rationale and blocker state.
 - **docs/templates/research-journal-entry.md** — Template consumed by `research-journal`. Required sections: `Worked on`, `Next session starts with`. Optional sections: `Decisions`, `Failed attempts`, `Surprises`, `Insights`, `Blockers`, `References`. Includes a concrete worked example and length/specificity rules.
 - **Multi-platform support** — Eureka now installs on five platforms. Added `.cursor-plugin/plugin.json` and `hooks/hooks-cursor.json` (Cursor); `gemini-extension.json`, `GEMINI.md`, and `skills/using-eureka/references/gemini-tools.md` (Gemini CLI); `.codex/INSTALL.md` and `skills/using-eureka/references/codex-tools.md` (Codex — symlink-based install, requires `multi_agent = true` in `config.toml` for subagent dispatch); `.opencode/INSTALL.md` and `.opencode/plugins/eureka.js` (OpenCode JavaScript plugin that injects the bootstrap via system prompt transform and auto-registers the skills directory). `package.json` now specifies `main` pointing at the OpenCode plugin entry point. The Claude Code install path is unchanged.
-- **README installation section** — Now documents all five platforms (Claude Code marketplace, Claude Code manual, Cursor, Gemini CLI, Codex, OpenCode) with platform-specific install commands and links to the full per-platform INSTALL.md files.
-
-### Changed
-
-- **using-eureka references directory** — Added `skills/using-eureka/references/` subdirectory containing `gemini-tools.md` and `codex-tools.md` tool-name mapping tables. Gemini CLI and Codex users now have an authoritative reference for translating Claude Code tool names (`Skill`, `TodoWrite`, `Task`, `Read`, `Write`, `Edit`, `Bash`) into their platform equivalents. The `GEMINI.md` context file `@`-imports both the bootstrap skill and the Gemini tool mapping so Gemini loads them together at session start.
-
-### Build
-
-- **CI**: Bumped `actions/checkout@v4` → `@v6` and `actions/setup-python@v5` → `@v6` to use Node 24-compatible action versions, resolving the Node 20 deprecation warning ahead of GitHub's 2026-06-02 force migration deadline.
+- **`skills/using-eureka/references/` directory** — Tool-name mapping tables for Gemini CLI and Codex. Translates Claude Code tool names (`Skill`, `TodoWrite`, `Task`, `Read`, `Write`, `Edit`, `Bash`) into their platform equivalents and documents subagent dispatch workarounds for platforms without a `Task` tool.
+- **README Quick Start section** — Concrete first-session walkthrough for new users: start with `whats-next`, end with `research-journal`, let everything else trigger automatically. Clarifies that Eureka is strictly additive and does not require restructuring existing projects.
+- **README FAQ section** — Five common concerns answered: existing project migration, pre-registration of past experiments, `CLAUDE.md` precedence, exploratory work feeling heavy, and disabling a specific skill.
+- **README installation section** — Expanded to document all five supported platforms with platform-specific install commands and links to the per-platform `INSTALL.md` files.
 
 ### Changed
 
 - **using-eureka** — Lifecycle diagram now includes `whats-next` as an alternative entry point and `research-journal` as a cross-phase continuous overlay. Skill Priority section adds triage as step 0 and continuity (research-journal) as step 5. Both new skills listed under FLEXIBLE types.
-- **whats-next** — Step 1 project state scan now explicitly includes `docs/eureka/journal/*.md` (most recent entry) as a strong signal. Step 2 reads the `Next session starts with` field from the latest journal entry and quotes it back to the user as the primary continuity signal. Step 6 hand-off ends with a soft reminder that `research-journal` can capture the current session at the end.
+- **whats-next** — Step 1 project state scan now explicitly includes `docs/eureka/journal/*.md` (most recent entry) as a strong continuity signal. Step 2 reads the `Next session starts with` field from the latest journal entry and quotes it back to the user. Step 6 hand-off ends with a soft reminder that `research-journal` can capture the current session at the end.
+
+### Build
+
+- **CI**: Bumped `actions/checkout@v4` → `@v6` (v6.0.2) and `actions/setup-python@v5` → `@v6` (v6.2.0) to use Node 24-compatible action versions, resolving the Node 20 deprecation warning ahead of GitHub's 2026-06-02 force-migration deadline.
+- **CI**: JSON validation job extended to cover `.cursor-plugin/plugin.json`, `gemini-extension.json`, and `hooks/hooks-cursor.json`.
+- **CI**: New step runs `node --check` on `.opencode/plugins/eureka.js` to catch JavaScript syntax errors before they ship.
+- **Branch protection**: Force-push and deletion blocked on `main` via classic branch protection. Force-push attempts are rejected by GitHub.
+- **Tag protection**: Repository ruleset blocks deletion, non-fast-forward, and update on tags matching `v*`. Release tags are now immutable.
 
 ## [1.0.0] - 2026-04-12
 
@@ -75,5 +80,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.0
 [1.0.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.0.0

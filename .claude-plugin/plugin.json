@@ -1,7 +1,7 @@
 {
   "name": "eureka",
   "description": "Research rigor skills for Claude Code: hypothesis pre-registration, statistical rigor, claims audit, and reproducibility gates for scientific workflows",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "jeonnoin-alt"
   },
