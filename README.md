@@ -32,8 +32,10 @@ In Claude Code, register this repository as a marketplace, then install:
 
 ```bash
 /plugin marketplace add jeonnoin-alt/Eureka
-/plugin install eureka
+/plugin install Eureka
 ```
+
+The plugin name is **case-sensitive** and capitalized (`Eureka`) so that slash commands appear with an `Eureka:` namespace prefix (e.g. `/Eureka:research-brainstorming`).
 
 ### Claude Code (Manual Installation)
 

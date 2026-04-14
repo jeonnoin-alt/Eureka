@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-04-14
+
+### Changed
+
+- **Plugin name capitalized to `Eureka`** — The `name` field in `.claude-plugin/plugin.json` and the `plugins[0].name` field in `.claude-plugin/marketplace.json` are now `"Eureka"` (capitalized) instead of `"eureka"`. Per Claude Code's plugin docs, the plugin name controls the slash-command namespace, so plugin skills now appear as `/Eureka:research-brainstorming`, `/Eureka:hypothesis-first`, etc., instead of `/research-brainstorming` (which had no visible namespace prefix). The `package.json` `name` field stays lowercase (`eureka`) per npm convention.
+
+### Migration
+
+Existing installs need to reinstall to pick up the new namespace:
+
+```
+/plugin uninstall eureka
+/plugin marketplace update eureka
+/plugin install Eureka
+```
+
+The install command argument is now case-sensitive: `Eureka`, not `eureka`.
+
 ## [1.1.0] - 2026-04-13
 
 ### Added
@@ -80,6 +98,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.1
 [1.1.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.0
 [1.0.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.0.0
