@@ -1,5 +1,5 @@
 {
-  "name": "eureka",
+  "name": "eureka-marketplace",
   "description": "Marketplace for Eureka — research rigor skills library for Claude Code",
   "owner": {
     "name": "jeonnoin-alt"
@@ -8,7 +8,7 @@
     {
       "name": "Eureka",
       "description": "Research rigor skills for Claude Code: hypothesis pre-registration, statistical rigor, claims audit, and reproducibility gates for scientific workflows",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "source": "./",
       "author": {
         "name": "jeonnoin-alt"

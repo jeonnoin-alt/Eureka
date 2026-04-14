@@ -37,6 +37,14 @@ In Claude Code, register this repository as a marketplace, then install:
 
 The plugin name is **case-sensitive** and capitalized (`Eureka`) so that slash commands appear with an `Eureka:` namespace prefix (e.g. `/Eureka:research-brainstorming`).
 
+> **Coming from v1.1.0 or v1.1.1?** First clean up the old install:
+> ```
+> /plugin marketplace remove eureka
+> /plugin marketplace add jeonnoin-alt/Eureka
+> /plugin install Eureka
+> ```
+> v1.1.1 had a Windows install bug (EPERM rename) caused by a case-collision between the marketplace name and the plugin name. v1.1.2 fixes this by renaming the marketplace to `eureka-marketplace` (the plugin itself stays `Eureka`).
+
 ### Claude Code (Manual Installation)
 
 Clone this repository into your Claude Code plugins cache:

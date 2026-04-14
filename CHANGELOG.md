@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-04-14
+
+### Fixed
+
+- **Windows install error (EPERM, case collision)** — v1.1.1 capitalized the plugin name to `Eureka` so the slash-command namespace would appear as `Eureka:`, but the marketplace name in `marketplace.json` was still `eureka` (lowercase). On Windows (case-insensitive filesystem), this meant Claude Code tried to extract the plugin into `cache\eureka\Eureka\1.1.1\`, where the parent `eureka` and child `Eureka` resolve to the same directory. The rename operation failed with `EPERM: operation not permitted, rename`.
+
+  Reported error from a v1.1.1 Windows install:
+  ```
+  Error: Failed to install: EPERM: operation not permitted, rename
+    'C:\Users\User\.claude\plugins\cache\Eureka' ->
+    'C:\Users\User\.claude\plugins\cache\eureka\Eureka\1.1.1'
+  ```
+
+  Fix: The marketplace top-level name in `.claude-plugin/marketplace.json` is now `eureka-marketplace` (case-distinct from the plugin name `Eureka`). The cache path becomes `cache/eureka-marketplace/Eureka/1.1.2/`, with no case-only collisions in any parent-child pair.
+
+  This follows the same pattern superpowers uses: marketplace `superpowers-dev`, plugin `superpowers` — two genuinely different strings.
+
+### Migration
+
+If you got the EPERM error on v1.1.1, do the following in Claude Code:
+
+```
+/plugin marketplace remove eureka
+/plugin marketplace add jeonnoin-alt/Eureka
+/plugin install Eureka
+```
+
+The first command removes the half-installed v1.1.1 marketplace registration. The second re-adds it (now picking up the v1.1.2 marketplace name `eureka-marketplace`). The third installs the plugin cleanly.
+
+If `/plugin marketplace remove` does not clean up the cache directory, manually delete `C:\Users\User\.claude\plugins\cache\eureka\` (or `~/.claude/plugins/cache/eureka/` on macOS/Linux) before retrying.
+
 ## [1.1.1] - 2026-04-14
 
 ### Changed
@@ -98,7 +129,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.2
 [1.1.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.1
 [1.1.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.0
 [1.0.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.0.0
