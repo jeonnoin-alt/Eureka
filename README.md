@@ -208,6 +208,19 @@ The **registration** produced by `hypothesis-first` is analogous to a failing te
 
 So if you have just finished `research-brainstorming` and are being transitioned to `hypothesis-first`, expect a registration document, not a task list. The task list comes in the next step via `experiment-design`.
 
+### Which skill do I need?
+
+New to Eureka? Two skills have "research" in the name — here's how to tell them apart:
+
+| I have... | Use this |
+|---|---|
+| A dataset but no idea what to do with it | `research-ideation` |
+| A vague interest area ("something with EEG") | `research-ideation` |
+| A specific question ("Does X cause Y?") | `research-brainstorming` |
+| A hypothesis I want to test | `research-brainstorming` |
+
+**`research-ideation`** generates many ideas. **`research-brainstorming`** takes one idea and makes it rigorous. Ideation is divergent; brainstorming is convergent. You can always start with ideation and let it hand you off to brainstorming when you're ready.
+
 ## What's Inside
 
 ### Skills Library
