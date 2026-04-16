@@ -101,7 +101,9 @@ digraph research_lifecycle {
     write [label="Manuscript Writing\n(your work + eureka:claims-audit)"];
     pub [label="Submission Gate\neureka:verification-before-publication"];
     submit [label="Submit / Archive\neureka:submission-readiness"];
+    ideation [label="Research Ideation\neureka:research-ideation\n(idea generation from\nkeywords/data/papers)"];
 
+    ideation -> rq [label="idea selected"];
     rq -> hr [label="design approved\ngap verified"];
     hr -> plan [label="hypothesis registered"];
     plan -> exp [label="plan ready"];
@@ -124,7 +126,9 @@ digraph research_lifecycle {
     stuck -> write [style=dashed];
     stuck -> pub [style=dashed];
     stuck -> submit [style=dashed];
+    stuck -> ideation [style=dashed];
 
+    ideation -> journal [style=dashed, label="capture"];
     rq -> journal [style=dashed, label="capture"];
     hr -> journal [style=dashed];
     plan -> journal [style=dashed];
