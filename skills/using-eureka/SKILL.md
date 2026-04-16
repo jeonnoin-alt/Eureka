@@ -104,7 +104,8 @@ digraph research_lifecycle {
     exp [label="Experiment Execution\n(your work)"];
     trouble [label="Troubleshooting\neureka:systematic-troubleshooting"];
     rev [label="Results Review\neureka:requesting-research-review"];
-    write [label="Manuscript Writing\n(your work + eureka:claims-audit)"];
+    write [label="Manuscript Writing\neureka:manuscript-writing\n(section-by-section with reviewer)"];
+    audit [label="Claims Audit\neureka:claims-audit"];
     pub [label="Submission Gate\neureka:verification-before-publication"];
     submit [label="Submit / Archive\neureka:submission-readiness"];
     ideation [label="Research Ideation\neureka:research-ideation\n(idea generation from\nkeywords/data/papers)"];
@@ -119,8 +120,10 @@ digraph research_lifecycle {
     exp -> rev [label="phase complete"];
     rev -> exp [label="FAIL: fix and re-run"];
     rev -> write [label="PASS"];
-    write -> pub [label="manuscript ready"];
+    write -> audit [label="all sections reviewed"];
+    audit -> pub [label="audit PASS"];
     pub -> write [label="FAIL: revise"];
+    audit -> write [label="FAIL: fix claims"];
     pub -> submit [label="PASS"];
     exp -> rq [label="pivot needed"];
 
@@ -141,6 +144,7 @@ digraph research_lifecycle {
     trouble -> journal [style=dashed];
     rev -> journal [style=dashed];
     write -> journal [style=dashed];
+    audit -> journal [style=dashed];
     journal -> stuck [style=dashed, label="informs"];
 }
 ```
@@ -198,6 +202,7 @@ When multiple skills could apply, use this order:
 - submission-readiness
 - whats-next
 - research-journal
+- manuscript-writing
 
 The skill itself tells you which type it is.
 

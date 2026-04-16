@@ -163,11 +163,13 @@ It's strictly additive. New artifacts (design docs, hypothesis registrations, ex
 
 5. **requesting-research-review** — Activates when an experiment phase is complete. Dispatches a `research-reviewer` subagent that scores the work across seven independent dimensions (Scientific Foundation, Methodological Rigor, Experimental Execution, Results Quality, Novelty, Reproducibility, Domain Standards). All seven must meet the threshold to PASS.
 
-6. **claims-audit** — Activates during manuscript writing. Traces every quantitative claim to a source file, verifies every figure is script-generated, and confirms that all experiments (including negative ones) are reported. Unreported null results are flagged as publication bias.
+6. **manuscript-writing** — Activates when writing the manuscript. Guides section-by-section writing with prerequisite gates (no Results before results exist, Abstract written last), citation discipline (every claim cited), number traceability (every value traced to a source file), and per-section subagent review via `section-reviewer`. Format-agnostic (LaTeX, Markdown, or other).
 
-7. **verification-before-publication** — Activates before submission. Fresh verification of every claim, regeneration of every figure from scripts, end-to-end reproducibility check (raw → processed → analysis → results with a single command), and confirmation that the `research-reviewer` score meets the pre-submission threshold.
+7. **claims-audit** — Activates after all sections are written. Traces every quantitative claim to a source file, verifies every figure is script-generated, and confirms that all experiments (including negative ones) are reported. Unreported null results are flagged as publication bias.
 
-8. **submission-readiness** — Activates after verification passes. Presents four structured options: submit to target journal, preprint first then submit, continue refining, or pivot. Forces explicit documentation of the decision.
+8. **verification-before-publication** — Activates before submission. Fresh verification of every claim, regeneration of every figure from scripts, end-to-end reproducibility check (raw → processed → analysis → results with a single command), and confirmation that the `research-reviewer` score meets the pre-submission threshold.
+
+9. **submission-readiness** — Activates after verification passes. Presents four structured options: submit to target journal, preprint first then submit, continue refining, or pivot. Forces explicit documentation of the decision.
 
 **The agent checks for relevant skills before any task.** Mandatory workflows, not suggestions.
 
@@ -242,6 +244,9 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 **Review**
 - **requesting-research-review** — Dispatch a seven-dimension scientific rigor review
 - **receiving-research-review** — Respond to review feedback with technical rigor, not performative agreement
+
+**Writing**
+- **manuscript-writing** — Section-by-section writing with prerequisite gates, citation discipline, number traceability, per-section subagent review
 
 **Publication Gates**
 - **claims-audit** — Trace every number, verify every figure, report every experiment

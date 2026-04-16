@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-04-16
+
+### Added
+
+- **`manuscript-writing` skill** — Guides section-by-section manuscript writing with prerequisite gates (no Results before results exist, no Discussion before Results is finalized, Abstract written last), citation discipline (every claim cited at write-time), number traceability (every quantitative value traced to a source file with inline comments), figure/table cross-reference validation, variable definition enforcement, and a per-section subagent review via `section-reviewer`. Format-agnostic: works with LaTeX, Markdown, or other formats. The user specifies their format at session start or in `CLAUDE.md`. Fills the gap between `requesting-research-review` (PASS) and `claims-audit` — previously there was no Eureka skill governing the writing process itself.
+- **`section-reviewer` subagent prompt** (`skills/manuscript-writing/section-reviewer-prompt.md`) — Fresh-eyes per-section review dispatched during manuscript writing (step 5 of the per-section workflow). Checks citation completeness (every `\cite{}` key verified against bibliography), figure/table cross-references (every `\ref{}` has a corresponding file), number traceability (every quantitative value traced to results/), variable definitions, logic flow, prerequisite compliance, fabrication signals, and placeholders. Returns structured output with citation check counts, number traceability counts, and figure check counts alongside the standard `Status: Approved | Issues Found` format. Different from `claims-audit` (full-manuscript, post-writing) and `research-reviewer` (7-dimension publication readiness).
+
+### Changed
+
+- **`using-eureka`** lifecycle diagram — `manuscript-writing` is now an explicit node between `requesting-research-review` (PASS) and `claims-audit`. The old single "Manuscript Writing (your work + claims-audit)" node is split into two: `manuscript-writing` (section-by-section with reviewer) → `claims-audit` (full-manuscript audit). Added `audit → write` feedback loop for claims-audit failures. Journal dashed edges now include `audit` node. FLEXIBLE skill types list gains `manuscript-writing`.
+- **README** — Research Workflow section adds `manuscript-writing` as step 6 (renumbering remaining steps). Skills Library gains "Writing" category with `manuscript-writing` entry.
+
 ## [1.3.0] - 2026-04-16
 
 ### Added
@@ -164,7 +176,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.3.0
 [1.2.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.2.0
 [1.1.2]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.2
