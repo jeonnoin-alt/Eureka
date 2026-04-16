@@ -169,7 +169,7 @@ These thoughts mean STOP — you're rationalizing skipping a skill:
 When multiple skills could apply, use this order:
 
 1. **Triage first** (whats-next) — when the user is stuck or unsure which phase they are in, route through `whats-next` to identify the right specialist
-2. **Process skills second** (research-brainstorming, hypothesis-first) — these determine HOW to approach the research
+2. **Process skills second** (research-ideation, research-brainstorming, hypothesis-first) — these determine HOW to approach the research
 3. **Review skills third** (requesting-research-review, claims-audit) — these validate execution
 4. **Gate skills fourth** (verification-before-publication) — these approve transitions
 5. **Continuity skills last** (research-journal) — run at session end or after major events to preserve narrative state for the next session
@@ -178,6 +178,7 @@ When multiple skills could apply, use this order:
 "My experiments are done" → requesting-research-review first, not manuscript writing.
 "I don't know what to do next" → whats-next first, then whatever it routes you to.
 "Session is wrapping up" → research-journal to capture decisions before context is lost.
+"I have this dataset but don't know what to study" → research-ideation first, not research-brainstorming.
 
 ## Skill Types
 
@@ -188,6 +189,7 @@ When multiple skills could apply, use this order:
 - verification-before-publication
 
 **Flexible** (adapt principles to domain and context):
+- research-ideation
 - research-brainstorming
 - experiment-design
 - systematic-troubleshooting
