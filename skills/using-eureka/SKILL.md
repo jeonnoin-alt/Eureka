@@ -65,7 +65,13 @@ digraph eureka_flow {
     "Respond (including clarifications)" [shape=doublecircle];
 
     "User message received" -> "Research task detected?";
-    "Research task detected?" -> "Already brainstormed\nresearch design?" [label="yes"];
+    "Has formed research question?" [shape=diamond];
+    "Invoke research-ideation" [shape=box];
+
+    "Research task detected?" -> "Has formed research question?" [label="yes"];
+    "Has formed research question?" -> "Already brainstormed\nresearch design?" [label="yes"];
+    "Has formed research question?" -> "Invoke research-ideation" [label="no — only keywords,\ndataset, or vague interest"];
+    "Invoke research-ideation" -> "Already brainstormed\nresearch design?";
     "Research task detected?" -> "Might any eureka skill apply?" [label="unclear"];
     "Already brainstormed\nresearch design?" -> "Invoke research-brainstorming" [label="no"];
     "Already brainstormed\nresearch design?" -> "Might any eureka skill apply?" [label="yes"];
