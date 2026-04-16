@@ -99,7 +99,8 @@ Based on Steps 1–3, identify which phase the user is in. Use this map:
 
 | State | Phase | Recommend |
 |---|---|---|
-| No design doc, vague research idea | **Pre-design** | `eureka:research-brainstorming` |
+| No design doc, **no research question at all** — only keywords, a dataset, or vague interest (e.g., "something with EEG") | **Pre-ideation** | `eureka:research-ideation` |
+| No design doc, **has a research question** but it needs refinement (e.g., "Does X cause Y?") | **Pre-design** | `eureka:research-brainstorming` |
 | Design exists, no registration, no analysis | **Pre-registration** | `eureka:hypothesis-first` |
 | Hypothesis registered, no experiment plan | **Pre-execution planning** | `eureka:experiment-design` |
 | Experiment plan exists, no results | **Execution** | Just run the experiments — no skill needed yet |
@@ -111,6 +112,8 @@ Based on Steps 1–3, identify which phase the user is in. Use this map:
 | Pivoting / lost direction | **Re-design** | `eureka:research-brainstorming` (start over with new question) |
 
 If the user's state spans multiple phases, pick the **earliest unfinished one**. You cannot skip Phase N to get to Phase N+1.
+
+**Discriminating rule for Pre-ideation vs Pre-design:** If the user can state the question as "Does/Is/Can [X] [verb] [Y]?", they have a formed question → Pre-design. If they cannot, they are in Pre-ideation.
 
 ## Step 5: Recommend 2-3 Next Actions
 
@@ -192,6 +195,8 @@ These are the most frequent stuck states researchers experience and the typical 
 | "I have results but no plan to write them up" | Drafting | Start writing, then `claims-audit` |
 | "I haven't touched this in weeks, where was I?" | Any | Scan state, recommend the next gate |
 | "I keep going in circles on the same analysis" | Investigation OR re-design | `systematic-troubleshooting` first; if 3+ attempts failed, escalate to `research-brainstorming` |
+| "I have data but don't know what to study" | Pre-ideation | `research-ideation` |
+| "What interesting questions are there in this field?" | Pre-ideation | `research-ideation` |
 
 ## Integration
 
