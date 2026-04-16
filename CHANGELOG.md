@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-04-16
+
+### Added
+
+- **`research-ideation` skill** — New optional entry point for the research workflow. Generates 3-10 concrete research ideas from keywords, datasets, and/or papers, each with metadata (difficulty, data needs, estimated duration, core methodology). Recommends one idea and suggests handing off to `research-brainstorming` to shape it into a rigorous study design. Sits before `research-brainstorming` in the lifecycle: ideation (diverge) → brainstorming (converge) → hypothesis-first (register) → experiment-design (plan).
+
+### Changed
+
+- **`using-eureka`** — Lifecycle diagram adds `research-ideation` node before `research-brainstorming`. Routing flowchart adds "Has formed research question?" decision diamond. Skill Priority adds `research-ideation` to process skills. Flexible list updated.
+- **`whats-next`** — Routing table splits former "Pre-design" row into "Pre-ideation" (→ `research-ideation`) and "Pre-design" (→ `research-brainstorming`) with a discriminating rule. Two new Common Stuck States added.
+- **`README.md`** — Research Workflow adds step 0 (`research-ideation`). New "Which skill do I need?" guide distinguishes ideation from brainstorming. Skills Library adds "Ideation" category.
+
 ## [1.2.0] - 2026-04-14
 
 ### Added
@@ -152,7 +164,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.3.0
 [1.2.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.2.0
 [1.1.2]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.2
 [1.1.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.1.1
