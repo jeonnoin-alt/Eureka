@@ -228,6 +228,9 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 **Triage**
 - **whats-next** — Scan project state, diagnose which phase you're in, route to the right specialist skill
 
+**Ideation**
+- **research-ideation** — Generate research ideas from keywords, datasets, and papers with difficulty/duration/methodology metadata
+
 **Design & Registration**
 - **research-brainstorming** — Nine-question Socratic design refinement
 - **hypothesis-first** — Pre-register H1, H0, analysis plan, and data version before analysis
