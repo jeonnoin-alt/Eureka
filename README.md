@@ -151,6 +151,8 @@ It's strictly additive. New artifacts (design docs, hypothesis registrations, ex
 
 ## The Research Workflow
 
+0. **research-ideation** *(optional)* — Activates when the researcher has no specific question yet — only keywords, a dataset, or vague interest. Generates 3-5 concrete research ideas with metadata (difficulty, data needs, duration, methodology). Recommends one and suggests handing off to `research-brainstorming`. Skip this step if you already have a question.
+
 1. **research-brainstorming** — Activates when a research question is detected. Explores the idea through nine mandatory questions (H0, falsifiability, primary outcome, confounds + data leakage, power, alternative explanation, prior work, contradictory evidence, data provenance). Presents the design in sections for validation. Saves a research design document.
 
 2. **hypothesis-first** — Activates after design approval. The scientific equivalent of test-driven development. Forces you to commit H1, H0, exact statistical test, significance threshold, data version hash, and preprocessing version to version control **before** any data is analyzed. No analysis without a registered hypothesis.
