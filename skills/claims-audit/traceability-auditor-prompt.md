@@ -31,24 +31,33 @@ Task tool (general-purpose):
 
     Read `{MANUSCRIPT_PATH}` (LaTeX `.tex`, Markdown `.md`, or concatenated sections).
 
-    Apply these regexes to capture every numeric claim. Each match records:
+    Apply these regex patterns to capture every numeric claim. Each match records:
     - The numeric value
     - The surrounding 80 characters of context (what the number is OF)
     - The line number or section reference
 
-    **Regex patterns** (non-exhaustive — add patterns for domain-specific values as needed):
+    **How to read the pattern table:**
+    - Patterns are **illustrative starting points**, not exhaustive or literal copy-paste. Adapt them for the manuscript's actual conventions (e.g., the field might write `R²` as the Unicode superscript, `R^2` in LaTeX source, `R-squared` in prose, or `R_squared` in a plot label — all are valid variants you should capture)
+    - `...` in a pattern means "extend with the same numeric-capture shape" — e.g., `η²\s*=\s*...` should capture `η² = 0.42` by extending with `-?\d*\.?\d+` the way the correlation pattern does. Not literal ellipsis.
+    - Unicode characters (`ρ`, `η²`, `±`, `–`) appear in both the patterns below and in manuscripts. Use them directly; don't escape them.
+    - LaTeX source often uses `$r = 0.86$`, `$R^2 = 0.74$`, `$\rho = 0.5$` — strip the `$` delimiters and treat the math-mode content as regular text for matching
+    - Over-extract deliberately — the downstream tolerance match will filter non-claims
 
-    | Claim type | Pattern examples |
-    |---|---|
-    | Correlations | `r\s*=\s*-?\d*\.?\d+`, `ρ\s*=\s*-?\d*\.?\d+`, `R\^2\s*=\s*\d*\.?\d+` |
-    | p-values | `p\s*(=|<|>)\s*\d*\.?\d+(e-?\d+)?`, `p-value\s*=\s*...` |
-    | Sample sizes | `N\s*=\s*\d+`, `n\s*=\s*\d+`, `\bn=\d+\b` |
-    | Percentages | `\d+\.?\d*\s*%`, `\d+\.?\d*\s*percent` |
-    | Effect sizes | `d\s*=\s*-?\d*\.?\d+`, `η²\s*=\s*...`, `f²\s*=\s*...`, `OR\s*=\s*...`, `HR\s*=\s*...`, `RR\s*=\s*...` |
-    | Confidence intervals | `95%\s*CI\s*\[?\s*-?\d*\.?\d+\s*[,–\-]\s*-?\d*\.?\d+`, `CI:\s*...` |
-    | AUC / sens / spec | `AUC\s*=\s*\d*\.?\d+`, `sensitivity\s*=\s*...`, `specificity\s*=\s*...` |
-    | Means / SDs | `\d+\.?\d*\s*±\s*\d+\.?\d*`, `mean\s*=\s*...` |
-    | Counts | `\d+\s+(subjects|patients|participants|trials|sessions|samples)` |
+    **Regex patterns** (non-exhaustive starting points; adapt for the specific manuscript):
+
+    | Claim type | Pattern examples | Unicode / variant notes |
+    |---|---|---|
+    | Correlations | `r\s*=\s*-?\d*\.?\d+` | Also match: `ρ` (Unicode), `\rho` (LaTeX), `R²`, `R^2`, `R-squared`, `R\^2` (literal `R^2`) |
+    | p-values | `p\s*(=\|<\|>)\s*\d*\.?\d+(e-?\d+)?` | Also: `p-value`, `P-value`, LaTeX `p<0.001` without spaces |
+    | Sample sizes | `N\s*=\s*\d+`, `n\s*=\s*\d+` | Match both `N` (total) and `n` (subgroup); LaTeX `$n = 47$` |
+    | Percentages | `\d+\.?\d*\s*%`, `\d+\.?\d*\s*percent` | LaTeX `$50\%$`; avoid matching `50%` inside `%` comments |
+    | Effect sizes | `d\s*=\s*-?\d*\.?\d+` | Also: `η²`, `η^2`, `\eta^2`, `f²`, `OR`, `HR`, `RR`, `AOR`, Cohen's h |
+    | Confidence intervals | `95%\s*CI\s*\[?\s*-?\d*\.?\d+\s*[,–\-]\s*-?\d*\.?\d+` | Capture both dash styles: `–` (en dash), `-`, and `,` separators |
+    | AUC / sens / spec | `AUC\s*=\s*\d*\.?\d+` | Also: `sensitivity`, `specificity`, `PPV`, `NPV`, `C-index`, `balanced accuracy` |
+    | Means / SDs | `\d+\.?\d*\s*±\s*\d+\.?\d*` | Also: `mean±SD`, `M = X.XX, SD = Y.YY`; `±` is Unicode U+00B1 |
+    | Counts | `\d+\s+(subjects\|patients\|participants\|trials\|sessions\|samples\|cells\|mice\|runs\|seeds)` | Field-specific (extend for domain) |
+    | Durations / rates | `\d+\.?\d*\s*(hours?\|minutes?\|days?\|weeks?\|months?\|years?)`, `\d+\.?\d*\s*/\s*(s\|min\|hour)` | |
+    | Scientific notation | `\d+\.?\d*\s*[eE]-?\d+` | Also LaTeX: `\times\s*10\^{-?\d+}` |
 
     Also capture any number that appears as a **statistic claim** outside these patterns — err on the side of over-extraction; the downstream tolerance match will filter non-claims.
 

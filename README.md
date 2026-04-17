@@ -301,6 +301,26 @@ Seven subagent prompts used by skills for fresh-eyes review (all use 3-tier seve
 - **docs/templates/research-journal-entry.md** — Output of `research-journal`
 - **docs/templates/registrations-index-template.md** — Seed file for `docs/eureka/registrations/INDEX.md`; copy into your project repo when starting registration tracking (maintained thereafter by `hypothesis-first`)
 
+### Consumer Paths (`docs/eureka/` in your project)
+
+Eureka skills produce durable artifacts in canonical paths under `docs/eureka/` — this is a directory Eureka expects to exist **in YOUR research project**, not in Eureka's own plugin repo (where `docs/eureka/` is `.gitignore`d because it's reserved for consumers).
+
+| Consumer path | Written by | Purpose |
+|---|---|---|
+| `docs/eureka/designs/YYYY-MM-DD-<topic>-design.md` | `research-brainstorming` | Approved research design documents |
+| `docs/eureka/registrations/YYYY-MM-DD-<topic>-registration.md` | `hypothesis-first` | Pre-registered hypotheses (immutable post-commit) |
+| `docs/eureka/registrations/INDEX.md` | `hypothesis-first` (maintained) | Machine-readable chain of active/superseded/amended registrations |
+| `docs/eureka/plans/YYYY-MM-DD-<topic>-experiments.md` | `experiment-design` | Executable experiment plans |
+| `docs/eureka/audits/YYYY-MM-DD-claims-audit.md` | `claims-audit` | Number-traceability + figure-integrity audit reports |
+| `docs/eureka/reviews/YYYY-MM-DD-review.md` | `research-reviewer` agent | 7-dimension scored review reports |
+| `docs/eureka/novelty-audits/YYYY-MM-DD-novelty-audit.md` | `novelty-competitive-audit` | Pre-submission novelty competitive audit reports |
+| `docs/eureka/verifications/YYYY-MM-DD-verification.md` | `verification-before-publication` | Final pre-submission verification reports |
+| `docs/eureka/journal/YYYY-MM-DD.md` | `research-journal` | Narrative session journal entries |
+
+**Why these paths are in YOUR repo, not Eureka's**: these files are your project's state — they document decisions, hypotheses, and reviews for *your* research. Eureka ships the skills; you ship the artifacts. The plugin repo intentionally gitignores `docs/eureka/` to avoid accidentally committing example artifacts that would confuse new users about what belongs to the plugin vs. their project.
+
+**Getting started**: `mkdir -p docs/eureka/{designs,registrations,plans,audits,reviews,novelty-audits,verifications,journal}` in your project the first time you invoke an Eureka skill that writes to those paths. Skills will create them on demand if missing.
+
 ## Philosophy
 
 - **Hypothesis before data** — The scientific TDD. Register the prediction before you can possibly know the answer.

@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-04-17
+
+### Added
+
+- **`hooks/freshness-hash.sh`** — New shell helper that computes canonical SHA-256 hashes for the `manuscript_hash` and `results_hash` YAML frontmatter fields defined in v1.10.0's freshness protocol. Three modes: `manuscript <path>` (hashes a single file), `results <dir>` (content digest of all files in a results directory, excluding build artifacts), and `both <manuscript> <results>` (emits two YAML-ready lines). Without this helper, the v1.10.0 freshness protocol was theoretical — users had no shipped way to populate the hash fields. The helper uses only `sha256sum`, `find`, `sort` (standard coreutils) and is deterministic across filesystems (files sorted by relative path before hashing). Excluded from the `results/` digest: `.aux`, `.log`, `.out`, `.toc`, `.synctex.gz`, `.fdb_latexmk`, `.fls`, `.bbl`, `.blg`, `.DS_Store`, editor swap files (`~`, `.swp`) — these drift with every LaTeX recompile without representing actual result changes. Addresses v1.10.0 review item 1.
+
+- **`README.md` "Consumer Paths" section** — New navigation aid explaining where Eureka skill artifacts live in a user's research project vs. in Eureka's own plugin repo. Resolves the "new user greps Eureka's repo for `docs/eureka/registrations/INDEX.md` and finds nothing" confusion. Table enumerates 9 canonical consumer paths (`docs/eureka/designs/`, `docs/eureka/registrations/`, `docs/eureka/plans/`, `docs/eureka/audits/`, `docs/eureka/reviews/`, `docs/eureka/novelty-audits/`, `docs/eureka/verifications/`, `docs/eureka/journal/`, and `docs/eureka/registrations/INDEX.md`) with their producing skill and purpose. Explicit rationale: these are the user's project state (decisions, hypotheses, reviews for their research), so `docs/eureka/` is gitignored in Eureka's plugin repo to prevent accidental example artifacts from confusing new users about what belongs to the plugin vs. their project. Addresses v1.10.0 review item 5.
+
+### Changed
+
+- **`skills/claims-audit/traceability-auditor-prompt.md`** — Step 1 regex patterns clarified. Added explicit "How to read the pattern table" block stating that patterns are illustrative starting points (not exhaustive or literal copy-paste), `...` means "extend with the same numeric-capture shape" (not literal ellipsis), Unicode characters (`ρ`, `η²`, `±`, `–`) appear as-is in both patterns and manuscripts (don't escape them), and LaTeX math-mode delimiters should be stripped before matching. The pattern table gained a third column of "Unicode / variant notes" covering `ρ/\rho`, `R²/R^2/R-squared`, `±`/en-dash variants, LaTeX `$...$` math-mode, and domain-specific count units (cells, mice, runs, seeds). Two new rows added: "Durations / rates" and "Scientific notation". Addresses v1.10.0 review item 2.
+
+- **`skills/using-eureka/SKILL.md`** — Canonical Output Paths section gains a "Computing the hashes" subsection with three example invocations of `hooks/freshness-hash.sh`. Notes the design decisions behind `results_hash` content digest (sorted per-file sha256 concatenation, build artifacts excluded). Makes the freshness protocol practical rather than documentary.
+
+### Rationale
+
+Cleanup release addressing the three substantive items from the v1.10.0 code review:
+
+- **Item 1 (HIGH)**: the v1.10.0 freshness protocol was theoretical without automation. v1.10.1 ships a `freshness-hash.sh` helper so populating the YAML frontmatter is a one-line shell call, not manual sha256 computation. The protocol now has teeth.
+- **Item 2 (MEDIUM)**: the traceability-auditor's regex pattern table had implicit assumptions (escape `R^2` vs Unicode `R²`; `...` as placeholder vs literal) that could produce false negatives if interpreted narrowly. The clarifications make the pattern table a proper starting point while keeping the "adapt for your manuscript" flexibility.
+- **Item 5 (MEDIUM)**: new users grep Eureka's plugin repo for `docs/eureka/` artifacts and find nothing because the directory is gitignored for consumers-vs-plugin-repo reasons. The new README section removes this friction with an explicit table and architectural explanation.
+
+Items 3, 4, 6, 7 from the v1.10.0 review are deferred (tracking/stylistic, non-blocking).
+
+Semver: PATCH. No new features, no breaking changes, no behavior changes beyond making an existing convention practical.
+
 ## [1.10.0] - 2026-04-17
 
 ### Added
@@ -425,7 +451,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.10.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.10.1...HEAD
+[1.10.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.10.1
 [1.10.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.10.0
 [1.9.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.9.0
 [1.8.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.1

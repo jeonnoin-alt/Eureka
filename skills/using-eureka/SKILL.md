@@ -252,10 +252,23 @@ Skills that produce durable artifacts should write to canonical locations under 
 ---
 generated_at: <ISO-8601 timestamp>
 manuscript_hash: sha256:<hex>      # or N/A for pre-manuscript artifacts
-results_hash: sha256:<hex>          # SHA256 of sorted file hashes in results/
+results_hash: sha256:<hex>          # content digest of results/ (see helper below)
 status: passed | failed | in_progress
 ---
 ```
+
+**Computing the hashes** — use the shipped helper script:
+
+```bash
+# Get both hashes ready to paste into YAML frontmatter:
+hooks/freshness-hash.sh both paper/main.tex results/
+
+# Individual hashes:
+hooks/freshness-hash.sh manuscript paper/main.tex
+hooks/freshness-hash.sh results results/
+```
+
+The `results_hash` is a content digest: `sha256(concat(sorted(per-file-sha256)))` over all files in `results/` excluding common build artifacts (`.aux`, `.log`, `.synctex.gz`, `.DS_Store`, etc.). Deterministic across filesystems because files are sorted by path. Adding a file, renaming a file, or changing file contents all drift the hash; LaTeX recompilation alone (which regenerates `.aux`/`.log`) does not.
 
 **Downstream freshness check** — `verification-before-publication` and `submission-readiness` read upstream artifacts and soft-warn (not block) if hashes mismatch. Soft warning rather than hard block because file-level hash is sensitive to trivial whitespace changes; users can tighten to hard block by preference.
 
