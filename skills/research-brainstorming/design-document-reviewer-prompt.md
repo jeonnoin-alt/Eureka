@@ -30,41 +30,69 @@ Task tool (general-purpose):
     | **Placeholders** | No `TBD`, `TODO`, `[...]`, `<fill-in>`, or `"???"` anywhere in the document |
     | **Scope** | The design covers exactly one study. Multiple independent studies (different DV, different population, different intervention) should have been decomposed into separate designs during brainstorming |
 
-    ## Calibration
+    ## Red-team mode (default on)
 
-    Only flag issues that would cause real problems during hypothesis registration or experiment execution. Examples of real issues:
+    Do not assume the design document is correct. Actively hunt for:
+    - **Hidden assumptions**: what does the design quietly rely on? (e.g., "T+ prevalence 50%", "sample size sufficient", "measurement is valid") — if found, flag the assumption and ask for explicit justification
+    - **Overlooked alternatives**: could the same question be answered by a simpler design? Could the hypothesis be framed differently to be more falsifiable?
+    - **Scope creep**: does the design attempt multiple studies fused together?
+    - **Confounds the author didn't list**: domain-typical confounds that should have made the "top 3" list
+
+    If you cannot find even one Should-fix or Advisory issue after honest effort, document your red-team search strategy to prove you looked (3-5 sentences).
+
+    ## Calibration — severity tiers
+
+    Flag issues with one of three severity tiers:
+
+    **Must-fix** (blocks approval — the design cannot proceed to registration without resolution):
     - H0 is vague and cannot be formally tested
     - Power analysis is missing for a confirmatory study
-    - Data version is unspecified ("ADNI" with no release tag)
-    - Section contains `TBD`
+    - Data version is unspecified (e.g., just the dataset name without release tag or file hash)
+    - Section contains `TBD`, `TODO`, or `[fill in]`
     - Contradictory evidence section is empty AND no search strategy is documented
+    - Mandatory question (1-11) unanswered
+    - Scope violation: design covers multiple independent studies
 
-    NOT issues (do not flag):
+    **Should-fix** (address before proceeding but not formally blocking):
+    - Confound enumerated but control mechanism vague ("we'll adjust for X" without saying how)
+    - Power analysis present but effect-size source questionable
+    - Literature gap asserted but only cites 1-2 papers (thin evidence)
+    - Altitude-evidence mismatch is marginal (one more supporting experiment would resolve it)
+    - Hidden assumption found by red-team mode but likely still valid
+
+    **Advisory** (improvement suggestions, non-blocking):
     - Wording could be clearer
+    - Additional confounds worth mentioning
     - Section length is uneven across the document
-    - You would have organized it differently
-    - Nice-to-have suggestions
+    - Organizational preferences
+    - Nice-to-have references
 
-    **Approve unless there are serious gaps that would lead to a flawed registration.**
+    **Approve unless there are Must-fix issues. Should-fix and Advisory are reported but do not block approval.**
 
     ## Output Format
 
     ## Design Document Review
 
     **Status:** Approved | Issues Found
+    **Must-fix count**: N (blocks approval)
+    **Should-fix count**: N
+    **Advisory count**: N
 
-    **Issues (if any):**
-    - [Section X]: [specific issue] — [why it matters for hypothesis registration or experiment execution]
-    - ...
+    **Red-team search summary** (1-3 sentences): [what you actively looked for, what you found or confirmed absent]
 
-    **Recommendations (advisory, do not block approval):**
-    - [suggestions that would improve the document but are not required]
-    - ...
+    **Must-fix** (blocking, if any):
+    - [Section X]: [specific issue] — [why it blocks] — [fix suggestion]
+
+    **Should-fix** (non-blocking but should address):
+    - [Section X]: [issue] — [reasoning]
+
+    **Advisory** (improvement suggestions):
+    - [suggestion]
 ```
 
-**Reviewer returns:** `Status` (Approved | Issues Found), `Issues` list (empty if approved), `Recommendations` list.
+**Reviewer returns:** `Status` (Approved iff Must-fix count = 0 | Issues Found otherwise), severity-tier counts, red-team search summary, per-tier issue lists.
 
 **Main agent's response to the review:**
 
-- **If `Status: Approved`** → proceed to the user review gate (research-brainstorming checklist step 13).
-- **If `Status: Issues Found`** → address each issue in the design document. Optionally re-dispatch the reviewer to verify the fixes. Do not present the document to the user until the reviewer approves.
+- **If `Status: Approved`** (Must-fix = 0) → proceed to the user review gate (research-brainstorming checklist step 13). Address Should-fix items before proceeding; Advisory items are optional.
+- **If `Status: Issues Found`** (Must-fix ≥ 1) → address each Must-fix issue in the design document. Re-dispatch the reviewer to verify fixes. Do not present the document to the user until Must-fix count = 0.

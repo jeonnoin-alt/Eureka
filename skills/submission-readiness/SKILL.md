@@ -25,6 +25,21 @@ Guide completion of research work by verifying publication gates, then presentin
 - `eureka:claims-audit`: PASS?
 - **Venue-specific framing tuned?** Confirm explicitly: does the manuscript's contribution altitude match the target venue's expected altitude? See `docs/references/narrative-guide.md` section **"Venue-specific altitude tuning"** for the altitude guide. A Nature-family contribution altitude paired with specialty-journal-tier evidence is a desk-reject risk; the inverse (specialty-journal pitch for Nature-tier evidence) undersells. If the user has not explicitly tuned framing to the target venue (or target venue changed since brainstorming), flag this gate as FAIL before proceeding.
 
+**Freshness verification (canonical output paths, v1.10.0)**:
+
+Each upstream artifact writes to `docs/eureka/<subdir>/YYYY-MM-DD-<kind>.md` with YAML frontmatter including `manuscript_hash`, `results_hash`, and `status`. For each prerequisite above, read the latest artifact in the corresponding canonical path and verify:
+
+| Prerequisite | Canonical path | Freshness check |
+|---|---|---|
+| novelty-competitive-audit | `docs/eureka/novelty-audits/` | latest file `status: passed` AND `manuscript_hash` matches current manuscript |
+| verification-before-publication | `docs/eureka/verifications/` | latest file `status: passed` AND hashes current |
+| research-reviewer | `docs/eureka/reviews/` | latest file score ≥ 95 AND hashes current |
+| claims-audit | `docs/eureka/audits/` | latest file `status: passed` AND hashes current |
+
+**Soft warning on hash mismatch**: if a prerequisite artifact's `manuscript_hash` or `results_hash` doesn't match current state, display a warning but do NOT block submission-readiness. Soft warning because file-level hashes are sensitive to trivial whitespace changes (e.g., autoformatter touched the `.tex` file). User may proceed if they're confident nothing substantive changed, or invoke the upstream skill to re-verify.
+
+Hard block only when prerequisite artifact is **missing entirely** (skill never ran) or has `status: failed`.
+
 **If ANY gate fails:**
 ```
 Verification gate failed. Cannot proceed to submission decision.

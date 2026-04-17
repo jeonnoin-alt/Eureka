@@ -270,7 +270,19 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 
 ### Agents
 
-- **research-reviewer** — Senior research reviewer that scores work across seven dimensions and produces a Gap-to-Threshold analysis for failing dimensions. Dispatched via `requesting-research-review`.
+- **research-reviewer** — Senior research reviewer that scores work across seven dimensions and produces a Gap-to-Threshold analysis for failing dimensions. Dispatched via `requesting-research-review`. Includes per-sub-criterion scoring anchors for D1-D7 to improve inter-run reliability.
+
+### Subagents
+
+Seven subagent prompts used by skills for fresh-eyes review (all use 3-tier severity — Advisory / Should-fix / Must-fix — and red-team mode by default):
+
+- **design-document-reviewer** — per-design review (dispatched by `research-brainstorming`)
+- **registration-reviewer** — pre-commit gate for registrations (dispatched by `hypothesis-first`)
+- **experiment-plan-reviewer** — plan buildability + contingency-inheritance check (dispatched by `experiment-design`)
+- **section-reviewer** — per-manuscript-section review (dispatched by `manuscript-writing`)
+- **figure-reviewer** — per-figure design + legend review (dispatched by `figure-design`)
+- **novelty-audit-reviewer** — pre-submission novelty check (dispatched by `novelty-competitive-audit`)
+- **traceability-auditor** — **computational subagent** (v1.10.0): regex-extracts manuscript numbers + filesystem-scans `results/` + produces machine-readable diff (dispatched by `claims-audit`). First computational subagent pattern in Eureka.
 
 ### Reference Documents
 
@@ -280,12 +292,14 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 - **docs/references/figure-guide.md** — Figure design: chart-type flowchart, colorblind-safe palettes (hex codes), per-journal export specs, matplotlib style recipe, accessibility tools
 - **docs/references/narrative-guide.md** — Manuscript framing: contribution altitude (method improvement / framework / phenomenon / falsification), story arc patterns, Discovery-Adjusted Framing (post-results narrative pivot with HARKing guardrails), negative-result reframing, Intro-Discussion symmetry, venue-specific altitude tuning for 7 journal families
 - **docs/references/novelty-audit-guide.md** — Pre-submission novelty competitive audit: search strategy by field (medical/CS/neuroscience/physics/social/etc.), time-window guidance, 4-dimensional preemption assessment rubric, differentiation test templates with bad/good examples, PASS/CONCERN/BLOCK decision tree, action menu (narrow / venue change / expand evidence / re-frame altitude / abandon), common anti-patterns, search log template
+- **docs/references/registration-lifecycle.md** — Registration lifecycle: active/amended/superseded/archived state machine, YAML frontmatter schema, filename convention, amendment vs supersede decision tree, `docs/eureka/registrations/INDEX.md` chain tracking, HARKing severity spectrum (6-tier), data-discovery feedback workflow, plan↔registration contingency inheritance rules
 
 ### Templates
 
 - **docs/templates/research-design-doc.md** — Output of `research-brainstorming`
 - **docs/templates/research-review-report.md** — Output of `research-reviewer`
 - **docs/templates/research-journal-entry.md** — Output of `research-journal`
+- **docs/templates/registrations-index-template.md** — Seed file for `docs/eureka/registrations/INDEX.md`; copy into your project repo when starting registration tracking (maintained thereafter by `hypothesis-first`)
 
 ## Philosophy
 

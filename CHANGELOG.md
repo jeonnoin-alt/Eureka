@@ -7,6 +7,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-04-17
+
+### Added
+
+- **`skills/claims-audit/traceability-auditor-prompt.md`** — New **computational subagent** (Eureka's first). Dispatched by `claims-audit` as Step 0 of its workflow. Regex-extracts every quantitative claim from the manuscript, scans `results/` files, produces a machine-readable diff (exact / approximate / untraceable). Eliminates the "23 numbers manually cross-referenced to CSV rows" cognitive load surfaced in external feedback. Uses 3-tier severity (Must-fix / Should-fix / Advisory). **Architectural shift**: differs from the 6 existing qualitative reviewer subagents — those judge, this computes. Sets the pattern for future computational subagents (figure regeneration auditor, citation-graph auditor, reproducibility smoke-test).
+
+- **`docs/references/registration-lifecycle.md`** — New reference document (11 sections) unifying registration evolution concerns that were previously scattered across feedback: amendment vs supersede vs new registration decision tree with worked examples (Examples 1-3); `active / amended-by / superseded-by / archived` state machine; YAML frontmatter schema (`registration_id`, `status`, `supersedes`, `parent`, `created`, `last_modified`, `target_venue`); filename convention; `docs/eureka/registrations/INDEX.md` template for machine-readable chain tracking; **6-tier HARKing severity spectrum** (observation-noted → silent edit) with point-deduction mapping to research-reviewer D3/D4; data-discovery → registration feedback workflow (Option A/B/C/D decision tree for when observed data violates pre-registration assumption); plan ↔ registration contingency inheritance rules. Addresses F2 #4, F3 #3/#5/#6/#7.
+
+- **`docs/templates/registrations-index-template.md`** — New template file shipped with Eureka as a seed. Users copy to `docs/eureka/registrations/INDEX.md` in their project repo when starting registration tracking; `hypothesis-first` maintains it thereafter. Prevents the "3 months after a pivot, no one knows which registration is authoritative" failure mode. (The consumer path `docs/eureka/registrations/INDEX.md` is gitignored in Eureka's own repo because `docs/eureka/` is reserved for Eureka CONSUMERS, not Eureka itself.)
+
+- **Research-reviewer scoring anchors for D1-D4, D6, D7** — `agents/research-reviewer.md` previously had anchors only for D5 (Novelty & Contribution). v1.10.0 adds worked-example anchors for every sub-criterion across all 7 dimensions. Each anchor describes score bands (e.g., 0-8, 9-14, 15-18, 19-20 for a /20 sub-criterion). Improves inter-run reliability — two independent review runs on the same project should now produce similar scores because the rubric is less interpretive. Addresses F2 #2.
+
+- **Severity-tier rollout to 6 existing reviewer subagents**: all subagent prompts now use **Advisory / Should-fix / Must-fix** output format, matching the v1.9.0 `novelty-audit-reviewer` pattern. Files updated:
+  - `design-document-reviewer-prompt.md` (research-brainstorming)
+  - `registration-reviewer-prompt.md` (hypothesis-first — most severe; Must-fix covers almost all substantive issues due to pre-commit gate importance)
+  - `experiment-plan-reviewer-prompt.md` (experiment-design — includes new "contingency inheritance check" Must-fix dimension)
+  - `section-reviewer-prompt.md` (manuscript-writing)
+  - `figure-reviewer-prompt.md` (figure-design)
+  - `research-reviewer-prompt.md` (requesting-research-review — maps to D3/D4 CRITICAL deductions)
+
+  `Status: Approved` is preserved for backward compat (Approved ≡ Must-fix count = 0). Resolves v1.9.0 review item 3.
+
+- **Red-team mode default-on for all 7 subagents**: each reviewer now has an explicit "Red-team mode (default on)" section directing it to actively hunt for hidden assumptions, overlooked alternatives, and substantive gaps — fresh-eyes means fresh *scientific critique*, not fresh read. If a reviewer passes without finding any Should-fix or Advisory item, it must document its red-team search strategy (3-5 sentences). Addresses F3 #1 ("reviewers almost always return Approved = compliance theater").
+
+- **Plan ↔ Registration contingency inheritance**: `experiment-design` SKILL.md gains a new "Contingency Inheritance from Registration" section (Step 2 of its workflow). Rules: plan may ADD task-level operational contingencies but MAY NOT weaken or contradict registration contingencies. Silent override is a `Must-fix` flag in `experiment-plan-reviewer`. Resolves F3 #2.
+
+- **`whats-next` resume mode** — new parallel mode alongside the existing Diagnostic Mode. Trigger phrases include "resume", "continue", "last session", "어디서부터", "이어서". Reads the most recent `docs/eureka/journal/` entry + `git log -20` + `docs/eureka/` subdirectory recent-modifications, then synthesizes "Last session ended at [phase]; next step is [skill]; context in 3 sentences; proceed?". Falls back to Diagnostic mode if journal is ambiguous or >2 weeks old. Addresses F2 #7.
+
+- **Computational recipes in `docs/references/statistical-guide.md`** — new "Computational Recipes (Python)" section (~150 lines). Copy-paste snippets using `statsmodels`, `scipy.stats`, `numpy` for: MDE at 80% power (t-test, correlation), post-hoc observed power (with explicit caveat), stratum-N feasibility, **parametric power uncertainty** (F3 #4 — power range across plausible effect-size ranges, and NB regression simulation for correlated outcomes), sample-size justification template for hypothesis-first registrations, common pitfalls. Addresses F2 #8 and F3 #4.
+
+- **Canonical output paths + freshness protocol** — new `using-eureka` sections defining canonical paths for each skill's durable artifacts (`docs/eureka/{designs,registrations,plans,audits,reviews,novelty-audits,verifications,journal}/`), YAML frontmatter with `generated_at` / `manuscript_hash` / `results_hash` / `status`. `verification-before-publication` and `submission-readiness` perform **soft-warn freshness checks** when upstream artifact hashes don't match current manuscript/results state. Hard block only if prerequisite artifact is missing entirely or has `status: failed`. Addresses F2 #3.
+
+- **Korean/multi-locale announce allowance** — `using-eureka` relaxes the "announce at start" requirement to allow the announcement in the user's ambient language. Skill body and structured output (design docs, YAML frontmatter, review reports) remain in English for portability and CI parsing. Addresses F2 #6 and F3 #9.
+
+- **Manuscript-writing figure-design auto-trigger hardened** — Writing Discipline Rule 3 now declares a **HARD-RULE**: when a section cites a figure that does not exist OR needs revision, you MUST invoke `eureka:figure-design` before continuing to write prose that depends on the figure. Addresses F2 #9.
+
+### Fixed
+
+- **v1.9.0 review item 1** — consolidated the two separate `**Pairs with:**` lines in `manuscript-writing` Integration section into a single nested bullet list.
+- **Pre-existing domain leaks** opportunistically fixed while editing: "ADNI" removed from `design-document-reviewer-prompt.md` and `registration-reviewer-prompt.md` (generalized to `<dataset-name> v3.1` pattern); "NDM / ESM / AND" removed from `claims-audit` Completeness example table (generalized to "method A / method B / proposed method"); "NACC transfer" removed from `traceability-auditor` example row.
+
+### Changed
+
+- **`claims-audit` SKILL.md** — Audit Process now has a Step 0 that dispatches the `traceability-auditor` computational subagent first, consuming its table as input for Steps 1-3. Canonical output path: `docs/eureka/audits/YYYY-MM-DD-claims-audit.md`.
+- **`hypothesis-first` SKILL.md** — Integration gains a "Lifecycle upkeep" subsection pointing to `registration-lifecycle.md`, an "INDEX.md upkeep (mandatory)" section declaring that every registration change must update `docs/eureka/registrations/INDEX.md` in the same commit, and a "HARKing severity spectrum" subsection. Reference line added for `registration-lifecycle.md`.
+- **`experiment-design` SKILL.md** — new "Contingency Inheritance from Registration (Do This Second)" section added to the pre-task workflow. Reference line added for `registration-lifecycle.md`.
+- **`manuscript-writing` SKILL.md** — Writing Discipline Rule 3 strengthened from "invoke when needed" to HARD-RULE "MUST invoke before continuing prose that depends on the figure". Integration section Pairs-with list consolidated into single nested bullet structure (v1.9.0 review item 1 fix).
+- **`submission-readiness` SKILL.md** — Step 1 gains "Freshness verification (canonical output paths)" sub-table reading upstream artifact frontmatter. Soft-warn on hash mismatch; hard block only if artifact missing or status=failed.
+- **`verification-before-publication` SKILL.md** — Publication Verification Checklist gains 2 new items: freshness check on claims-audit, upstream artifact presence verification.
+- **README.md** — Reference Documents section adds `registration-lifecycle.md`. New "### Subagents" section enumerating all 7 subagent prompts with descriptions (including the distinction between qualitative reviewers and the new computational traceability-auditor).
+- **`research-reviewer.md` agent** — "Dimensions 1-4, 6, 7" each gain a `**Scoring anchors (per sub-criterion)**` block with score-band descriptions for every sub-criterion. D5 anchors (which already existed) unchanged.
+
+### Rationale
+
+**Second of a 2-release roadmap** responding to April 2026 external feedback from AI agents using Eureka on real research projects. v1.9.0 (F1) closed the external competitiveness gap. v1.10.0 closes the F2+F3 cluster:
+
+- **F2 underlying**: "discipline is excellent, but its cost is offloaded to cognitive load" → automation track (traceability-auditor + freshness protocol + scoring anchors + statistical recipes + Korean locale + whats-next resume)
+- **F3 underlying**: "workflow skeleton solid, but ceremony-to-effect ratio low" → substance track (severity tiers + red-team mode default-on) + lifecycle track (registration-lifecycle.md)
+
+**Architectural shift**: introducing the **computational subagent pattern**. Until v1.9.0, all 6 reviewer subagents performed qualitative judgment. `traceability-auditor` (v1.10.0) performs structural computation — regex + filesystem scan + numeric diff. This keeps Eureka's "markdown + subagent" architecture while automating the biggest cognitive-load complaint. Sets the pattern for future computational subagents.
+
+**Severity-tier discipline**: the 3-tier format (Advisory / Should-fix / Must-fix) now runs across all 7 subagents uniformly. Prior 2-tier format (Approved / Issues Found) bundled nuance — every issue blocked approval, even stylistic. The 3-tier format preserves strict blocking (Must-fix → commit/submission blocked) while letting non-blocking concerns be reported without halting progress. Red-team mode default-on raises the substance floor — fresh-eyes reviewers now must actively hunt for hidden assumptions rather than passively reviewing.
+
+**Registration lifecycle**: F2 #4 ("amendment vs new registration unclear"), F3 #3 ("redesign pivot cost 4 subagent runs + 2 rewrites"), F3 #5 ("data-discovery → registration feedback path absent"), F3 #6 ("superseded registration index absent"), F3 #7 ("HARKing prevention severity blunt") were all symptoms of one missing artifact: a formal registration lifecycle. `registration-lifecycle.md` consolidates them with YAML frontmatter state-machine, filename conventions, INDEX.md tracking, HARKing severity spectrum, data-discovery feedback workflow, and contingency inheritance rules.
+
+**No new skills**: v1.10.0 adds 1 new subagent (`traceability-auditor`), 1 new reference doc (`registration-lifecycle.md`), and 1 new INDEX template, but **no new skills**. Skill count stays at 16 (v1.9.0's novelty-competitive-audit was the last addition). The restraint is deliberate: F2/F3 feedback was not about missing skills but about friction within existing ones.
+
+**No breaking changes**: `Status: Approved` preserved in all subagent outputs (≡ Must-fix = 0); freshness checks are soft-warn not hard-block; canonical output paths are convention (skills still work with arbitrary paths if user overrides); Korean locale is allowance not requirement. Projects built on v1.9.0 work unchanged on v1.10.0.
+
 ## [1.9.0] - 2026-04-17
 
 ### Added
@@ -356,7 +425,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.10.0...HEAD
+[1.10.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.10.0
 [1.9.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.9.0
 [1.8.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.1
 [1.8.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.0

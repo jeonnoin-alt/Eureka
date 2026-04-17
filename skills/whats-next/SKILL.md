@@ -13,6 +13,37 @@ This skill diagnoses **where you are in the research lifecycle**, then recommend
 
 **Core principle:** When stuck, the answer is almost never "try harder at what you're doing." The answer is usually "you're in a different phase than you think — switch tools."
 
+## Modes
+
+This skill has two modes:
+
+### Diagnostic mode (default)
+
+User doesn't know where they are in the research lifecycle, or needs help picking the next skill. Scan state → diagnose phase → recommend specialist skill. This is the existing workflow (Steps 1-6 below).
+
+### Resume mode (NEW in v1.10.0)
+
+User returns after a break and wants to continue where they left off. Trigger phrases: "resume", "continue", "last session", "where was I", "어디서부터", "이어서".
+
+**Resume workflow:**
+
+1. Read the most recent entry in `docs/eureka/journal/` (sort by filename `YYYY-MM-DD.md`). If no journal entry exists, fall back to Diagnostic mode.
+2. Read the last 20 commits of `git log --oneline -20` for context on what was worked on.
+3. Scan `docs/eureka/` subdirectories for most-recently-modified artifacts:
+   - `designs/` — any new design docs?
+   - `registrations/` — any new or amended registrations? (check `INDEX.md`)
+   - `plans/` — any experiment plans in progress?
+   - `audits/` — recent claims-audit runs?
+   - `reviews/` — recent research-reviewer runs?
+   - `novelty-audits/` — recent novelty audits?
+   - `verifications/` — recent verification runs?
+4. Synthesize: "Last session ended at [phase] based on [evidence]. Expected next step is [skill]. Context in 3 sentences: [...]. Proceed with [skill]?"
+5. Wait for user confirmation, then hand off to the recommended skill.
+
+**Decision rule**: if the journal entry clearly identifies the current phase AND there are no stale artifacts suggesting the state has drifted, use resume mode. If the journal entry is ambiguous or more than 2 weeks old, fall through to diagnostic mode.
+
+---
+
 ## When to Use
 
 **Use this skill when:**

@@ -89,7 +89,9 @@ In Markdown: `![Figure 1](figures/fig1.png)` requires `figures/fig1.png` to exis
 
 No manually drawn figures. No screenshots pasted into the manuscript. Figures must be reproducible.
 
-When the section cites a figure that does not yet exist, or an existing figure needs updating, invoke `eureka:figure-design` to create or revise it — that skill enforces chart-type selection, typography, colorblind-safe palettes, and journal-specific export specs. `manuscript-writing` writes the text that references the figure; `figure-design` creates the figure itself.
+**HARD-RULE — auto-trigger `eureka:figure-design`**: when writing a section that cites a figure that does not yet exist OR an existing figure's design needs revision, you MUST invoke `eureka:figure-design` before continuing to write prose that depends on the figure. Do NOT write around a missing figure with placeholder prose. `figure-design` enforces chart-type selection, typography, colorblind-safe palettes, and journal-specific export specs. `manuscript-writing` writes the text that references the figure; `figure-design` creates the figure itself.
+
+This rule is stronger than the prior "invoke when needed" phrasing because external feedback showed users skipping figure-design for new figures and producing figures that failed journal spec.
 
 ### 4. Variables defined on first use
 
@@ -286,12 +288,15 @@ The user specifies their format at the start of the writing session (or in `CLAU
 - **Prerequisite:** At least one section's prerequisites met
 - **Invokes:** `section-reviewer` subagent (per section, after writing)
 - **Transitions to:** `eureka:claims-audit` (after all sections + Abstract complete)
-- **Pairs with:** `eureka:research-journal` (capture writing decisions), `eureka:whats-next` (if stuck on which section to write next), `eureka:figure-design` (when the Results section cites a figure that needs to be created or updated)
-- **Reference:** `docs/references/statistical-guide.md` (for Results section reporting standards)
-- **Reference:** `docs/references/latex-guide.md` (for LaTeX conventions: main.tex template, section files, BibTeX, math notation, figures)
-- **Reference:** `docs/references/figure-guide.md` (for figure design conventions: chart-type selection, typography, colorblind-safe palettes, journal-specific export specs)
-- **Reference:** `docs/references/narrative-guide.md` (for Step 3 Discovery-Adjusted Framing, narrative arc selection, Intro-Discussion symmetry, and venue-specific altitude tuning)
-- **Pairs with:** `eureka:novelty-competitive-audit` (pre-submission external novelty check; a CONCERN/BLOCK verdict triggers Step 3 re-fire)
+- **Pairs with:**
+  - `eureka:research-journal` — capture writing decisions and framing locks
+  - `eureka:whats-next` — if stuck on which section to write next
+  - `eureka:figure-design` — when any section cites a figure that needs to be created or updated (fires automatically when manuscript-writing's Writing Discipline Rule 3 detects a figure citation without an existing artifact)
+  - `eureka:novelty-competitive-audit` — pre-submission external novelty check; a CONCERN/BLOCK verdict triggers Step 3 re-fire
+- **Reference:** `docs/references/statistical-guide.md` — Results section reporting standards, computational recipes (power, MDE, parametric uncertainty)
+- **Reference:** `docs/references/latex-guide.md` — LaTeX conventions (main.tex template, section files, BibTeX, math notation, figures)
+- **Reference:** `docs/references/figure-guide.md` — figure design conventions (chart type, typography, colorblind-safe palettes, journal export specs)
+- **Reference:** `docs/references/narrative-guide.md` — Step 3 Discovery-Adjusted Framing, narrative arc selection, Intro-Discussion symmetry, venue-specific altitude tuning
 
 ## Skill Type
 

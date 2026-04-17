@@ -35,11 +35,23 @@ Task tool (general-purpose):
     | **Script hygiene** | Script calls a style function (e.g., `apply_paper_style()`) at the top to set global rcParams? Colors come from named constants, not inline hex? No manual post-hoc Illustrator edits referenced in comments? |
     | **Reproducibility red flags** | Script output depends on a fixed random seed (if randomness involved)? No hard-coded paths pointing outside the repo? No references to interactive notebook cells? |
 
-    ## Calibration
+    ## Red-team mode (default on)
 
-    **The test is: would a peer reviewer at {TARGET_JOURNAL} flag this?**
+    Do not assume the figure is correct. Actively hunt for:
+    - **Effect-size distortion**: y-axis range chosen to exaggerate a small effect (e.g., y-axis 0.85-0.90 for accuracy differences that are 2 percentage points)
+    - **Missing raw data**: bar chart of means where raw points would fit but are omitted
+    - **Hidden typography failures**: font appears right in the PDF preview but is actually Type 3 embedded (will fail journal upload)
+    - **Altitude drift**: the figure visually implies a larger claim than the Methods supports
+    - **Inconsistent palette**: different colors for the same condition across Figures 1, 2, 3 (semantic consistency break)
+    - **Hand-waved caption**: legend looks complete but on close read omits n or test details
 
-    Flag as issues:
+    If the figure passes without a single Should-fix or Advisory, document your red-team search strategy (3-5 sentences).
+
+    ## Calibration — severity tiers
+
+    **The test is: would a peer reviewer at {TARGET_JOURNAL} flag this?** Assign severity tier accordingly.
+
+    **Must-fix** (blocks approval — peer reviewer at target journal would flag as requiring revision):
     - Font below 5pt
     - Red-green-only categorical contrast
     - Rainbow/jet cmap for sequential data
@@ -54,21 +66,34 @@ Task tool (general-purpose):
     - Dynamite plot (bar + whisker of mean alone) with N per group ≤ 50
     - Image panel without "representative of N" label or stated quantification N
     - Error bar type stated only as "error bars" without specifying SEM/SD/CI
+    - Type 3 fonts embedded in PDF (journal rejects silently)
 
-    Do NOT flag:
+    **Should-fix** (non-blocking but address before submission):
+    - Effect-size y-axis range suspicious (could be exaggerating a small effect)
+    - Semantic color inconsistency with a sibling figure
+    - Raw data overlay feasible at this N but omitted (raw-data-visibility check)
+    - Hidden assumption found by red-team but figure is otherwise defensible
+    - Legend complete but verbose or cluttered
+
+    **Advisory** (non-blocking improvements):
     - "The color palette could be prettier" (stylistic preference, not a violation)
     - "I would use a different chart type" (if both types are appropriate)
     - "Panel (a) could be larger" (unless it's unreadable)
     - Minor alignment issues that don't affect readability
-    - Caption wording (not the reviewer's job; section-reviewer handles text)
+    - Caption wording (not this reviewer's job; section-reviewer handles text)
 
-    **Approve unless there are issues a peer reviewer at the target journal would flag as requiring revision.**
+    **Approve unless there are Must-fix issues.** Should-fix and Advisory are reported but do not block approval.
 
     ## Output Format
 
     ## Figure Review: {FIGURE_PATH}
 
     **Status:** Approved | Issues Found
+    **Must-fix count**: N (blocks approval)
+    **Should-fix count**: N
+    **Advisory count**: N
+
+    **Red-team search summary** (1-3 sentences): [what you looked for]
 
     **Target journal:** {TARGET_JOURNAL}
     **Stated purpose:** {FIGURE_PURPOSE}
@@ -117,20 +142,21 @@ Task tool (general-purpose):
     - Manual edits detected: [none / list]
     - Reproducibility: [seed fixed if needed? paths relative?]
 
-    **Issues (if any):**
-    - [Severity: HIGH/MED/LOW]: [specific issue] — [fix suggestion referencing the script line if possible]
-    - ...
+    **Must-fix** (blocking, if any):
+    - [specific issue] — [why the target journal would reject] — [fix suggestion referencing the script line if possible]
 
-    **Recommendations (advisory, do not block approval):**
-    - [suggestions that would improve the figure but are not required]
-    - ...
+    **Should-fix** (non-blocking but address before submission):
+    - [issue]
+
+    **Advisory** (improvement suggestions):
+    - [suggestion]
 ```
 
-**Reviewer returns:** `Status` (Approved | Issues Found), structured design checks across 8 dimensions, `Issues` list with severity, `Recommendations`.
+**Reviewer returns:** `Status` (Approved iff Must-fix = 0 | Issues Found otherwise), severity-tier counts, red-team search summary, structured design checks across 8+ dimensions, per-tier issue lists.
 
 **Main agent's response:**
 
-- **`Status: Approved`** → move to the next figure or back to `manuscript-writing`
-- **`Status: Issues Found`** → fix each HIGH/MED issue in the script, re-render, re-dispatch the reviewer. LOW-severity issues may be batched with other fixes. Repeat until `Approved`.
+- **`Status: Approved`** (Must-fix = 0) → move to the next figure or back to `manuscript-writing`. Address Should-fix items before submission; Advisory items optional.
+- **`Status: Issues Found`** (Must-fix ≥ 1) → fix each Must-fix issue in the script, re-render, re-dispatch the reviewer. Repeat until Must-fix count = 0.
 
-If the reviewer flags the same HIGH-severity issue twice after an attempted fix, escalate to the user: describe the issue, the fix attempted, and ask for guidance.
+If the reviewer flags the same Must-fix issue twice after an attempted fix, escalate to the user: describe the issue, the fix attempted, and ask for guidance.

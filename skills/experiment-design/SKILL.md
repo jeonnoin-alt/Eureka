@@ -62,6 +62,36 @@ Before writing any tasks, examine the approved design for scope:
 
 ---
 
+## Contingency Inheritance from Registration (Do This Second)
+
+Before breaking the design into tasks, read the approved registration file at `docs/eureka/registrations/<registration_id>.md`.
+
+**Extract all contingency clauses from the registration:**
+- Halt rules ("if X, halt the study")
+- Proceed rules ("if X, proceed as pilot"; "if X, proceed without stratification")
+- Escalate rules ("if X, amendment required")
+- Pre-registered decision rules (analysis branching, correction-method triggers)
+
+**Apply inheritance rules** (see `docs/references/registration-lifecycle.md` section **"Plan ↔ Registration contingency inheritance rules"**):
+
+| Scenario | Allowed? |
+|---|---|
+| Plan contingency matches registration verbatim | ✓ Yes |
+| Plan adds NEW task-level operational contingency (e.g., "restart if GPU OOM") | ✓ Yes — operational, not scientific |
+| Plan is STRICTER than registration (e.g., registration says "proceed as pilot if N<300", plan says "halt if N<300") | ✗ No — plan is overriding the registration. Fix plan OR amend registration |
+| Plan is WEAKER than registration (e.g., removes a halt rule) | ✗ No — weakening requires a new registration via supersede (not amendment), since it changes the study's risk profile |
+| Plan OMITS a registration contingency | ✗ No — silent override; add it back |
+
+**Workflow**:
+1. Read registration, extract contingencies verbatim into a scratch list
+2. As you write each experiment task, copy applicable contingencies into the task's `Step 4: Verify outputs` or equivalent field
+3. If a task-level operational contingency is stricter than what you want to execute, do NOT silently weaken — stop and invoke `eureka:hypothesis-first` amendment workflow
+4. The `experiment-plan-reviewer` subagent will check contingency inheritance as a Must-fix-severity dimension
+
+This closes the "plan vs registration contradiction" class of failures (registration says "proceed as pilot if N<300", plan says "halt if N<300" — which wins? Answer: neither should silently win; fix one or amend the other).
+
+---
+
 ## Experiment Task Structure
 
 Each experiment is a numbered, named block. Every field is mandatory.
@@ -207,6 +237,8 @@ After saving, report the path to the user.
 **Pairs with:** `requesting-research-review` — after experiments are run, the results log feeds into the review skill for rigor assessment.
 
 **Reference:** `docs/references/data-checklist.md` — input versioning, Table 1 template, preprocessing pipeline requirements.
+
+**Reference:** `docs/references/registration-lifecycle.md` — contingency inheritance rules, amendment workflow when plan needs to differ from registration.
 
 **Workflow position:**
 ```

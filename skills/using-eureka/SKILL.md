@@ -222,3 +222,41 @@ The skill itself tells you which type it is.
 ## User Instructions
 
 Instructions say WHAT to research, not HOW to ensure rigor. "Run experiment X" or "Analyze dataset Y" does not mean skip the research workflow.
+
+## Announcement language (multi-locale allowance)
+
+The skill invocation announcement ("Using [skill] to [purpose]") **may be in the user's ambient language** — if the user writes in Korean, announce in Korean (e.g., "research-brainstorming 스킬을 사용해 연구 질문을 정의합니다"); if the user writes in English, announce in English; if another language, match the user's language.
+
+**Skill body and structured output** (design documents, registration YAML frontmatter, research-reviewer reports, claims-audit tables, etc.) **remain in English** — plugin standard for portability, CI parsing, and cross-team reuse. Announcements are the only user-facing surface that flexes by locale.
+
+This allowance addresses the "Korean researchers code-switch every skill invocation" friction surfaced in external feedback. Korean speakers can now trigger skills naturally via Korean descriptions (already supported since v1.4.1) and receive Korean announcements without breaking skill-internal structure.
+
+## Canonical output paths (skill artifacts)
+
+Skills that produce durable artifacts should write to canonical locations under `docs/eureka/` so downstream skills can find them:
+
+| Skill / Agent | Canonical output path |
+|---|---|
+| `research-brainstorming` | `docs/eureka/designs/YYYY-MM-DD-<topic>-design.md` |
+| `hypothesis-first` | `docs/eureka/registrations/YYYY-MM-DD-<topic>-registration.md` + updates to `docs/eureka/registrations/INDEX.md` |
+| `experiment-design` | `docs/eureka/plans/YYYY-MM-DD-<topic>-experiments.md` |
+| `claims-audit` | `docs/eureka/audits/YYYY-MM-DD-claims-audit.md` |
+| `research-reviewer` agent | `docs/eureka/reviews/YYYY-MM-DD-review.md` |
+| `novelty-competitive-audit` | `docs/eureka/novelty-audits/YYYY-MM-DD-novelty-audit.md` |
+| `verification-before-publication` | `docs/eureka/verifications/YYYY-MM-DD-verification.md` |
+| `research-journal` | `docs/eureka/journal/YYYY-MM-DD.md` |
+
+**Freshness metadata** — every artifact includes YAML frontmatter:
+
+```yaml
+---
+generated_at: <ISO-8601 timestamp>
+manuscript_hash: sha256:<hex>      # or N/A for pre-manuscript artifacts
+results_hash: sha256:<hex>          # SHA256 of sorted file hashes in results/
+status: passed | failed | in_progress
+---
+```
+
+**Downstream freshness check** — `verification-before-publication` and `submission-readiness` read upstream artifacts and soft-warn (not block) if hashes mismatch. Soft warning rather than hard block because file-level hash is sensitive to trivial whitespace changes; users can tighten to hard block by preference.
+
+This addresses the "no state sharing between skills" feedback: prerequisite skills can now verify upstream artifacts exist and are fresh without dispatching the upstream skill again.

@@ -336,10 +336,35 @@ Found something in exploratory analysis and want to claim it as a result? Replic
 - **Called by:** `eureka:research-brainstorming` — invoked at the end of the design phase to lock the hypothesis before any analysis begins
 - **Reference:** `docs/references/statistical-guide.md` — test selection, effect size interpretation, correction methods
 - **Reference:** `docs/references/data-checklist.md` — data version locking, preprocessing requirements, missing value handling
+- **Reference:** `docs/references/registration-lifecycle.md` — YAML frontmatter schema, filename convention, amendment vs supersede decision tree, HARKing severity spectrum, data-discovery feedback workflow
 - **Precedes:** All experiment execution and data analysis
 - **Applies to:** Every analysis, regardless of perceived simplicity or exploratory intent (exploratory work follows the exploratory track, not a registration-free track)
 
 If `eureka:research-brainstorming` completed a design document, the registration here formalizes it into version control. The design document is the draft; the VCS commit is the registration.
+
+### Lifecycle upkeep — registrations evolve
+
+Pre-registration does NOT mean registrations are frozen. Studies discover that assumptions were wrong, data came out different, or the hypothesis needs revision. `docs/references/registration-lifecycle.md` covers the full lifecycle:
+
+- **YAML frontmatter** on every registration file with `status: active | amended-by | superseded-by | archived` — machine-readable lifecycle state
+- **Filename convention**: originals `YYYY-MM-DD-<topic>-registration.md`, amendments `YYYY-MM-DD-<topic>-amendment-NNN.md`, versioned registrations `YYYY-MM-DD-<topic>-v<N>-registration.md`
+- **Amendment** when hypothesis unchanged but operational detail shifts (e.g., observed prevalence different from assumed): create amendment file, parent stays active
+- **Supersede** when hypothesis or primary outcome changes: new registration file, old marked superseded-by
+- **Data-discovery feedback workflow** (when observed data violates assumption): decision tree for amendment vs supersede vs archive
+
+### INDEX.md upkeep (mandatory)
+
+`docs/eureka/registrations/INDEX.md` is the machine-readable chain of all registrations. Every time this skill creates, amends, or supersedes a registration, regenerate the affected rows in INDEX.md. Without INDEX.md, 3 months after a pivot nobody knows which registration is authoritative — this was a concrete failure mode reported in external feedback.
+
+The skill's workflow now includes:
+1. Write the registration file with YAML frontmatter (§4 of registration-lifecycle.md)
+2. Update `docs/eureka/registrations/INDEX.md` with the new row and affected lineage
+3. Dispatch `registration-reviewer` subagent (existing step)
+4. Commit both the registration file AND the updated INDEX.md in the same commit
+
+### HARKing severity spectrum
+
+`registration-lifecycle.md` formalizes the spectrum from "observation noted" (no concern) to "silent registration edit" (CRITICAL fraud-adjacent). Use this spectrum to judge severity of any deviation the researcher discovers mid-study — the default mental model should NOT be "all deviations = HARKing" (which pushes hiding) but "specific severity tier determines disclosure requirement".
 
 ---
 

@@ -261,7 +261,7 @@ Both the script (`.py`/`.R`/`.jl`) AND the output file (`.pdf`/`.svg`) go to git
 | "The figure looks fine on my screen" | Screens are 100-200 DPI RGB. Print is 300+ DPI CMYK. Always export to PDF and inspect at 100% zoom before declaring done. |
 | "Journal guidelines are for final submission — draft can be loose" | Drafts become submissions through editorial inertia. Fixing typography at submission time is 10x the cost of setting a global style once. |
 | "I'll just screenshot the Jupyter notebook output" | Screenshots are raster at screen DPI, no vector, no TrueType. Always save via `savefig('.pdf')`. |
-| "The brain map has to look exactly like Figure 4 in Vogel 2020" | Mimicking an example is fine; copying the exact palette/colorbar/layout IS NOT. Derive from principles, not from a specific paper's choices. |
+| "The figure has to look exactly like a specific paper's visualization" | Mimicking an exemplar is fine; copying the exact palette, colorbar, and layout is not. Derive from principles, not from a specific paper's stylistic choices. |
 | "n is in Methods — don't need it in the legend" | Reviewers read figure legends independently of Methods. Put `n` in BOTH. |
 | "Bar chart of mean is standard practice" | It is — and it's the single most-flagged visualization anti-pattern in top-journal review (eLife top-10). Show the raw points. |
 | "Asterisks for p-values are fine, everyone uses them" | Only if the legend defines them. `*p<0.05` alone is not enough; prefer exact values (`p = 0.003`). |

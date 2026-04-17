@@ -64,6 +64,14 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 - Key foundational paper missing: -5 per paper
 - Hypothesis stated post-hoc (HARKing detected): -30 (CRITICAL)
 
+**Scoring anchors (per sub-criterion):**
+
+- **1.1 Literature Coverage /20**: 0-10 = handful of papers mentioned in passing; 11-15 = canonical papers cited and framed; 16-19 = canonical + adjacent fields + recent work engaged; 20 = exhaustive and balanced, no obvious omissions
+- **1.2 Gap Identification /25**: 0-10 = "this area is understudied" without evidence; 11-18 = specific gap with 1-2 supporting citations; 19-23 = gap with boundary papers named and their limits explicit; 24-25 = gap triangulated from multiple angles, reviewer cannot easily propose a disproving counter-example
+- **1.3 Hypothesis Clarity /25**: 0-10 = vague direction ("relationship between X and Y"); 11-18 = directional with a numeric target; 19-23 = directional + falsifiable + quantitative threshold + pre-registered; 24-25 = above + includes an explicit null prediction
+- **1.4 Research Question /15**: 0-7 = unclear or too broad to answer; 8-11 = answerable but not clearly novel; 12-14 = answerable AND novel AND relevant to target venue; 15 = above + central to a field-level unknown
+- **1.5 Theoretical Grounding /15**: 0-7 = empirical hypothesis with no theoretical anchor; 8-11 = hypothesis derives from an established framework; 12-14 = hypothesis derives from framework AND predicts something the framework wouldn't trivially predict; 15 = above + explicit mechanism proposed
+
 ---
 
 ### Dimension 2: Methodological Rigor — /100
@@ -84,6 +92,14 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 - No baseline or comparison condition: -20
 - Major confound unaddressed: -15 per confound
 
+**Scoring anchors (per sub-criterion):**
+
+- **2.1 Study Design Validity /20**: 0-8 = design cannot answer RQ (score-level disconnect); 9-14 = design answers RQ but has obvious alternative explanations; 15-18 = design answers RQ with pre-addressed alternatives; 19-20 = design is the strongest feasible for the RQ given constraints
+- **2.2 Measurement Validity /20**: 0-8 = measure is proxy with no validation; 9-14 = measure is validated in related populations; 15-18 = measure is validated in THIS population; 19-20 = above + sensitivity analysis across measurement choices
+- **2.3 Baseline/Comparison /20**: 0-8 = no baseline OR straw-man baseline; 9-14 = reasonable baseline but not state-of-the-art; 15-18 = state-of-the-art baseline with fair comparison; 19-20 = multiple SOTA baselines including adversarial choices
+- **2.4 Analysis Plan Appropriateness /20**: 0-8 = inappropriate test (e.g., parametric on skewed data); 9-14 = appropriate test but no correction for multiple comparisons where applicable; 15-18 = appropriate + correction applied; 19-20 = above + sensitivity analysis for test-choice assumptions
+- **2.5 Confound Control /20**: 0-8 = ≥1 major confound unaddressed; 9-14 = top 3 confounds named and addressed in design; 15-18 = above + adjustment strategy pre-registered; 19-20 = above + falsification tests (does the confound explain the effect?)
+
 ---
 
 ### Dimension 3: Experimental Execution — /100
@@ -103,6 +119,14 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 - Single random seed only: -20
 - No held-out test set or cross-validation: -20
 - Undocumented deviations from design: -15 per deviation
+
+**Scoring anchors (per sub-criterion):**
+
+- **3.1 Pre-specification Compliance /25**: 0-10 = analysis clearly differs from registration without disclosure; 11-18 = analysis matches registration but minor deviations not explicitly disclosed; 19-23 = analysis matches registration + deviations noted as amendments per `registration-lifecycle.md`; 24-25 = above + pre-registered deviations (e.g., observed-prevalence amendment) with explicit severity-tier labeling
+- **3.2 Sample Size Adequacy /15**: 0-6 = N justified by availability only ("we had N subjects"); 7-11 = N justified by rule-of-thumb; 12-14 = N justified by power analysis with effect-size source; 15 = above + sensitivity analysis across effect-size assumptions
+- **3.3 Ablation/Sensitivity /20**: 0-8 = single configuration reported; 9-14 = key components ablated; 15-18 = key ablations + parameter sensitivity reported; 19-20 = above + ablations against adversarial variants
+- **3.4 Robustness /20**: 0-8 = single seed; 9-14 = multiple seeds OR cross-validation but not both; 15-18 = multiple seeds AND cross-validation AND held-out test set; 19-20 = above + replication on independent cohort/dataset
+- **3.5 Execution Fidelity /20**: 0-8 = multiple undocumented deviations; 9-14 = minor documented deviations; 15-18 = all deviations documented + amendments filed per lifecycle; 19-20 = zero deviations OR all deviations anticipated as pre-registered contingencies
 
 ---
 
@@ -129,6 +153,14 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 - Dynamite plot (bar + whisker of mean only) with N per group ≤ 50: -5 per figure
 - Image panel without "representative of N" label or quantification N: -5 per figure
 - **Cap on figure-reporting deductions (the three above only):** maximum -15 per figure (not -45). A single figure with all three issues loses 15 points from D4, not cumulative per issue type. Multiple figures each deduct independently up to the per-figure cap.
+
+**Scoring anchors (per sub-criterion):**
+
+- **4.1 Statistical Completeness /20**: 0-8 = only p-values reported; 9-14 = effect size + p-value (no CI or correction); 15-18 = effect size + 95% CI + p-value + correction method named and applied; 19-20 = above + sensitivity analysis for correction method choice
+- **4.2 Uncertainty Quantification /20**: 0-8 = point estimates only; 9-14 = analytical CIs or SEs reported; 15-18 = bootstrap or permutation CIs for complex estimators; 19-20 = above + uncertainty propagation through downstream analyses
+- **4.3 Data Traceability /20**: 0-8 = multiple untraceable numbers in manuscript; 9-14 = most numbers traceable but inline source comments absent; 15-18 = every number traceable + inline source comments; 19-20 = above + `traceability-auditor` subagent passes with 0 Must-fix
+- **4.4 Honest Interpretation /20**: 0-8 = overclaiming (causal from correlational) OR selective reporting; 9-14 = honest but cautious in places that should be more direct; 15-18 = honest + all limitations acknowledged + null results reported; 19-20 = above + alternative explanations pre-considered
+- **4.5 Figure Integrity & Reporting /20**: (see sub-criterion above — integrity /10 + reporting /10 with their own anchors per the row description)
 
 ---
 
@@ -170,6 +202,15 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 - No environment specification: -10
 - Result not reproducible from paper description alone: -25 (CRITICAL)
 
+**Scoring anchors (per sub-criterion):**
+
+- **6.1 Code Availability /20**: 0-8 = code referenced but not accessible; 9-14 = code in public repo but undocumented; 15-18 = public + README + install instructions; 19-20 = above + end-to-end reproduce.sh or equivalent
+- **6.2 Data Availability /20**: 0-8 = data availability statement missing; 9-14 = data availability stated but no access path; 15-18 = data accessible via specific link or controlled-access process; 19-20 = above + dataset DOI or version tag
+- **6.3 Environment Specification /10**: 0-3 = language named ("Python"); 4-6 = language + major libraries; 7-9 = requirements.txt / environment.yml pinned; 10 = above + OS/container specified
+- **6.4 Experiment Reproducibility /25**: 0-10 = experiments have configs but no seeds; 11-17 = seeds recorded per experiment; 18-22 = configs + seeds + single-command reproduce; 23-25 = above + passing smoke-test in a clean environment documented
+- **6.5 Documentation /15**: 0-5 = sparse comments; 6-10 = READMEs + function docstrings; 11-13 = above + parameter descriptions + examples; 14-15 = above + data/config file schema documented
+- **6.6 Availability Statement /10**: 0-3 = missing or vague; 4-6 = present with general statement; 7-9 = specific URLs/DOIs + access procedure; 10 = above + embargo/controlled-access terms clearly stated
+
 ---
 
 ### Dimension 7: Domain-Specific Standards — /100
@@ -185,6 +226,14 @@ This dimension adapts to the research field based on {DOMAIN_CONTEXT} and {TARGE
 | 7.3 Translational Relevance | /20 | Practical implications articulated (clinical, policy, application) |
 | 7.4 Limitations Honesty | /15 | Limitations of approach honestly discussed for this domain |
 | 7.5 Future Directions | /15 | Concrete next steps that connect to the broader field |
+
+**Scoring anchors (per sub-criterion — adapt to `{DOMAIN_CONTEXT}` and `{TARGET_VENUE}`)**:
+
+- **7.1 Field-Specific Methods /25**: 0-10 = methods known to be non-standard in the field without justification; 11-18 = standard methods applied correctly; 19-23 = standard methods + appropriate adaptation for specifics of this study; 24-25 = above + methodological contribution back to the field
+- **7.2 Field-Specific Validation /25**: 0-10 = validation misses domain-expected tests (e.g., cross-cohort for clinical prediction, ablation for ML, replication for psychology); 11-18 = domain-expected tests present; 19-23 = above + adversarial / robustness tests; 24-25 = above + external validation on independent cohort/dataset
+- **7.3 Translational Relevance /20**: 0-8 = implications vague or absent; 9-14 = implications stated at general level; 15-18 = implications specific to a use case with scope and limits; 19-20 = above + a concrete use-case demonstration
+- **7.4 Limitations Honesty /15**: 0-5 = boilerplate limitations only; 6-10 = specific limitations stated; 11-13 = specific + addressed proactively (sensitivity / alternative analysis); 14-15 = above + limitations drive concrete future-work proposals
+- **7.5 Future Directions /15**: 0-5 = vague ("more work needed"); 6-10 = specific next experiments named; 11-13 = specific + prioritized; 14-15 = above + connected to a coherent research program, not just a to-do list
 
 ---
 

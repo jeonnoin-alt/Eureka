@@ -81,6 +81,11 @@ Complete every item before claiming submission-ready. No skipping.
 
 **Claims and Accuracy**
 - [ ] claims-audit PASS — every manuscript claim has a traceable evidence source
+- [ ] **Freshness check** — read the most recent `docs/eureka/audits/YYYY-MM-DD-claims-audit.md` frontmatter. Verify `manuscript_hash` and `results_hash` match the current manuscript + results. If hashes mismatch, **soft-warn**: the audit may be stale; consider re-running. Proceed at user's discretion (soft warning, not hard block)
+- [ ] **Upstream artifact presence** — confirm the following canonical-path artifacts exist and are fresh (YAML frontmatter `status: passed`):
+  - `docs/eureka/audits/YYYY-MM-DD-claims-audit.md`
+  - `docs/eureka/reviews/YYYY-MM-DD-review.md` (research-reviewer ≥ 95/100)
+  - `docs/eureka/novelty-audits/YYYY-MM-DD-novelty-audit.md` (novelty-competitive-audit PASS)
 
 **Figures**
 - [ ] Figures regenerated from scripts (not loaded from stale file)

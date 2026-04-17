@@ -33,47 +33,75 @@ Task tool (general-purpose):
     | **Runtime estimates present** | Every experiment has an `Expected Runtime` field with a rough estimate. Not mandatory to be accurate, but required to be present for scheduling sanity |
     | **Dependency graph is sound** | The `Depends on` field for each experiment references earlier experiments that exist in the plan. No circular dependencies. No dangling references to experiments that don't exist |
     | **Scope note if multi-hypothesis** | If the plan covers multiple hypotheses from the design, the plan header includes a `Scope Note` acknowledging this |
+    | **Contingency inheritance from registration** | For each contingency (halt, proceed, escalate rule) in the plan, verify it matches the registration's contingency at `{REGISTRATION_PATH}`. Plan MAY add task-level operational contingencies but MUST NOT weaken (make less strict than) or contradict registration contingencies. Example conflict: plan says "halt if N<300" but registration says "proceed as pilot if N<300" — plan is stricter than registration and must be resolved. Either fix the plan to match registration, OR invoke the `registration-lifecycle` amendment workflow to formally revise the registration. Silent override is not acceptable. See `docs/references/registration-lifecycle.md` section **"Plan ↔ Registration contingency inheritance rules"** for the full rule set. |
 
-    ## Calibration
+    ## Red-team mode (default on)
 
-    **The test is: can an executor who has never seen this project run the plan end-to-end by following it?** If yes, approve. If no, flag the blockers.
+    Do not assume the plan is correct. Actively hunt for:
+    - **Unstated dependencies**: steps that implicitly depend on environment state (specific Python version, specific CUDA version, specific disk space) not documented in `Inputs`
+    - **Hidden failure modes**: commands that can succeed silently with wrong outputs (e.g., running a training command that produces a model checkpoint even when the data was empty)
+    - **Reproducibility breaks**: seed fixed but randomness elsewhere unmanaged (numpy default_rng, torch cuda nondeterminism)
+    - **Contingency silent drift**: plan has a contingency that weakens the registration — flag as Must-fix
+    - **Missing negative-path steps**: what happens if a step fails? Is rollback specified?
 
-    Flag as issues:
+    If the plan passes without a single Should-fix or Advisory, document your red-team search strategy (3-5 sentences).
+
+    ## Calibration — severity tiers
+
+    **The test is: can an executor who has never seen this project run the plan end-to-end by following it?** If yes, approve. If no, flag the blockers with the appropriate severity tier.
+
+    **Must-fix** (blocks approval — plan is not executable or contradicts registration):
     - Any step that requires interpretation to execute
     - Missing input/output paths
     - Unspecified seeds
     - Commands that aren't literal shell commands
     - Hypotheses with no matching experiment
     - Input version hashes that don't match the registration
+    - **Plan contingency contradicts or weakens registration contingency** (new — see Contingency inheritance row above)
+    - Placeholders (`TBD`, `TODO`, `[...]`)
+    - Missing commit step for any experiment that produces results
 
-    Do NOT flag:
+    **Should-fix** (report but do not block approval — author should address before execution):
+    - Dependency graph is intricate and worth a visual diagram
+    - Runtime estimates seem implausible (but are present)
+    - Reproducibility gap found by red-team (numpy RNG not seeded in addition to the main seed)
+    - Input paths exist now but are fragile (point to someone's home directory)
+
+    **Advisory** (improvement suggestions, non-blocking):
     - The plan could be organized better
     - Header field wording preferences
     - Experiments could be ordered differently
-    - Runtime estimates seem optimistic/pessimistic (as long as they're present)
-    - "You should add more sensitivity analyses" (that's new scope, not a plan defect)
+    - "You should add more sensitivity analyses" (new scope, not a plan defect)
 
-    **Approve unless there are issues that would block actual execution.**
+    **Approve unless there are Must-fix issues.** Should-fix and Advisory are reported but do not block approval.
 
     ## Output Format
 
     ## Experiment Plan Review
 
     **Status:** Approved | Issues Found
+    **Must-fix count**: N (blocks approval)
+    **Should-fix count**: N
+    **Advisory count**: N
 
-    **Issues (if any):**
-    - [Experiment N, Step X]: [specific issue] — [why it blocks execution]
+    **Red-team search summary** (1-3 sentences): [what you looked for]
+
+    **Contingency inheritance check**: [PASS / FAIL — if FAIL, list specific mismatches]
+
+    **Must-fix** (blocking, if any):
+    - [Experiment N, Step X]: [specific issue] — [why it blocks execution] — [fix suggestion]
     - [Header]: [specific issue] — [why it matters]
-    - ...
 
-    **Recommendations (advisory, do not block approval):**
-    - [suggestions that would improve the plan but are not required for execution]
-    - ...
+    **Should-fix** (non-blocking but address before execution):
+    - [issue]
+
+    **Advisory** (improvement suggestions):
+    - [suggestion]
 ```
 
-**Reviewer returns:** `Status` (Approved | Issues Found), `Issues` list, `Recommendations` list.
+**Reviewer returns:** `Status` (Approved iff Must-fix = 0 | Issues Found otherwise), severity-tier counts, contingency inheritance check result, per-tier issue lists.
 
 **Main agent's response to the review:**
 
-- **If `Status: Approved`** → report the plan complete to the user and save the final path.
-- **If `Status: Issues Found`** → address each issue in the plan document (fill in missing commands, add seeds, fix paths, add missing experiments for uncovered hypotheses, update header fields). Re-dispatch the reviewer to verify the fixes. Do not report the plan complete to the user until the reviewer approves.
+- **If `Status: Approved`** (Must-fix = 0) → report the plan complete to the user and save the final path. Address Should-fix items before execution; Advisory items optional.
+- **If `Status: Issues Found`** (Must-fix ≥ 1) → address each Must-fix issue in the plan document (fill in missing commands, add seeds, fix paths, reconcile contingency inheritance, add missing experiments for uncovered hypotheses, update header fields). Re-dispatch the reviewer to verify the fixes. Do not report the plan complete until Must-fix count = 0.
