@@ -145,7 +145,7 @@ Figure + legend alone must be interpretable **without reading the main text**. R
 Every figure with a statistical test, error bars, or group comparison must state in the legend:
 
 - **`n = X` per group/condition** — exact number, not a range
-- **`n` definition** — e.g., "X cells from X slices from X animals from X litters collected over X days". Biological vs technical replicates clarified where applicable
+- **`n` definition** — what `n` represents and sample independence where applicable. Examples by field: biology — "3 biological replicates (animals), 5 technical replicates each"; ML/physics — "10 independent random seeds"; psychology/HCI — "24 subjects, 40 trials each"; clinical — "50 patients, 1 scan each"
 - **Statistical test name** — e.g., "one-way ANOVA with Tukey HSD post-hoc correction", "paired t-test", "Wilcoxon signed-rank"
 - **Error bar type** — SEM, SD, or 95% CI. "Error bars" alone is not enough
 - **Center value** — mean, median, or geometric mean
@@ -221,7 +221,7 @@ Before dispatching the reviewer, run through:
 - [ ] Output is PDF or SVG (not JPEG)?
 - [ ] Figure legend names `n`, statistical test, error bar type, and center value?
 - [ ] Legend is interpretable without reading the main text?
-- [ ] Biological vs technical replicates clarified where applicable?
+- [ ] Sample independence clarified where applicable (biological vs technical replicates; independent vs repeated measures; subjects vs trials)?
 - [ ] No dynamite plots when sample size permits raw overlay (N ≤ 50 per group)?
 - [ ] Representative images labeled as such; quantified images state N?
 

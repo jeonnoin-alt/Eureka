@@ -186,7 +186,7 @@ Publication errors propagate. A wrong number in a published table becomes a cite
 - **Called by:** `eureka:using-eureka` when submission intent is detected
 - **Reference:** `docs/references/statistical-guide.md` — statistical reporting checklist
 - **Reference:** `docs/references/data-checklist.md` — data version locking, preprocessing reproducibility, raw→processed regeneration
-- **Reference:** `docs/references/figure-guide.md` — figure legend requirements (section 5a), common reviewer rejection reasons (section 10), dynamite plot anti-pattern
+- **Reference:** `docs/references/figure-guide.md` — see sections **"Figure Legend Requirements (Reviewer-Grade)"** and **"Common Reviewer Rejection Reasons for Figures"** for the legend reporting checklist and the dynamite-plot anti-pattern
 
 ## The Bottom Line
 

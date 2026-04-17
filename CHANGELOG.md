@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-04-17
+
+### Changed
+
+- **Cross-references by title instead of section number** — `agents/research-reviewer.md` D4.5, `skills/verification-before-publication/SKILL.md`, and `skills/manuscript-writing/section-reviewer-prompt.md` previously referenced `docs/references/figure-guide.md` "section 5a" and "section 10". Section numbers drift when the reference doc is renumbered (as happened mid-edit during v1.7.0). All three cross-references now cite the section **titles** ("Figure Legend Requirements (Reviewer-Grade)", "Common Reviewer Rejection Reasons for Figures") — stable even if the doc is renumbered.
+- **Deduction cap added to D4.5 (research-reviewer agent)** — the three new v1.7.0 figure-reporting deductions (-5 legend / -5 dynamite plot / -5 unlabeled representative image) now cap at **-15 per figure** rather than stacking to -45. Multiple figures each deduct independently up to the per-figure cap. Prevents a single unusually bad figure from sinking Dimension 4 on its own while still punishing systematic reporting failures.
+- **Domain-neutral sample-independence phrasing** — v1.7.0's "biological vs technical replicates" language was biology-centric; an ML, physics, or HCI paper has different sample structure. Reworded across `figure-design/SKILL.md`, `figure-reviewer-prompt.md`, `section-reviewer-prompt.md`, `figure-guide.md`, and `research-reviewer.md` to reference **sample independence** generically, with field-specific examples listed: biology (biological vs technical replicates), ML/physics (independent vs repeated random seeds), psychology/HCI (subjects vs trials), clinical (patients vs scans), imaging (cells vs slices vs animals).
+
+### Fixed
+
+- **`docs/templates/research-review-report.md`** — updated stale dimension name from "4.5 Figure Integrity" to "4.5 Figure Integrity & Reporting" to match the v1.7.0 expansion of D4.5 in the `research-reviewer` agent.
+
+### Rationale
+
+Cleanup release addressing the v1.7.0 review's minor items. No new features, no breaking changes, no behavior changes beyond the D4.5 deduction cap (which makes scoring slightly more forgiving while preserving the reporting-compliance signal).
+
 ## [1.7.0] - 2026-04-17
 
 ### Added
@@ -251,7 +267,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.7.1...HEAD
+[1.7.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.1
 [1.7.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.0
 [1.6.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.6.0
 [1.5.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.5.0

@@ -264,7 +264,12 @@ Figure legends are what real journal reviewers evaluate most aggressively. A bea
 For every figure that involves statistical inference, group comparison, error bars, or quantified images, the legend must state:
 
 1. **Sample size `n` per group/condition** — exact number, not a range
-2. **`n` definition** — what `n` represents (e.g., "X cells from X slices from X animals from X litters collected over X days"). Biological vs technical replicates distinguished where applicable
+2. **`n` definition** — what `n` represents, with sample independence clarified. The exact phrasing depends on the field:
+   - Biology / medicine: "3 biological replicates (animals), 5 technical replicates each"
+   - ML / physics / simulation: "10 independent random seeds" or "5 held-out cross-validation folds"
+   - Psychology / HCI / behavioral: "24 subjects, 40 trials each"
+   - Clinical / epidemiology: "n = 50 patients, one scan per patient"
+   - Cell / tissue imaging: "X cells from X slices from X animals from X litters collected over X days"
 3. **Statistical test used** — e.g., "one-way ANOVA with Tukey HSD post-hoc", "paired t-test", "Wilcoxon signed-rank"
 4. **Error bar type** — SEM, SD, 95% CI, IQR. "Error bars" alone is insufficient
 5. **Center value** — mean, median, geometric mean

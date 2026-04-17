@@ -116,7 +116,7 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 | 4.2 Uncertainty Quantification | /20 | 95% CI or equivalent, error bars, bootstrap or permutation tests |
 | 4.3 Data Traceability | /20 | Every reported number traceable to a specific file in results/ |
 | 4.4 Honest Interpretation | /20 | No overclaiming, null results reported, limitations acknowledged, no causal language for correlational results |
-| 4.5 Figure Integrity & Reporting | /20 | **Integrity (/10):** figures generated from code/scripts, not manually edited. **Reporting (/10):** figure legends state `n` per group/condition, `n` definition, statistical test name, error bar type (SEM/SD/95%CI — not just "error bars"), center value (mean/median), biological vs technical replicate distinction where applicable, and for image panels "representative of N" or quantification N. Reviewer-grade legend compliance per top-journal standards. See `docs/references/figure-guide.md` section 5a for the full checklist and section 10 for common rejection reasons. |
+| 4.5 Figure Integrity & Reporting | /20 | **Integrity (/10):** figures generated from code/scripts, not manually edited. **Reporting (/10):** figure legends state `n` per group/condition, `n` definition, statistical test name, error bar type (SEM/SD/95%CI — not just "error bars"), center value (mean/median), sample independence (biological vs technical replicates where applicable), and for image panels "representative of N" or quantification N. Reviewer-grade legend compliance per top-journal standards. See `docs/references/figure-guide.md` — sections **"Figure Legend Requirements (Reviewer-Grade)"** and **"Common Reviewer Rejection Reasons for Figures"**. |
 
 **Deductions:**
 - Number in manuscript not traceable to data file: -20 per instance (CRITICAL)
@@ -128,6 +128,7 @@ All dimensions are scored independently out of 100. ALL must meet the threshold 
 - Figure legend missing `n`, statistical test, error bar type, or center value: -5 per figure
 - Dynamite plot (bar + whisker of mean only) with N per group ≤ 50: -5 per figure
 - Image panel without "representative of N" label or quantification N: -5 per figure
+- **Cap on figure-reporting deductions (the three above only):** maximum -15 per figure (not -45). A single figure with all three issues loses 15 points from D4, not cumulative per issue type. Multiple figures each deduct independently up to the per-figure cap.
 
 ---
 

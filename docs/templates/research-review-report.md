@@ -85,7 +85,7 @@ Any dimension where required files are missing scores 0 for the missing sub-crit
 | 4.2 Uncertainty Quantification | 20 | XX | | |
 | 4.3 Data Traceability | 20 | XX | | |
 | 4.4 Honest Interpretation | 20 | XX | | |
-| 4.5 Figure Integrity | 20 | XX | | |
+| 4.5 Figure Integrity & Reporting | 20 | XX | | |
 
 **Dimension Summary**: [1-2 sentences]
 
