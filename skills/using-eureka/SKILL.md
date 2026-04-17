@@ -106,6 +106,7 @@ digraph research_lifecycle {
     rev [label="Results Review\neureka:requesting-research-review"];
     write [label="Manuscript Writing\neureka:manuscript-writing\n(section-by-section with reviewer)"];
     figd [label="Figure Design\neureka:figure-design\n(chart-type + typography +\ncolorblind-safe palette +\nfigure-reviewer subagent)"];
+    novelty [label="Novelty Audit\neureka:novelty-competitive-audit\n(pre-submission external\ncompetitiveness check +\npreemption detection +\nPASS/CONCERN/BLOCK)"];
     audit [label="Claims Audit\neureka:claims-audit"];
     pub [label="Submission Gate\neureka:verification-before-publication"];
     submit [label="Submit / Archive\neureka:submission-readiness"];
@@ -123,7 +124,9 @@ digraph research_lifecycle {
     rev -> write [label="PASS"];
     write -> figd [label="section cites figure"];
     figd -> write [label="figure approved"];
-    write -> audit [label="all sections reviewed"];
+    write -> novelty [label="manuscript complete"];
+    novelty -> write [label="CONCERN/BLOCK:\nreframe or narrow"];
+    novelty -> audit [label="PASS"];
     audit -> pub [label="audit PASS"];
     pub -> write [label="FAIL: revise"];
     audit -> write [label="FAIL: fix claims"];
@@ -140,6 +143,7 @@ digraph research_lifecycle {
     stuck -> submit [style=dashed];
     stuck -> ideation [style=dashed];
     stuck -> figd [style=dashed];
+    stuck -> novelty [style=dashed];
 
     ideation -> journal [style=dashed, label="capture"];
     rq -> journal [style=dashed, label="capture"];
@@ -171,6 +175,7 @@ These thoughts mean STOP — you're rationalizing skipping a skill:
 | "This doesn't need a formal design" | Unexamined assumptions waste months. The design can be short, but it must exist. |
 | "Let me just look at the data first" | Looking at data before locking your analysis plan is how p-hacking starts. |
 | "The sample size should be fine" | Should be? Run the power analysis. |
+| "Internal scores are high, we're ready to submit" | Internal scores don't check external preemption. `novelty-competitive-audit` catches the 6-12 months of field drift between design approval and submission — the most common desk-reject reason. |
 
 ## Skill Priority
 
@@ -188,6 +193,7 @@ When multiple skills could apply, use this order:
 "Session is wrapping up" → research-journal to capture decisions before context is lost.
 "I have this dataset but don't know what to study" → research-ideation first, not research-brainstorming.
 "Make a figure" / "the figure looks wrong" / "update fig X" → figure-design first, then manuscript-writing if a caption or section update is also needed.
+"Manuscript is ready but not sure it's still novel" / "worried about preemption" / "rigor scores high but nervous about field overlap" → novelty-competitive-audit, which blocks submission-readiness until it PASSes.
 
 ## Skill Types
 
@@ -196,6 +202,7 @@ When multiple skills could apply, use this order:
 - hypothesis-first
 - claims-audit
 - verification-before-publication
+- novelty-competitive-audit
 
 **Flexible** (adapt principles to domain and context):
 - research-ideation

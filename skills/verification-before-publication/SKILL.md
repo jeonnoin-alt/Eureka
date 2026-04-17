@@ -182,11 +182,13 @@ Publication errors propagate. A wrong number in a published table becomes a cite
 - **Requires:** `eureka:claims-audit` PASS — every claim must be traceable before this skill's checklist begins
 - **Requires:** `eureka:requesting-research-review` PASS at ≥ 95/100 — scientific rigor validated by independent review
 - **Requires:** `eureka:hypothesis-first` INTERPRET standards met — every statistical result reports effect size, CI, and correction method
+- **Requires:** `eureka:novelty-competitive-audit` PASS — external competitiveness verified against recent literature (internal rigor is necessary but not sufficient for submission)
 - **Feeds into:** submission-readiness assessment — this gate is the final check before external submission
 - **Called by:** `eureka:using-eureka` when submission intent is detected
 - **Reference:** `docs/references/statistical-guide.md` — statistical reporting checklist
 - **Reference:** `docs/references/data-checklist.md` — data version locking, preprocessing reproducibility, raw→processed regeneration
 - **Reference:** `docs/references/figure-guide.md` — see sections **"Figure Legend Requirements (Reviewer-Grade)"** and **"Common Reviewer Rejection Reasons for Figures"** for the legend reporting checklist and the dynamite-plot anti-pattern
+- **Reference:** `docs/references/novelty-audit-guide.md` — search strategy, preemption rubric, differentiation templates, verdict decision tree for the `novelty-competitive-audit` prerequisite
 
 ## The Bottom Line
 

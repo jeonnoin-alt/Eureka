@@ -94,6 +94,20 @@ Discovery-adjustment is **not** HARKing. The rule: **pre-registration constrains
 4. If adjusting: write a one-paragraph framing decision in `docs/eureka/journal/YYYY-MM-DD.md` (research-journal) — altitude, arc, one-sentence contribution, what changed vs design, why
 5. Commit the framing decision — all section writing flows from this
 
+### When to re-run the framing lock
+
+The lock is "once per manuscript" by default. Re-run it when any of these trigger:
+
+| Trigger | Why | Action |
+|---|---|---|
+| `eureka:novelty-competitive-audit` returns CONCERN or BLOCK | Recent literature preempted the claim; altitude or framing may need adjustment | Re-run with new constraint: altitude must be defensible against the preempts surfaced by the audit |
+| Target venue changes mid-project | Different venues expect different altitudes (see §7 "Venue-specific altitude tuning") | Re-run with the new venue's altitude expectations as the target |
+| Major result added or removed after initial draft | The strongest finding may have shifted | Re-run step 1-2 with the revised result set |
+| Reviewer response revision | A reviewer surfaced a preempt OR the review reshuffled the narrative importance | Re-run before writing the response letter and revised manuscript |
+| Explicit user request | Framing feels wrong mid-writing | Re-run with any specific concern the user names |
+
+HARKing guardrail unchanged across re-runs: pre-registered hypothesis stays pinned in Methods + Results. Only the narrative framing shifts.
+
 ---
 
 ## 5. Negative result reframing

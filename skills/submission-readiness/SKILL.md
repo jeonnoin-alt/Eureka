@@ -19,6 +19,7 @@ Guide completion of research work by verifying publication gates, then presentin
 
 **Before presenting options, verify all gates pass:**
 
+- `eureka:novelty-competitive-audit`: PASS? Internal rigor gates (below) don't check external competitiveness. This gate catches preemption — the most common desk-reject reason — before submission. See `docs/references/novelty-audit-guide.md`.
 - `eureka:verification-before-publication` checklist: PASS?
 - `eureka:research-reviewer` score at target threshold (≥95 for pre-submission): PASS?
 - `eureka:claims-audit`: PASS?
@@ -181,6 +182,7 @@ Regardless of which option was chosen:
 ## Integration
 
 **Called after:**
+- `eureka:novelty-competitive-audit` — must PASS before this skill proceeds (external competitiveness gate)
 - `eureka:verification-before-publication` — must pass before this skill proceeds
 - `eureka:requesting-research-review` — must reach ≥95 threshold before this skill proceeds
 - `eureka:claims-audit` — must pass before this skill proceeds
@@ -194,3 +196,4 @@ Regardless of which option was chosen:
 
 **References:**
 - `docs/references/narrative-guide.md` — see sections **"Venue-specific altitude tuning"**, **"Contribution altitude — 4 tiers"** (altitude-vs-evidence match), and **"Common framing anti-patterns"**
+- `docs/references/novelty-audit-guide.md` — search strategy by field, preemption assessment rubric, differentiation templates, PASS/CONCERN/BLOCK decision tree, action menu for CONCERN/BLOCK verdicts

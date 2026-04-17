@@ -161,6 +161,18 @@ Pre-registration constrains the **hypothesis**; it does not constrain the **stor
 
 See `docs/references/narrative-guide.md` — sections **"Discovery-Adjusted Framing"** for the full workflow, **"Negative result reframing"** (null → informative constraint), and **"Venue-specific altitude tuning"** if target venue has shifted since brainstorming.
 
+**When to re-fire this lock**
+
+The lock is "once per manuscript" by default. Re-fire it when any of these trigger:
+
+1. **`eureka:novelty-competitive-audit` returns CONCERN or BLOCK** — the altitude or framing may need adjustment to maintain defensibility against recent literature
+2. **Target venue changes mid-project** — different venues expect different altitudes; see `narrative-guide.md` section **"Venue-specific altitude tuning"**
+3. **Major result added or removed** after the initial draft — the strongest finding may have shifted
+4. **Reviewer response revision** — before writing a response letter and revised manuscript, re-examine framing in light of reviewer critique; a preempt surfaced by a reviewer should flow into `novelty-competitive-audit` + this re-fire
+5. **Explicit user request** — if the narrative feels wrong mid-writing, re-fire
+
+Re-fire = run the 5-question check above again, commit the new framing decision. The HARKing guardrail is unchanged: pre-registered hypothesis stays pinned (Methods + Results); only the narrative framing shifts.
+
 ### Step 4: Write the section
 
 Follow the Writing Discipline Rules above. Write the complete section.
@@ -279,6 +291,7 @@ The user specifies their format at the start of the writing session (or in `CLAU
 - **Reference:** `docs/references/latex-guide.md` (for LaTeX conventions: main.tex template, section files, BibTeX, math notation, figures)
 - **Reference:** `docs/references/figure-guide.md` (for figure design conventions: chart-type selection, typography, colorblind-safe palettes, journal-specific export specs)
 - **Reference:** `docs/references/narrative-guide.md` (for Step 3 Discovery-Adjusted Framing, narrative arc selection, Intro-Discussion symmetry, and venue-specific altitude tuning)
+- **Pairs with:** `eureka:novelty-competitive-audit` (pre-submission external novelty check; a CONCERN/BLOCK verdict triggers Step 3 re-fire)
 
 ## Skill Type
 

@@ -201,6 +201,8 @@ These are the most frequent stuck states researchers experience and the typical 
 | "I need to make a figure for Results" | Writing | `figure-design` (after results are finalized) |
 | "Results are technically fine but the paper feels flat" | Writing / pre-submission | `manuscript-writing` narrative-arc lock step (Discovery-Adjusted Framing) with `docs/references/narrative-guide.md` section **"Discovery-Adjusted Framing"** |
 | "Not sure if this is Nature-level or specialty-journal-level" | Submission prep | `submission-readiness` venue-framing check with `narrative-guide.md` section **"Venue-specific altitude tuning"** |
+| "The paper is rigorous but I'm not sure it's still novel" / "worried about preemption" | Pre-submission | `novelty-competitive-audit` (blocks `submission-readiness` until PASS) |
+| "Reviewer/editor surfaced a preempt paper; what do I do?" | Pre-revision / pre-resubmission | `novelty-competitive-audit` first, then `manuscript-writing` narrative-arc lock re-fire if altitude needs adjustment |
 
 ## Integration
 

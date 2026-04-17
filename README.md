@@ -258,6 +258,7 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 
 **Publication Gates**
 - **claims-audit** — Trace every number, verify every figure, report every experiment
+- **novelty-competitive-audit** — Pre-submission external competitiveness check: preemption detection against recent literature, contribution altitude re-verification, differentiation test, PASS/CONCERN/BLOCK verdict (internal rigor gates don't catch "the field moved in the 6-12 months since you started")
 - **verification-before-publication** — Fresh evidence for every claim before submission
 - **submission-readiness** — Four-option decision gate for finished work
 
@@ -278,6 +279,7 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 - **docs/references/latex-guide.md** — LaTeX conventions: `main.tex` template, section files, BibTeX, natbib citations, math notation, figures/tables, compile workflow
 - **docs/references/figure-guide.md** — Figure design: chart-type flowchart, colorblind-safe palettes (hex codes), per-journal export specs, matplotlib style recipe, accessibility tools
 - **docs/references/narrative-guide.md** — Manuscript framing: contribution altitude (method improvement / framework / phenomenon / falsification), story arc patterns, Discovery-Adjusted Framing (post-results narrative pivot with HARKing guardrails), negative-result reframing, Intro-Discussion symmetry, venue-specific altitude tuning for 7 journal families
+- **docs/references/novelty-audit-guide.md** — Pre-submission novelty competitive audit: search strategy by field (medical/CS/neuroscience/physics/social/etc.), time-window guidance, 4-dimensional preemption assessment rubric, differentiation test templates with bad/good examples, PASS/CONCERN/BLOCK decision tree, action menu (narrow / venue change / expand evidence / re-frame altitude / abandon), common anti-patterns, search log template
 
 ### Templates
 

@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.0] - 2026-04-17
+
+### Added
+
+- **`skills/novelty-competitive-audit/SKILL.md`** — New **RIGID** skill that fires pre-submission to verify the manuscript's contribution is still novel against recent literature. Core premise: internal rigor gates (`claims-audit`, `research-reviewer`, `figure-design`) check internal consistency; they do NOT check whether the field moved in the 6-12 months between design approval and submission. Editors' first desk-reject filter ("does this advance the field?") is outside the other gates. This skill is the external competitiveness gate. Structure: 10-item checklist, HARD-GATE verdict table (PASS / CONCERN / BLOCK), 9-step per-audit workflow (extract headline claims → define search strategy → perform search → record candidates → 4-dim rubric evaluation → differentiation test → altitude recheck → verdict → dispatch reviewer subagent), rationalizations and red-flags tables, orthogonality matrix with existing skills. Korean triggers in description field ("출판 전 경쟁 검토", "preemption 체크", "novelty 감사").
+
+- **`skills/novelty-competitive-audit/novelty-audit-reviewer-prompt.md`** — New subagent prompt template. Reviews the audit report across 9 dimensions: search scope honesty, candidate evaluation fairness, differentiation rigor, altitude-evidence match post-audit, verdict calibration, **red-team search** (reviewer independently hunts for 2-3 preempts the author may have missed), manuscript-claim consistency, pre-emptive citation check, action-menu consistency. Uses **3-tier severity output** (Advisory / Should-fix / Must-fix) — anticipates the v1.10.0 severity-tier rollout to all reviewer subagents; starting this new subagent with 3-tier from day one is cheaper than retrofitting.
+
+- **`docs/references/novelty-audit-guide.md`** — New reference document (same pattern as `figure-guide.md`, `narrative-guide.md`). 11 sections: when-to-use matrix across 5 phase/skill entry points, search strategy by field (10-row table: medical/biology/neuroscience/CS-ML/physics/chemistry/social/economics/engineering/general), time-window guidance (2-year default with adjustment rules by field velocity), 4-dimensional preemption assessment rubric (primary claim / method / data / date × high / partial / low) with flagging rules, differentiation test template with bad/good examples, 3 worked preemption examples (BLOCK→CONCERN→PASS narrowing, BLOCK→venue change, partial overlap→pre-emptive citation), PASS/CONCERN/BLOCK decision tree, 5-option action menu for CONCERN/BLOCK verdicts (narrow claim / venue change / expand evidence / re-frame altitude / abandon), 10 common anti-patterns, search log template, further reading.
+
+- **`manuscript-writing` Step 3 re-fire triggers** — the narrative-arc lock (v1.8.0) was "once per manuscript" by default. v1.9.0 adds 5 explicit re-fire triggers: (1) novelty-competitive-audit returns CONCERN or BLOCK, (2) target venue changes mid-project, (3) major result added/removed after initial draft, (4) reviewer response revision, (5) explicit user request. HARKing guardrail unchanged across re-runs: pre-registered hypothesis stays pinned in Methods+Results, only narrative framing shifts.
+
+- **`narrative-guide.md` "When to re-run" subsection** in §4 (Discovery-Adjusted Framing) — table form of the 5 re-fire triggers with why/action columns.
+
+- **`submission-readiness` Step 1 prerequisite #5** — `novelty-competitive-audit: PASS?` added as the new first prerequisite before the existing 4 gates (verification-before-publication, research-reviewer ≥95, claims-audit, venue-framing). Rationale: external novelty is the gate the others cannot check.
+
+- **`verification-before-publication` Integration "Requires"** — `novelty-competitive-audit` PASS added as a required prerequisite alongside existing claims-audit, research-reviewer ≥95, hypothesis-first.
+
+- **`using-eureka` Research Lifecycle diagram** — new `novelty` node between `write` and `audit`, with `novelty → write` backedge for CONCERN/BLOCK re-framing. New routing rule ("worried about preemption" → novelty-competitive-audit). New Red Flag ("Internal scores are high, we're ready to submit" → internal scores don't check external preemption). Added to RIGID skill types.
+
+- **`whats-next` Common Stuck States** — 2 new rows: "The paper is rigorous but I'm not sure it's still novel" → `novelty-competitive-audit`; "Reviewer/editor surfaced a preempt paper" → `novelty-competitive-audit` first, then narrative-arc re-fire.
+
+- **`README.md` Skills Library and Reference Documents** — `novelty-competitive-audit` listed under Publication Gates; `novelty-audit-guide.md` listed under Reference Documents.
+
+### Rationale
+
+Prompted by external feedback collected April 2026 from AI agents using Eureka on real research projects. The headline finding: **"Eureka checks if the paper is rigorous; it does not check whether it is worth publishing."** Concrete failure mode described: an agent reached a 96/100 research-reviewer PASS on a submission-ready manuscript, then caught a recent (2025) competitor paper that preempted the work through the agent's own critical questioning — not through any Eureka gate. None of claims-audit, research-reviewer, verification-before-publication would have caught the preempt. The gap was structural: Eureka enforces **internal rigor** but not **external competitiveness**.
+
+v1.9.0 closes that gap with a new pre-submission gate. Design choices:
+
+- **Structured review, not WebSearch automation** — per user decision. The skill structures the evaluation; the agent or user performs the actual literature search. Keeps domain judgment with the human+agent pair, avoids false confidence from brittle automation.
+- **Multi-phase novelty** — `research-brainstorming` Step 3 already handles design-time novelty. This skill is the same concern at submission time, covering the 6-12 months of field drift since design approval. Both fire; they do not substitute for each other.
+- **Separation of concerns preserved** — `claims-audit` still owns number traceability; this skill owns external novelty. Distinct scopes, distinct verdicts.
+- **3-tier severity from day one** — the new subagent uses Advisory/Should-fix/Must-fix, anticipating v1.10.0's rollout of this pattern to the 6 existing reviewer subagents. Retrofitting later is more expensive than starting right.
+- **Re-fire pattern for narrative-arc lock** — v1.8.0's "once per manuscript" default was correct as initial behavior, but the need for re-fire on specific triggers (venue change, preempt, major result shift) surfaced in feedback. v1.9.0 adds explicit re-fire conditions without changing the default behavior.
+
+v1.9.0 is the **first of a 2-release roadmap responding to the feedback**. v1.10.0 (next release) addresses a cross-cutting cluster of concerns from the same feedback batch: traceability-auditor subagent (Eureka's first computational subagent pattern), registration-lifecycle reference doc with amendment/supersede/INDEX.md conventions, research-reviewer scoring anchors for inter-run reliability, severity-tier rollout to the 6 existing reviewer subagents, Korean/multi-locale announce allowance, `whats-next` resume mode, statistical recipes (MDE / post-hoc power / parametric uncertainty) in `statistical-guide.md`, experiment-design plan ↔ registration contingency inheritance, red-team mode default-on for existing reviewers.
+
+Skill count: **15 → 16** (first skill addition since v1.3.0 manuscript-writing). Justified because novelty-competitive-audit is a distinct phase/gate with its own HARD-GATE verdict — not a pattern that fits inside an existing skill.
+
 ## [1.8.1] - 2026-04-17
 
 ### Changed
@@ -316,7 +356,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.8.1...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.9.0...HEAD
+[1.9.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.9.0
 [1.8.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.1
 [1.8.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.0
 [1.7.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.1
