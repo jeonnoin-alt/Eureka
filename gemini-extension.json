@@ -1,6 +1,6 @@
 {
   "name": "eureka",
   "description": "Research rigor skills: hypothesis pre-registration, statistical rigor, claims audit, and reproducibility gates for scientific workflows",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "contextFileName": "GEMINI.md"
 }

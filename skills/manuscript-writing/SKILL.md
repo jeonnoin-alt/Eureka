@@ -88,6 +88,8 @@ In Markdown: `![Figure 1](figures/fig1.png)` requires `figures/fig1.png` to exis
 
 No manually drawn figures. No screenshots pasted into the manuscript. Figures must be reproducible.
 
+When the section cites a figure that does not yet exist, or an existing figure needs updating, invoke `eureka:figure-design` to create or revise it — that skill enforces chart-type selection, typography, colorblind-safe palettes, and journal-specific export specs. `manuscript-writing` writes the text that references the figure; `figure-design` creates the figure itself.
+
 ### 4. Variables defined on first use
 
 Every symbol in an equation must be defined the first time it appears. A reader encountering `\alpha` for the first time should immediately see "where `\alpha` is the diffusion rate constant."
@@ -242,9 +244,10 @@ The user specifies their format at the start of the writing session (or in `CLAU
 - **Prerequisite:** At least one section's prerequisites met
 - **Invokes:** `section-reviewer` subagent (per section, after writing)
 - **Transitions to:** `eureka:claims-audit` (after all sections + Abstract complete)
-- **Pairs with:** `eureka:research-journal` (capture writing decisions), `eureka:whats-next` (if stuck on which section to write next)
+- **Pairs with:** `eureka:research-journal` (capture writing decisions), `eureka:whats-next` (if stuck on which section to write next), `eureka:figure-design` (when the Results section cites a figure that needs to be created or updated)
 - **Reference:** `docs/references/statistical-guide.md` (for Results section reporting standards)
 - **Reference:** `docs/references/latex-guide.md` (for LaTeX conventions: main.tex template, section files, BibTeX, math notation, figures)
+- **Reference:** `docs/references/figure-guide.md` (for figure design conventions: chart-type selection, typography, colorblind-safe palettes, journal-specific export specs)
 
 ## Skill Type
 

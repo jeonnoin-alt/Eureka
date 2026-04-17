@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-04-17
+
+### Added
+
+- **`skills/figure-design/`** — New skill covering research figure design (chart type selection, typography, colorblind-safe palette, layout, journal-specific export). Complements `claims-audit` Part B (figure integrity) — `figure-design` owns design, `claims-audit` owns integrity. Follows the same shape as `manuscript-writing`: iron law, checklist, hard-gate chart-type selection table, per-figure workflow, rationalizations table, red flags. Dispatches a `figure-reviewer` subagent after every figure renders.
+- **`skills/figure-design/figure-reviewer-prompt.md`** — New subagent prompt template for per-figure review. Placeholders: `{FIGURE_PATH}`, `{SCRIPT_PATH}`, `{FIGURE_PURPOSE}`, `{TARGET_JOURNAL}`, `{CAPTION_TEXT}`. Ten review dimensions: chart-type fit, typography, color palette, axes/labels, legend, layout/chart junk, export format, journal compliance, script hygiene, reproducibility red flags. Output format matches the other five reviewer subagents (`Status: Approved` | `Issues Found`).
+- **`docs/references/figure-guide.md`** — New reference document (same pattern as `statistical-guide.md` / `latex-guide.md` — lookup, not a skill). Sections: chart type selection flowchart, typography by journal, colorblind-safe palette hex codes (Okabe-Ito, tol-bright, viridis/cividis/plasma/inferno, RdBu_r/coolwarm/PuOr), journal-specific export spec table for 12 top journals (Nature, Nat Comm, Science, Science Advances, Cell, Neuron, JAMA, NEJM, IEEE Transactions, PNAS, NeuroImage, Brain), matplotlib style recipe (copy-paste `apply_paper_style()` function with TrueType embedding and Okabe-Ito palette), accessibility tools (Coblis, Color Oracle, WebAIM), common matplotlib pitfalls, export workflow for matplotlib/seaborn/ggplot2/Plotly, Tufte principles brief, and further reading.
+
+### Changed
+
+- **`manuscript-writing` SKILL.md** — Writing Discipline Rule 3 (figure references) now invokes `eureka:figure-design` when a cited figure needs to be created or updated. Integration section gains `figure-design` as a pairing skill and a reference line for `docs/references/figure-guide.md`.
+- **`using-eureka` SKILL.md** — Research Lifecycle diagram adds `figure-design` node between Manuscript Writing and Claims Audit (writes text cites figure → figure-design creates/revises figure → returns to writing). Stuck-state routing adds a figure-design branch. Skill Priority section adds a "Make a figure / the figure looks wrong" routing rule. FLEXIBLE skill list adds `figure-design`.
+- **`whats-next` SKILL.md** — Common Stuck States table adds two new entries: "The figure looks wrong / won't pass journal review" and "I need to make a figure for Results" both routing to `figure-design`.
+
+### Rationale
+
+Eureka v1.5.0 enforced figure **integrity** via `claims-audit` Part B (script-generated, no manual edits, traceable to a results file) but provided zero guidance on figure **design** — chart-type selection, typography, colorblind-safe palettes, journal-specific column widths, export format. The user feedback that prompted this release was concrete: agents produced figures that passed claims-audit but were rejected at top-journal submission for soft-failure reasons (Type 3 fonts, red/green-only contrast, default matplotlib rainbow cmap, sub-5pt axis labels, JPEG exports, 3D bar charts). This release closes that gap with the same skill-level enforcement pattern Eureka uses elsewhere: a skill with iron laws, a hard-gate for chart-type selection, a journal-export gate, and a fresh-eyes subagent review after every figure renders. Reference material lives in `docs/references/figure-guide.md` (same pattern as `statistical-guide.md` and `latex-guide.md`), keeping the skill itself focused on workflow and principles while the reference holds the lookup tables.
+
 ## [1.5.0] - 2026-04-17
 
 ### Added
@@ -203,7 +221,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.6.0
 [1.5.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.5.0
 [1.4.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.1
 [1.4.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.0

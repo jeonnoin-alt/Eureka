@@ -254,6 +254,7 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 
 **Writing**
 - **manuscript-writing** — Section-by-section writing with prerequisite gates, citation discipline, number traceability, per-section subagent review
+- **figure-design** — Chart-type selection, typography, colorblind-safe palette, layout, and journal-specific export specs; dispatches a `figure-reviewer` subagent after every figure
 
 **Publication Gates**
 - **claims-audit** — Trace every number, verify every figure, report every experiment
@@ -274,6 +275,8 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 
 - **docs/references/statistical-guide.md** — Test selection, effect size interpretation, multiple comparison correction
 - **docs/references/data-checklist.md** — Data provenance, preprocessing, leakage taxonomy, missing value handling, split strategies
+- **docs/references/latex-guide.md** — LaTeX conventions: `main.tex` template, section files, BibTeX, natbib citations, math notation, figures/tables, compile workflow
+- **docs/references/figure-guide.md** — Figure design: chart-type flowchart, colorblind-safe palettes (hex codes), per-journal export specs, matplotlib style recipe, accessibility tools
 
 ### Templates
 

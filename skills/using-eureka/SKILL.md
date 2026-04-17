@@ -105,6 +105,7 @@ digraph research_lifecycle {
     trouble [label="Troubleshooting\neureka:systematic-troubleshooting"];
     rev [label="Results Review\neureka:requesting-research-review"];
     write [label="Manuscript Writing\neureka:manuscript-writing\n(section-by-section with reviewer)"];
+    figd [label="Figure Design\neureka:figure-design\n(chart-type + typography +\ncolorblind-safe palette +\nfigure-reviewer subagent)"];
     audit [label="Claims Audit\neureka:claims-audit"];
     pub [label="Submission Gate\neureka:verification-before-publication"];
     submit [label="Submit / Archive\neureka:submission-readiness"];
@@ -120,6 +121,8 @@ digraph research_lifecycle {
     exp -> rev [label="phase complete"];
     rev -> exp [label="FAIL: fix and re-run"];
     rev -> write [label="PASS"];
+    write -> figd [label="section cites figure"];
+    figd -> write [label="figure approved"];
     write -> audit [label="all sections reviewed"];
     audit -> pub [label="audit PASS"];
     pub -> write [label="FAIL: revise"];
@@ -136,6 +139,7 @@ digraph research_lifecycle {
     stuck -> pub [style=dashed];
     stuck -> submit [style=dashed];
     stuck -> ideation [style=dashed];
+    stuck -> figd [style=dashed];
 
     ideation -> journal [style=dashed, label="capture"];
     rq -> journal [style=dashed, label="capture"];
@@ -183,6 +187,7 @@ When multiple skills could apply, use this order:
 "I don't know what to do next" → whats-next first, then whatever it routes you to.
 "Session is wrapping up" → research-journal to capture decisions before context is lost.
 "I have this dataset but don't know what to study" → research-ideation first, not research-brainstorming.
+"Make a figure" / "the figure looks wrong" / "update fig X" → figure-design first, then manuscript-writing if a caption or section update is also needed.
 
 ## Skill Types
 
@@ -203,6 +208,7 @@ When multiple skills could apply, use this order:
 - whats-next
 - research-journal
 - manuscript-writing
+- figure-design
 
 The skill itself tells you which type it is.
 

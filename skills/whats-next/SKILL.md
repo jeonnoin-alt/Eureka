@@ -197,6 +197,8 @@ These are the most frequent stuck states researchers experience and the typical 
 | "I keep going in circles on the same analysis" | Investigation OR re-design | `systematic-troubleshooting` first; if 3+ attempts failed, escalate to `research-brainstorming` |
 | "I have data but don't know what to study" | Pre-ideation | `research-ideation` |
 | "What interesting questions are there in this field?" | Pre-ideation | `research-ideation` |
+| "The figure looks wrong / won't pass journal review" | Writing / submission prep | `figure-design` |
+| "I need to make a figure for Results" | Writing | `figure-design` (after results are finalized) |
 
 ## Integration
 
