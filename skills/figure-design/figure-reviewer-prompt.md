@@ -26,7 +26,9 @@ Task tool (general-purpose):
     | **Typography** | Font family is sans-serif (Arial or Helvetica, matching {TARGET_JOURNAL})? TrueType embedded (matplotlib: `pdf.fonttype = 42`)? All text ≥5pt? Consistent font family across all panels? Panel labels (if multi-panel) lowercase bold top-left? |
     | **Color palette** | Palette is colorblind-safe (Okabe-Ito, tol-bright, tab10, viridis, cividis, plasma, inferno, RdBu_r, coolwarm, or equivalent)? Flag red+green categorical contrast, rainbow/jet for sequential data, gradient fills for categorical groups, >8 qualitative colors. |
     | **Axes and labels** | Every axis has a label? Labels include units (or explicitly note dimensionless)? Tick values are human-readable round numbers? No unexplained scientific notation? Log axes have integer decade ticks? |
-    | **Legend** | Legend readable without zooming? Legend not overlapping data points or error bars? Text size matches tick labels (±1pt)? No unnecessary frame? |
+    | **Legend compliance (reviewer-grade)** | Legend self-contained (figure + legend alone interpretable without main text)? States `n = X` per group/condition (exact number, not range)? Defines `n` (e.g., "X cells from X slices from X animals")? Names the statistical test (e.g., "paired t-test", "one-way ANOVA with Tukey HSD")? Specifies error bar type (SEM / SD / 95% CI — "error bars" alone is insufficient)? Specifies center value (mean / median / geometric mean)? p-value convention clear (exact values preferred; asterisks must be defined in-legend)? Biological vs technical replicates distinguished where applicable? For image panels: labeled "representative of N independent experiments" OR quantified with N stated? |
+    | **Raw data visibility** | If the figure is a bar chart of mean + error whisker (dynamite plot), is raw data overlay feasible given sample size? Dynamite plots are the #1 reviewer-flagged visualization anti-pattern per eLife. Flag unless N per group > 50 (overlay becomes illegible). Acceptable alternatives: violin + strip, box + jitter, raincloud, dot plot. |
+    | **Legend (layout)** | Legend readable without zooming? Legend not overlapping data points or error bars? Text size matches tick labels (±1pt)? No unnecessary frame? |
     | **Layout / chart junk** | Top and right spines removed? No 3D effects, drop shadows, gradient fills? No unnecessary gridlines? No frame around plot area (unless journal-required)? |
     | **Export format** | Output is vector (PDF/SVG/EPS) for line/text content, or 300+ DPI raster (TIFF/PNG) for pixel content? Not JPEG? `bbox_inches='tight'` applied to avoid clipping? |
     | **Journal compliance** | Dimensions fit {TARGET_JOURNAL}'s column width requirements (check the journal's author guide or `docs/references/figure-guide.md`)? Font size within the journal's permitted range? |
@@ -48,6 +50,10 @@ Task tool (general-purpose):
     - Manual Illustrator edits mentioned in script/comments
     - Output in JPEG or screenshot format
     - Dimensions clearly mismatched to target journal column widths
+    - Legend missing `n`, statistical test, error bar type, or center value (any one of these)
+    - Dynamite plot (bar + whisker of mean alone) with N per group ≤ 50
+    - Image panel without "representative of N" label or stated quantification N
+    - Error bar type stated only as "error bars" without specifying SEM/SD/CI
 
     Do NOT flag:
     - "The color palette could be prettier" (stylistic preference, not a violation)
@@ -82,8 +88,24 @@ Task tool (general-purpose):
 
     **Layout Check:**
     - Spines: [top/right removed? gridlines appropriate?]
-    - Legend: [position, readability]
+    - Legend position: [observed, readability]
     - Axes: [labels with units?]
+
+    **Legend Compliance Check (reviewer-grade):**
+    - Self-contained (interpretable without main text): [yes/no]
+    - `n` stated per group: [yes/no]
+    - `n` definition: [present/absent — what's defined, e.g., "3 biological replicates from 3 animals"]
+    - Statistical test named: [yes/no — which test]
+    - Error bar type: [SEM / SD / 95% CI / "error bars" undefined / not stated]
+    - Center value: [mean / median / geometric mean / not stated]
+    - p-value convention: [exact / asterisks-defined / asterisks-undefined / N/A]
+    - Biological vs technical replicates: [clear / unclear / N/A]
+    - Representative image labeling (if applicable): [present / absent / N/A]
+
+    **Raw Data Visibility Check:**
+    - Figure type: [bar / violin / box / scatter / etc.]
+    - N per group: [observed]
+    - Dynamite plot flag: [none / flagged — raw overlay feasible at this N]
 
     **Export Check:**
     - Format: [PDF/SVG/EPS/PNG/TIFF]

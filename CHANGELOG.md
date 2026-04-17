@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-04-17
+
+### Added
+
+- **`figure-design` SKILL.md** — 3 new Iron Laws:
+  - **#9 Legend self-containment** — figure + legend alone must be interpretable without the main text
+  - **#10 Statistical reporting in legend** — mandatory 7 elements: `n` per group, `n` definition, test name, error bar type (SEM/SD/95%CI), center value, p-value convention, biological vs technical replicates
+  - **#11 Raw data visibility** — no dynamite plots (bar+whisker of mean alone) when N per group ≤ 50; overlay raw points via violin/strip/box/raincloud
+- **`figure-design` SKILL.md** — "Dynamite plot" added to Chart Type anti-patterns list with eLife Top-10 reference; 5 new inline self-check items for legend and replicates; 4 new Common Rationalizations rows ("n is in Methods — don't need in legend"); 3 new Red Flags (missing n/test/error-bar; dynamite plots; unlabeled representative images).
+- **`figure-reviewer-prompt.md`** — 2 new review dimensions added to the "What to Check" table: (1) **Legend compliance (reviewer-grade)** with 9 sub-checks mirroring top-journal reporting standards, (2) **Raw data visibility** with the N ≤ 50 dynamite-plot threshold. New Legend Compliance Check and Raw Data Visibility Check sections in the output format.
+- **`docs/references/figure-guide.md`** — New **Section 5a "Figure Legend Requirements (Reviewer-Grade)"** covering what reviewers check, a copy-paste-ready figure legend template, bad vs good legend examples, and the dynamite-plot anti-pattern with a sample-size-to-chart-type decision table. New **Section 10 "Common Reviewer Rejection Reasons for Figures"** — lookup table mapping 14 real reviewer comments ("Statistical test not clear", "Error bars undefined", "Representative of what?", "Cannot assess variability from bar chart", etc.) to their root causes and fixes.
+- **`section-reviewer-prompt.md`** — New "Figure legend reporting compliance" row added to the "What to Check" table: for each figure referenced in the section, verifies that the caption/legend states n, test, error bar type, center value, replicate type, and representative/quantification labeling. New Figure Legend Check subsection in the output format.
+- **`research-reviewer.md` (agent)** — **Dimension 4.5 "Figure Integrity"** expanded to **"Figure Integrity & Reporting"**: now /10 integrity + /10 reporting, still /20 total. Reporting sub-criterion covers legend compliance per top-journal standards. 3 new deductions added to Dimension 4: legend missing n/test/error-bar/center (-5/figure), dynamite plot with raw overlay feasible (-5/figure), unlabeled representative image (-5/figure).
+- **`verification-before-publication` SKILL.md** — 4 new items added to the Figures sub-section of the Publication-Specific Verification Checklist: legend completeness, p-value convention, representative/quantification labeling, no-dynamite-plot rule. `figure-guide.md` added as a reference in the Integration section.
+
+### Rationale
+
+v1.6.0 added design-level enforcement for figures (chart type, typography, colorblind palette, export format) via the `figure-design` skill and its `figure-reviewer` subagent. Real journal reviewers, however, flag **content-level reporting issues** far more aggressively than design issues — legend completeness (n, test, error bars, center value, biological vs technical replicates) and dynamite plots are the #1 and #2 most-cited figure problems per [eLife's Ten common statistical mistakes](https://elifesciences.org/articles/48175) and [Nature Cell Biology's reporting standards](https://www.nature.com/articles/ncb2964).
+
+Moreover, single-gate enforcement at `figure-design` is leaky: a user who skips `figure-design` and goes straight to `requesting-research-review` or `manuscript-writing` would bypass the check entirely. v1.7.0 therefore uses **defense in depth** — the same reporting requirements are enforced at **4 independent review gates**, each with scope-appropriate granularity:
+
+| Gate | Scope | Check depth |
+|---|---|---|
+| `figure-reviewer` subagent | Per figure, at creation | Full 12-dimension review including legend and raw-data visibility |
+| `section-reviewer` subagent | Per manuscript section | For each figure referenced in the section, legend completeness only |
+| `research-reviewer` 7-dim agent | Phase-level, holistic | Dimension 4.5 — integrity + reporting in aggregate with deductions per non-compliant figure |
+| `verification-before-publication` | Pre-submission final gate | 4 legend-related checklist items must all pass |
+
+`claims-audit` is intentionally unchanged — it owns number traceability (do the numbers in the text match the source files?), which is a separate concern from legend reporting compliance. Keeping the separation of concerns sharp prevents overlap and contradictions between skills.
+
 ## [1.6.0] - 2026-04-17
 
 ### Added
@@ -221,7 +251,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.0
 [1.6.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.6.0
 [1.5.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.5.0
 [1.4.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.1

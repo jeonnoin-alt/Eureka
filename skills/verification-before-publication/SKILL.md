@@ -85,6 +85,10 @@ Complete every item before claiming submission-ready. No skipping.
 **Figures**
 - [ ] Figures regenerated from scripts (not loaded from stale file)
 - [ ] Every figure number and label matches the manuscript text
+- [ ] Every figure legend states `n`, statistical test, error bar type (SEM/SD/95%CI), and center value (or confirms N/A for the figure type)
+- [ ] Every figure with statistical inference has exact p-values OR in-legend-defined asterisks
+- [ ] Every image panel labeled "representative of N independent experiments" or states quantification N
+- [ ] No dynamite plots (bar + whisker of mean alone) where raw overlay is feasible (N per group ≤ 50)
 
 **Reproducibility**
 - [ ] Experiments reproducible from configs + recorded seeds
@@ -182,6 +186,7 @@ Publication errors propagate. A wrong number in a published table becomes a cite
 - **Called by:** `eureka:using-eureka` when submission intent is detected
 - **Reference:** `docs/references/statistical-guide.md` — statistical reporting checklist
 - **Reference:** `docs/references/data-checklist.md` — data version locking, preprocessing reproducibility, raw→processed regeneration
+- **Reference:** `docs/references/figure-guide.md` — figure legend requirements (section 5a), common reviewer rejection reasons (section 10), dynamite plot anti-pattern
 
 ## The Bottom Line
 

@@ -255,6 +255,84 @@ fig.savefig("figures/fig_model_comparison.pdf")  # vector, TrueType, 600 DPI
 
 ---
 
+## 5a. Figure Legend Requirements (Reviewer-Grade)
+
+Figure legends are what real journal reviewers evaluate most aggressively. A beautifully designed figure with a sloppy legend is rejected; a merely competent figure with a complete legend often passes. Legends are read **independently** of the Methods section and the Results prose — assume the reviewer reads the figure + legend in isolation first and only returns to the main text if intrigued.
+
+### What reviewers at top journals check
+
+For every figure that involves statistical inference, group comparison, error bars, or quantified images, the legend must state:
+
+1. **Sample size `n` per group/condition** — exact number, not a range
+2. **`n` definition** — what `n` represents (e.g., "X cells from X slices from X animals from X litters collected over X days"). Biological vs technical replicates distinguished where applicable
+3. **Statistical test used** — e.g., "one-way ANOVA with Tukey HSD post-hoc", "paired t-test", "Wilcoxon signed-rank"
+4. **Error bar type** — SEM, SD, 95% CI, IQR. "Error bars" alone is insufficient
+5. **Center value** — mean, median, geometric mean
+6. **p-value convention** — prefer exact values (`p = 0.003`); if using asterisks, the legend must define them (`*p < 0.05, **p < 0.01, ***p < 0.001`)
+7. **For image panels** — label as "representative of N independent experiments" OR state the quantification N
+8. **Scale bars** (microscopy, anatomy) — specify the scale bar length in the legend
+
+### Figure legend template (copy-paste-ready)
+
+```
+Fig. N. [Short descriptive title — a single phrase, sentence case.]
+
+(a) [Panel A description, one sentence.]
+(b) [Panel B description, one sentence.]
+(c) [...]
+
+Data are [mean ± SEM | median with 25th-75th percentile | mean ± 95% CI].
+n = X [biological replicates | cells from X animals | subjects | folds].
+[Statistical test name, e.g., "One-way ANOVA with Tukey HSD post-hoc"] was used.
+[Exact p-values: p = 0.003; or if using asterisks: *p < 0.05, **p < 0.01, ***p < 0.001.]
+
+[If image panels: Scale bar = X μm. Images are representative of N
+independent experiments.]
+```
+
+### Bad vs good legend examples
+
+**BAD**
+
+> Fig 3. Accuracy comparison. \*p<0.05
+
+**GOOD**
+
+> Fig 3. Model accuracy across 5 cross-validation folds. Bars show mean accuracy, error bars show 95% confidence intervals, circles show individual fold scores (n = 5 folds per model, same splits across all models). One-way ANOVA with Tukey HSD post-hoc correction, \*p < 0.05, \*\*p < 0.01, \*\*\*p < 0.001.
+
+**BAD**
+
+> Fig 5. Representative immunofluorescence. Scale bar: 50 μm.
+
+**GOOD**
+
+> Fig 5. Representative immunofluorescence staining for protein X (green) and DAPI (blue) in wild-type (WT) and knockout (KO) tissue. Images are representative of 6 independent experiments (3 biological replicates per group, 2 technical replicates each). Scale bar = 50 μm. Quantification in panel (b): n = 6 animals per group; median with IQR; Mann-Whitney U test; \*\*p = 0.004.
+
+### Dynamite-plot anti-pattern
+
+A "dynamite plot" (bar chart of mean + error whisker with no raw data overlay) is the #1 visualization mistake flagged in top-journal peer review — see [eLife's Ten common statistical mistakes](https://elifesciences.org/articles/48175).
+
+**Why reviewers flag it:**
+
+- Hides the full distribution (bimodality, outliers, skew) behind a mean
+- Biases the eye to the summary statistic while the actual data stays invisible
+- Misrepresents spread — error bars can be SEM, SD, or CI, and each tells a different story; the figure shape is the same
+- Makes it impossible to assess whether the test's distributional assumptions (normality, equal variance) are appropriate
+
+**Acceptable alternatives:**
+
+| Group size (N per group) | Preferred |
+|---|---|
+| 3-10 | Strip plot (every point) + mean line |
+| 10-30 | Box plot + jitter overlay, or violin + strip |
+| 30-50 | Raincloud plot (violin + box + strip) |
+| 50+ | Violin plot alone (overlay becomes illegible); or add a subsample of 30 random points |
+| 100+ | Violin or histogram; overlay not useful |
+
+Rule of thumb: **if the raw points can be shown without overlap, show them**.
+
+---
+
 ## 6. Accessibility Tools
 
 | Tool | Purpose | URL |
@@ -347,7 +425,30 @@ Edward Tufte's *The Visual Display of Quantitative Information* (1983) introduce
 
 ---
 
-## 10. Further Reading
+## 10. Common Reviewer Rejection Reasons for Figures
+
+Synthesized from peer-review guidelines ([PLOS](https://plos.org/resource/peer-review-checklist/), [eLife](https://elifesciences.org/articles/48175), [Nature Cell Biology reporting standards](https://www.nature.com/articles/ncb2964)). When a reviewer writes one of these comments, the root cause is almost always one of the fixable issues below.
+
+| Rejection reason | Root cause | Fix |
+|---|---|---|
+| "Statistical test not clear" | Legend missing test name | State the test in the legend (e.g., "two-tailed paired t-test") |
+| "Error bars are undefined" | Legend says "error bars" without specifying type | Specify SEM / SD / 95% CI in the legend |
+| "n not reported per group" | Summary statistic shown without per-group n | Add "n = X per group" to the legend |
+| "Cannot assess variability from bar chart" | Dynamite plot (bar + whisker alone) | Overlay raw points (strip/swarm) or switch to violin/box |
+| "Representative of what?" | Image panel without N from which it was drawn | Add "representative of N independent experiments" to the legend |
+| "Effect size overstated" | y-axis range chosen to exaggerate a small effect | Use zero-anchored axis when appropriate; report effect size in legend |
+| "Colors indistinguishable to colorblind reader" | Red+green categorical contrast | Okabe-Ito palette; verify with Coblis simulation |
+| "Cannot read panel labels" | Labels < 5pt or poor contrast | 8-10pt panel labels, sans-serif, bold |
+| "Figure too complex" | Too many panels, too many overlapping lines | Split into separate figures or use small multiples |
+| "Technical vs biological replicates unclear" | Legend says "n = 3" without specifying | "n = 3 biological replicates (3 animals); 5 technical replicates per animal" |
+| "Normality assumption not verified" | Mean ± SD reported for a bimodal or skewed distribution | Show raw data; consider median + IQR; verify with Shapiro-Wilk |
+| "Multiple comparisons not corrected" | Multiple group comparisons without Bonferroni/Tukey/FDR | Apply correction; state the correction method in the legend |
+| "Centre value not stated" | Figure shows error bars without stating whether center is mean or median | "Data are mean ± SEM" or "median ± IQR" in the legend |
+| "Scale bar missing" (microscopy) | Image without a scale bar | Add scale bar; state length in legend (e.g., "Scale bar = 50 μm") |
+
+---
+
+## 11. Further Reading
 
 - Tufte, E. (1983). *The Visual Display of Quantitative Information*. Graphics Press.
 - Wilke, C. O. (2019). *Fundamentals of Data Visualization*. O'Reilly. Free online: https://clauswilke.com/dataviz/

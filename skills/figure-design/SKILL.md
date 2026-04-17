@@ -76,6 +76,7 @@ Before writing any plotting code, state the figure's purpose in one sentence and
 - **Gradient fills for categorical colors** — implies ordering where none exists
 - **Dual y-axes with unrelated scales** — invites misleading visual correlation
 - **Pie charts with >3 slices** — angle comparison is harder than length comparison
+- **Dynamite plot (bar of mean + error whisker with no raw data overlay)** — reviewer-flagged top-10 mistake per eLife (Ten common statistical mistakes). Hides distribution, misrepresents spread, biases the eye to means. Overlay raw points or switch to violin/box when N per group ≤ 50
 
 ## Iron Laws
 
@@ -134,6 +135,27 @@ These apply regardless of tool, field, or journal:
 ### 8. Export format matches journal requirements
 
 See the Journal Export Gate below for the table.
+
+### 9. Legend self-containment (reviewer-grade)
+
+Figure + legend alone must be interpretable **without reading the main text**. Reviewers often evaluate figures independently of the Methods section and the Results prose. If a reader can't understand the figure from the legend, the figure fails peer review regardless of how pretty it is.
+
+### 10. Statistical reporting in legend (mandatory whenever statistical inference is shown)
+
+Every figure with a statistical test, error bars, or group comparison must state in the legend:
+
+- **`n = X` per group/condition** — exact number, not a range
+- **`n` definition** — e.g., "X cells from X slices from X animals from X litters collected over X days". Biological vs technical replicates clarified where applicable
+- **Statistical test name** — e.g., "one-way ANOVA with Tukey HSD post-hoc correction", "paired t-test", "Wilcoxon signed-rank"
+- **Error bar type** — SEM, SD, or 95% CI. "Error bars" alone is not enough
+- **Center value** — mean, median, or geometric mean
+- **p-value convention** — prefer exact values (`p = 0.003`); if using asterisks, the legend must define them (`*p < 0.05, **p < 0.01, ***p < 0.001`)
+
+Missing any one of these is the single most common figure-related reviewer flag at top-tier journals.
+
+### 11. Raw data visibility — no dynamite plots
+
+For distributions or group comparisons, **show individual data points overlaid on summary statistics** whenever sample size permits (violin + strip, box + jitter, raincloud, strip plot with mean line). Bar chart of mean + error whisker alone ("dynamite plot") is the #1 flagged visualization anti-pattern in top-journal review (eLife: Ten common statistical mistakes). The rule of thumb: overlay raw points when N per group ≤ 50; above that overlay becomes illegible and summary statistics are acceptable.
 
 ## Journal Export Gate
 
@@ -197,6 +219,11 @@ Before dispatching the reviewer, run through:
 - [ ] Top and right spines removed?
 - [ ] Panel labels (if multi-panel) are lowercase bold top-left?
 - [ ] Output is PDF or SVG (not JPEG)?
+- [ ] Figure legend names `n`, statistical test, error bar type, and center value?
+- [ ] Legend is interpretable without reading the main text?
+- [ ] Biological vs technical replicates clarified where applicable?
+- [ ] No dynamite plots when sample size permits raw overlay (N ≤ 50 per group)?
+- [ ] Representative images labeled as such; quantified images state N?
 
 ### Step 7: Dispatch `figure-reviewer` subagent
 
@@ -235,6 +262,10 @@ Both the script (`.py`/`.R`/`.jl`) AND the output file (`.pdf`/`.svg`) go to git
 | "Journal guidelines are for final submission — draft can be loose" | Drafts become submissions through editorial inertia. Fixing typography at submission time is 10x the cost of setting a global style once. |
 | "I'll just screenshot the Jupyter notebook output" | Screenshots are raster at screen DPI, no vector, no TrueType. Always save via `savefig('.pdf')`. |
 | "The brain map has to look exactly like Figure 4 in Vogel 2020" | Mimicking an example is fine; copying the exact palette/colorbar/layout IS NOT. Derive from principles, not from a specific paper's choices. |
+| "n is in Methods — don't need it in the legend" | Reviewers read figure legends independently of Methods. Put `n` in BOTH. |
+| "Bar chart of mean is standard practice" | It is — and it's the single most-flagged visualization anti-pattern in top-journal review (eLife top-10). Show the raw points. |
+| "Asterisks for p-values are fine, everyone uses them" | Only if the legend defines them. `*p<0.05` alone is not enough; prefer exact values (`p = 0.003`). |
+| "This is a representative image, obviously" | Not obvious to reviewers. Label it "representative of N independent experiments" or state the quantification N. |
 
 ## Red Flags — STOP
 
@@ -249,6 +280,9 @@ Both the script (`.py`/`.R`/`.jl`) AND the output file (`.pdf`/`.svg`) go to git
 - Panel labels in a different font from the tick labels
 - Saving as `.jpg` or a screenshot-based format
 - "I'll clean it up before submission" (no — clean it up now)
+- Legend missing `n`, statistical test, or error bar definition
+- Bar chart of mean values with no raw data overlay (dynamite plot) when N per group ≤ 50
+- Image panel without "representative of N" label or quantification N stated
 
 ## Orthogonality with `claims-audit`
 

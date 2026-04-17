@@ -22,6 +22,7 @@ Task tool (general-purpose):
     |----------|-----------------|
     | **Citation completeness** | Every factual claim has a citation. Extract all citation keys (`\cite{}`, `\citep{}`, `\citet{}` in LaTeX; `[@key]` in Markdown) and verify each key exists in the bibliography file at {BIBLIOGRAPHY_PATH}. Flag any missing keys. Flag any factual claim without a citation (statements like "it is well known", "studies have shown", "previous work demonstrates" without a specific reference). |
     | **Figure/Table cross-references** | Every reference to a figure or table (`\ref{fig:X}`, `\ref{tab:X}` in LaTeX; figure links in Markdown) must have a corresponding label in the document AND a real file in {FIGURES_DIR}. Flag orphan references (reference exists but no label or file) and orphan labels (label exists but never referenced). |
+    | **Figure legend reporting compliance** (for sections with figure references) | For each figure referenced in the section, locate the figure's caption/legend (in LaTeX: the `\caption{}` inside the corresponding `\begin{figure}...\end{figure}`; in Markdown: the adjacent caption text). Verify the legend states: (a) sample size `n` per group/condition, (b) statistical test name, (c) error bar type (SEM / SD / 95% CI — "error bars" alone is insufficient), (d) center value (mean / median), (e) biological vs technical replicates distinction where applicable, (f) for image panels, "representative of N independent experiments" OR quantification N. Flag any figure reference whose legend is missing one or more of these elements. This check is reviewer-grade — top-journal peer reviewers flag these omissions as grounds for revision. See `docs/references/figure-guide.md` section 5a for the full standard. |
     | **Number traceability** | Every quantitative value in the text — correlation coefficients (r = X.XX), p-values (p = X.XX, p < X.XX), sample sizes (N = X), percentages ("X% improvement"), effect sizes (d = X.XX), confidence intervals — must be traceable to a specific file in {RESULTS_DIR}. If the author included source comments (e.g., `% source: results/file.json`), verify the reference. Flag any number that cannot be traced. |
     | **Variable definitions** | Every mathematical symbol or variable used in an equation must be defined on or before its first appearance in the section. Flag any symbol that appears without a definition. |
     | **Logic flow** | Each paragraph should follow: topic sentence → evidence → analysis → transition. Flag paragraphs that make logical leaps (conclusion not supported by the evidence presented), repeat previous paragraphs without adding interpretation, or introduce claims without context. |
@@ -43,6 +44,7 @@ Task tool (general-purpose):
     - Claim about results that don't exist yet (in a Results section)
     - Placeholder content (`TODO`, `[citation needed]`)
     - Logical leap where conclusion doesn't follow from evidence
+    - Figure reference whose legend lacks `n`, statistical test, error bar type, or center value
 
     Do NOT flag:
     - "This paragraph could be written more clearly" (stylistic, not substantive)
@@ -74,6 +76,11 @@ Task tool (general-purpose):
     - References found: [N]
     - References with existing files: [N/N]
     - Broken references: [list, or "none"]
+
+    **Figure Legend Check (reviewer-grade):**
+    - Figures referenced in section: [N]
+    - Legends with complete reporting (n + test + error bar + center value): [N/N]
+    - Legends missing required elements: [list with figure number and which elements are missing, e.g., "Fig 3: missing n per group, error bar type"]
 
     **Issues (if any):**
     - [Line X]: [specific issue] — [why it matters]
