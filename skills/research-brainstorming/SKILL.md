@@ -33,7 +33,7 @@ You MUST create a task for each of these items and complete them in order:
 10. **Present the research design** — in sections, get approval after each section
 11. **Write the research design document** — save to `docs/eureka/designs/YYYY-MM-DD-<topic>-design.md`
 12. **Design self-review** — check for placeholders, internal consistency, scope, ambiguity, and verify that null hypothesis and falsifiability criterion both exist
-13. **Dispatch `design-document-reviewer` subagent** — fresh-eyes review of the design document against the 9 mandatory questions and placeholder/consistency checks. Block progression on `Issues Found`; fix and re-dispatch until `Approved`
+13. **Dispatch `design-document-reviewer` subagent** — fresh-eyes review of the design document against the 11 mandatory questions (9 scientific + 2 narrative framing) and placeholder/consistency checks. Block progression on `Issues Found`; fix and re-dispatch until `Approved`
 14. **User reviews written design** — ask user to review before proceeding
 15. **Transition** — invoke `eureka:hypothesis-first` to register the hypothesis
 
@@ -88,9 +88,9 @@ digraph research_brainstorming {
 - Only one question per message
 - Focus on understanding: what is the research question, what data exists, what would a convincing result look like
 
-**Nine questions that MUST be answered before design approval:**
+**Eleven questions that MUST be answered before design approval:**
 
-These do not need to be asked as direct questions — they may emerge naturally from the dialogue. But all nine must have clear answers in the final design:
+These do not need to be asked as direct questions — they may emerge naturally from the dialogue. But all eleven must have clear answers in the final design. Questions 1-9 define the science; questions 10-11 define the **narrative frame** so the eventual paper has a story, not just results:
 
 1. **What is the null hypothesis?** (Exact statement, not just "no effect")
 2. **What is the primary outcome measure?** (Exactly one, pre-specified)
@@ -101,6 +101,8 @@ These do not need to be asked as direct questions — they may emerge naturally 
 7. **Has anyone published this or something sufficiently similar in the last 3 years?**
 8. **What published evidence CONTRADICTS your hypothesis?** (If you can find none, your search is biased — try harder.)
 9. **What is the exact data source, version, and preprocessing state you will use?** (Source, version tag or file hash, preprocessing pipeline version, access method. See `docs/references/data-checklist.md` §1.)
+10. **At what contribution altitude will this sit?** (Method improvement / new framework / new phenomenon / falsification — see `docs/references/narrative-guide.md` §2.) The altitude must match the evidence strength you are planning to collect. Overclaiming altitude → desk rejection; underclaiming → sold short.
+11. **What is the one-sentence story arc?** (Problem-driven / opportunity-driven / surprise-driven / falsification-driven — see `docs/references/narrative-guide.md` §3.) State the headline **both** for the predicted outcome AND for the opposite outcome. If the opposite outcome would leave you with no honest story, the study may not be worth running — or the design needs reframing.
 
 ## Examining the Literature Gap (Step 3 Detail)
 
@@ -227,3 +229,4 @@ Wait for the user's response. If they request changes, make them and re-run the 
 - **Invokes:** `eureka:hypothesis-first` (after design approval)
 - **Does NOT invoke:** Any experiment execution, data analysis, or implementation skill
 - **Reference:** `docs/references/data-checklist.md` — data provenance, preprocessing, leakage taxonomy, missing value handling
+- **Reference:** `docs/references/narrative-guide.md` — contribution altitude (§2) and story arc patterns (§3) for questions 10-11

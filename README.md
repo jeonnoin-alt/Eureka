@@ -277,6 +277,7 @@ New to Eureka? Two skills have "research" in the name — here's how to tell the
 - **docs/references/data-checklist.md** — Data provenance, preprocessing, leakage taxonomy, missing value handling, split strategies
 - **docs/references/latex-guide.md** — LaTeX conventions: `main.tex` template, section files, BibTeX, natbib citations, math notation, figures/tables, compile workflow
 - **docs/references/figure-guide.md** — Figure design: chart-type flowchart, colorblind-safe palettes (hex codes), per-journal export specs, matplotlib style recipe, accessibility tools
+- **docs/references/narrative-guide.md** — Manuscript framing: contribution altitude (method improvement / framework / phenomenon / falsification), story arc patterns, Discovery-Adjusted Framing (post-results narrative pivot with HARKing guardrails), negative-result reframing, Intro-Discussion symmetry, venue-specific altitude tuning for 7 journal families
 
 ### Templates
 

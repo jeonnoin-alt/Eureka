@@ -38,11 +38,12 @@ You MUST create a task for each of these and complete them in order:
 
 1. **Determine manuscript structure** — ask the user: what sections does this paper have? What format (LaTeX, Markdown)? What target journal?
 2. **Verify prerequisites per section** — check which sections can be written now (see Prerequisites Gate below)
-3. **Write sections in prerequisite order** — start with the earliest-ready section
-4. **Per section**: write → inline self-check → dispatch `section-reviewer` → fix → approve
-5. **Write Abstract last** — only after all other sections pass review
-6. **Final pass** — read the complete manuscript for cross-section flow and consistency
-7. **Transition** — invoke `eureka:claims-audit` for the full manuscript audit
+3. **Lock the narrative arc (Discovery-Adjusted Framing)** — before writing the first section, run the Step 2.5 checkpoint to confirm or revise the altitude and story arc committed at brainstorming, now that results exist (see Per-Section Workflow § Step 2.5)
+4. **Write sections in prerequisite order** — start with the earliest-ready section
+5. **Per section**: write → inline self-check → dispatch `section-reviewer` → fix → approve
+6. **Write Abstract last** — only after all other sections pass review
+7. **Final pass** — read the complete manuscript for cross-section flow and consistency
+8. **Transition** — invoke `eureka:claims-audit` for the full manuscript audit
 
 ## Writing Prerequisites Gate
 
@@ -130,6 +131,35 @@ Before writing, read:
 - Prior sections already written (for continuity and avoiding repetition)
 - Result files relevant to this section
 - The bibliography file (to know what references are available)
+
+### Step 2.5: Lock the narrative arc (Discovery-Adjusted Framing)
+
+<HARD-GATE>
+Before writing the FIRST section of the paper, run this checkpoint. For subsequent sections, skip if the arc is already locked and unchanged. Do NOT write Introduction or Discussion before this lock is committed — they are the two sections most affected by framing drift.
+</HARD-GATE>
+
+The brainstorming design document committed to a contribution altitude (method improvement / new framework / new phenomenon / falsification) and a story arc (problem-driven / opportunity-driven / surprise-driven / falsification-driven). See `docs/references/narrative-guide.md` §2 and §3. Now that results exist, verify the original framing still fits — or discovery-adjust.
+
+Run this 5-question check:
+
+1. **Strongest finding** — what is the single strongest result in `results/`, measured by effect size, novelty, or surprise? State it in one sentence.
+2. **Frame match** — does the original hypothesis (from the design doc) capture that finding? Or is a side finding stronger than the primary outcome?
+3. **Arc fit** — does the original story arc (predicted in brainstorming) still work given what you actually found? If the prediction was confirmed → original arc likely stands. If a surprise came out → the arc may need to shift to surprise-driven or falsification-driven.
+4. **Altitude validity** — is the altitude claimed in the design doc still defensible given the evidence collected? Flag altitude-evidence mismatch now, not at reviewer desk.
+5. **Commit** — state in one paragraph: final altitude, final arc, one-sentence contribution statement. Write this paragraph to `docs/eureka/journal/YYYY-MM-DD.md` (via `eureka:research-journal`) as the framing decision for this manuscript. All section writing flows from it.
+
+**HARKing guardrail** — re-framing is not HARKing. The rule:
+
+| Must stay pinned to pre-registration | Can shift with discovery-adjustment |
+|---|---|
+| Hypothesis text (H1, H0) in Methods | Framing emphasis in Introduction |
+| Statistical test, threshold, correction | Contribution altitude in Discussion |
+| Primary outcome definition | Which result gets Figure 1 |
+| Reported p-values, effect sizes, nulls | Story arc shape of the paper |
+
+Pre-registration constrains the **hypothesis**; it does not constrain the **story**. Report the hypothesis faithfully in Methods and Results. Frame the paper around whatever the data actually shows.
+
+See `docs/references/narrative-guide.md` §4 for the full Discovery-Adjusted Framing workflow, §5 for negative-result reframing (null → informative constraint), and §7 for venue-specific altitude tuning if target venue has shifted since brainstorming.
 
 ### Step 3: Write the section
 
@@ -248,6 +278,7 @@ The user specifies their format at the start of the writing session (or in `CLAU
 - **Reference:** `docs/references/statistical-guide.md` (for Results section reporting standards)
 - **Reference:** `docs/references/latex-guide.md` (for LaTeX conventions: main.tex template, section files, BibTeX, math notation, figures)
 - **Reference:** `docs/references/figure-guide.md` (for figure design conventions: chart-type selection, typography, colorblind-safe palettes, journal-specific export specs)
+- **Reference:** `docs/references/narrative-guide.md` (for Step 2.5 Discovery-Adjusted Framing, narrative arc selection, Intro-Discussion symmetry, and venue-specific altitude tuning)
 
 ## Skill Type
 

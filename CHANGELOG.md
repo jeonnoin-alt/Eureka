@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-04-17
+
+### Added
+
+- **`docs/references/narrative-guide.md`** — New reference document (lookup, not a skill) covering **manuscript framing**. 10 sections: (1) when to use, (2) contribution altitude 4-tier table (method improvement / new framework / new phenomenon / falsification) with evidence-to-altitude match rules, (3) story arc patterns (problem / opportunity / surprise / falsification-driven), (4) **Discovery-Adjusted Framing** — the post-results narrative pivot with explicit HARKing guardrails (pre-registration constrains the hypothesis, not the story), (5) negative-result reframing (null → informative constraint), (6) Intro ↔ Discussion symmetry rules + template, (7) venue-specific altitude tuning for 7 journal families (Nature/Science, Nat Comm, Neuron/Cell, NeuroImage/Brain, JAMA/NEJM, IEEE/ACM, PNAS/eLife), (8) before/after framing examples, (9) common framing anti-patterns table (buried lede, oversold gap, triple contribution, altitude mismatch, discussion drift), (10) further reading with ABT structure (And/But/Therefore) from Schimel/Olson.
+
+- **`research-brainstorming` SKILL.md** — Nine-question Socratic design refinement extended to **11 questions**. New Q10: "At what contribution altitude will this sit?" (altitude must match evidence strength). New Q11: "What is the one-sentence story arc, stated for both the predicted and opposite outcomes?" (if the opposite outcome leaves no honest story, the study or framing needs revision). New reference line added to Integration section pointing to `narrative-guide.md`.
+
+- **`research-brainstorming/design-document-reviewer-prompt.md`** — Subagent checklist expanded from 9 to 11 mandatory questions. Two new review rows: **altitude-evidence match** (flags "new phenomenon" with single-dataset evidence, "framework" without baseline comparison, etc.) and **story arc falsifiability** (flags Q11 answers where the opposite-outcome headline is empty — a signal the study may not be worth running or needs a falsification-arc reframe).
+
+- **`manuscript-writing` SKILL.md** — New **Step 2.5: Lock the narrative arc (Discovery-Adjusted Framing)** between Step 2 (read sources) and Step 3 (write). HARD-GATE: must complete before writing Introduction or Discussion. 5-question check (strongest finding / frame match / arc fit / altitude validity / commit). Explicit HARKing guardrail table distinguishing what must stay pinned to pre-registration (hypothesis text, statistical test, primary outcome, reported results) from what can shift with discovery-adjustment (framing emphasis, altitude, figure ordering, arc shape). Checklist extended from 7 to 8 items; Integration section adds `narrative-guide.md` reference.
+
+- **`manuscript-writing/section-reviewer-prompt.md`** — New **Intro-Discussion symmetry** review dimension that fires only when reviewing a Discussion or Conclusion section. Checks 4 symmetry conditions: (a) research-question closure, (b) contribution restatement with evidence, (c) gap-paper revisitation, (d) no new threads (Discussion drift detection). Two new entries in the "Flag as issues" list. New "Narrative Symmetry Check" subsection in the output format.
+
+- **`submission-readiness` SKILL.md** — New 4th prerequisite check in Step 1 before the existing 3 gates: **venue-specific framing tuned?** Flags altitude/venue mismatch (Nature-family claim with specialty-journal evidence, or vice versa) before the 4-option submission gate. Integration section references `narrative-guide.md` §2, §7, §9.
+
+- **`whats-next` SKILL.md** — Two new entries in the Common Stuck States table: "Results are technically fine but the paper feels flat" → routes to `manuscript-writing` Step 2.5; "Not sure if this is Nature-level or specialty-journal-level" → routes to `submission-readiness` venue-framing check.
+
+- **`README.md`** — Reference Documents section gains `narrative-guide.md` entry.
+
+### Rationale
+
+Eureka has always enforced **data integrity** (claims-audit), **statistical rigor** (hypothesis-first, research-reviewer), and now **figure discipline** (figure-design + multi-gate). But the same results, framed differently, can be published at a top-tier venue or desk-rejected. Narrative framing — contribution altitude, story arc, discovery-adjusted emphasis, venue-appropriate pitch, Intro-Discussion symmetry — is the axis Eureka previously did not address, producing manuscripts that were technically correct but narratively flat.
+
+Framing is **judgment, not discipline**, which is architecturally different from everything else Eureka enforces. Framing also spans **three distinct phases** — initial positioning (brainstorming, pre-data), discovery-adjusted framing (post-results, pre-writing), and venue-specific tuning (pre-submission). A single skill cannot serve all three phases without phase-mismatch. Instead of adding a 16th skill (which would either fire at the wrong time or require awkward multi-invocation), this release adopts **distributed framing checkpoints** across 3 existing skills (research-brainstorming, manuscript-writing, submission-readiness) plus 1 new reference document. The pattern mirrors v1.5.0 (`latex-guide.md`) and v1.6.0 (`figure-guide.md`) — reference docs as lookups, enforcement at phase-appropriate existing gates.
+
+Critical design property: the Discovery-Adjusted Framing checkpoint in `manuscript-writing` Step 2.5 includes explicit HARKing guardrails. Pre-registered hypotheses remain unchanged in Methods and Results (reporting discipline). Only the narrative framing (Intro emphasis, Discussion interpretation, contribution altitude claim) shifts to match what the data actually showed. This is honest reframing, not HARKing — the distinction is made explicit in both the SKILL.md step description and `narrative-guide.md` §4.
+
+Skill count unchanged at 15. No new iron laws (framing is judgment). No changes to `claims-audit`, `hypothesis-first`, `figure-design`, `verification-before-publication`, or `research-reviewer` — their discipline scopes remain distinct from narrative framing.
+
 ## [1.7.1] - 2026-04-17
 
 ### Changed
@@ -267,7 +297,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.7.1...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.0
 [1.7.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.1
 [1.7.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.0
 [1.6.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.6.0
