@@ -47,13 +47,20 @@ The plugin name is **case-sensitive** and capitalized (`Eureka`) so that slash c
 
 ### Claude Code (Manual Installation)
 
-Clone this repository into your Claude Code plugins cache:
+The marketplace install above is the recommended path. If you need to install manually (air-gapped environment, modified fork, etc.), clone the repo and point Claude Code at it:
 
 ```bash
-git clone https://github.com/jeonnoin-alt/Eureka ~/.claude/plugins/cache/eureka/eureka/1.0.0
+# Pick the current latest release tag
+VERSION=$(git ls-remote --tags --refs https://github.com/jeonnoin-alt/Eureka | awk -F/ '{print $NF}' | sort -V | tail -1 | sed 's/^v//')
+
+# Clone into the plugin cache path expected by Claude Code
+git clone --branch "v${VERSION}" https://github.com/jeonnoin-alt/Eureka \
+  ~/.claude/plugins/cache/eureka-marketplace/Eureka/${VERSION}
 ```
 
 Then restart Claude Code. The `SessionStart` hook will automatically inject the `using-eureka` bootstrap skill at the start of every new session.
+
+**Note:** The cache path uses `eureka-marketplace/Eureka/<version>/` (marketplace name and plugin name are different strings by design — avoids a Windows case-insensitive filesystem collision, see v1.1.2 CHANGELOG). Do NOT hardcode `1.0.0` as the version — that path is for historical reference only.
 
 ### Cursor
 
@@ -323,6 +330,10 @@ Two options:
 
 1. **Label the session as exploratory.** `hypothesis-first` has an explicit Exploratory Track — you can proceed without full pre-registration as long as the exploratory label is preserved in any eventual writeup. The discipline exists to prevent confirmatory claims from being smuggled in through the exploratory door, not to block legitimate exploration.
 2. **Add a standing rule to `CLAUDE.md`.** Example: `For scratch analyses under notebooks/exploratory/, skip research-brainstorming's mandatory questions.`
+
+**Does Eureka respond to non-English trigger phrases?**
+
+The skill bodies and README are English-only. However, a few skills (currently `research-journal` and `whats-next`) include Korean trigger phrases in their `description` field — short phrases like "기록해둬" (log this), "이제 뭐 해야 하지?" (what should I do next?), "어디쯤이지" (where am I?) — so that Korean-speaking users can trigger the skill naturally in Korean. The agent's response is in whatever language the user is using. If you want additional language support (Japanese, Spanish, etc.), open an issue or PR — the mechanism is trivial (add phrases to the `description` frontmatter field).
 
 **How do I disable a specific skill temporarily?**
 

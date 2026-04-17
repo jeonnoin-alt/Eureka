@@ -43,7 +43,7 @@ PASS_THRESHOLD      = Score threshold (85 for mid-project, 95 for pre-submission
 
 **3. Dispatch the research-reviewer subagent:**
 
-Use the Agent tool with `eureka:research-reviewer` type. Fill the template at `requesting-research-review/research-reviewer-template.md` with the gathered context.
+Use the Agent tool with `eureka:research-reviewer` type. Fill the template at `requesting-research-review/research-reviewer-prompt.md` with the gathered context.
 
 **4. Act on feedback:**
 
@@ -110,4 +110,4 @@ You: [Fix: re-run with 10 seeds, add bootstrap CIs]
 - Show the data that contradicts the reviewer's assessment
 - Request clarification on unclear feedback
 
-See template at: `requesting-research-review/research-reviewer-template.md`
+See template at: `requesting-research-review/research-reviewer-prompt.md`

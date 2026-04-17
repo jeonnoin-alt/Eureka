@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-04-16
+
+### Changed
+
+- **Renamed** `skills/requesting-research-review/research-reviewer-template.md` → `research-reviewer-prompt.md` for consistency with the other four subagent reviewer prompt files (`design-document-reviewer-prompt.md`, `registration-reviewer-prompt.md`, `experiment-plan-reviewer-prompt.md`, `section-reviewer-prompt.md`). Updated the two references in `skills/requesting-research-review/SKILL.md`.
+- **README manual install section** no longer hardcodes `1.0.0` in the path. New instructions detect the latest release tag via `git ls-remote` and use the correct `eureka-marketplace/Eureka/<version>/` cache path structure (aligning with v1.1.2's Windows EPERM fix).
+- **README FAQ** gains a question about non-English trigger phrases. Documents that `research-journal` and `whats-next` include Korean trigger phrases in their `description` field (e.g., "기록해둬", "어디쯤이지") so native Korean speakers can trigger skills naturally. Notes that the mechanism is trivial to extend for additional languages.
+- **`.gitignore`** comment for `docs/eureka/` is now explicit: the entry is defensive — those paths are produced by Eureka skills in projects that USE this plugin, not in the plugin repo itself.
+
+### Fixed
+
+- **v1.3.0 GitHub Release** — The `research-ideation` skill was committed and the CHANGELOG updated, but the `v1.3.0` git tag and GitHub Release page were never created in the previous session. Retroactively created the tag on commit `ae8e040` ("chore: release v1.3.0") and published the corresponding release page.
+
 ## [1.4.0] - 2026-04-16
 
 ### Added
@@ -176,7 +189,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.1
 [1.4.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.3.0
 [1.2.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.2.0

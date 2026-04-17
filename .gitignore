@@ -22,6 +22,11 @@ __pycache__/
 venv/
 
 # Eureka local artifacts
+# These are outputs Eureka skills produce in projects that USE this plugin
+# (e.g., docs/eureka/designs/, registrations/, plans/, journal/, audits/).
+# They should never appear in the plugin repo itself. This entry exists
+# defensively, in case a maintainer accidentally generates one during dev
+# testing of the skills against their own research project.
 docs/eureka/
 
 # OS
