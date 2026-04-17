@@ -199,8 +199,8 @@ These are the most frequent stuck states researchers experience and the typical 
 | "What interesting questions are there in this field?" | Pre-ideation | `research-ideation` |
 | "The figure looks wrong / won't pass journal review" | Writing / submission prep | `figure-design` |
 | "I need to make a figure for Results" | Writing | `figure-design` (after results are finalized) |
-| "Results are technically fine but the paper feels flat" | Writing / pre-submission | `manuscript-writing` Step 2.5 (Discovery-Adjusted Framing) with `docs/references/narrative-guide.md` §4 |
-| "Not sure if this is Nature-level or specialty-journal-level" | Submission prep | `submission-readiness` venue-framing check with `narrative-guide.md` §7 (venue altitude guide) |
+| "Results are technically fine but the paper feels flat" | Writing / pre-submission | `manuscript-writing` narrative-arc lock step (Discovery-Adjusted Framing) with `docs/references/narrative-guide.md` section **"Discovery-Adjusted Framing"** |
+| "Not sure if this is Nature-level or specialty-journal-level" | Submission prep | `submission-readiness` venue-framing check with `narrative-guide.md` section **"Venue-specific altitude tuning"** |
 
 ## Integration
 

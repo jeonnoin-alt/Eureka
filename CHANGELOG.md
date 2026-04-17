@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-04-17
+
+### Changed
+
+- **Cross-references by section title, not section number (regression fix from v1.8.0)** — v1.7.1 established the pattern of citing `docs/references/figure-guide.md` sections by **title** rather than number, because section numbers drift when the reference doc is renumbered. v1.8.0 introduced 9 new hard-coded `narrative-guide.md §N` references across 6 files, reproducing the bug. All 9 occurrences now cite stable section titles (e.g., **"Contribution altitude — 4 tiers"**, **"Discovery-Adjusted Framing"**, **"Venue-specific altitude tuning"**) across `research-brainstorming/SKILL.md`, `design-document-reviewer-prompt.md`, `manuscript-writing/SKILL.md`, `section-reviewer-prompt.md`, `submission-readiness/SKILL.md`, `whats-next/SKILL.md`.
+- **`manuscript-writing` narrative-arc lock step renumbered** — v1.8.0 introduced the lock step as "Step 2.5" (mid-workflow fractional step), which broke the integer-step convention used by every other skill. The step is now **Step 3**; subsequent steps renumbered 3→4, 4→5, 5→6, 6→7, 7→8 in the Per-Section Workflow. Top-level Checklist and Integration references updated accordingly. `docs/references/narrative-guide.md` references to "Step 2.5" also updated to "narrative-arc lock step" (skill-version-agnostic phrasing to avoid future renumbering breakage).
+- **`manuscript-writing` Step 3 HARD-GATE wording clarified** — v1.8.0's description mixed two rules ("before the FIRST section" + "do NOT write Introduction or Discussion before") that implied different scopes. The gate is now unambiguously universal: **before writing any section** (Introduction, Methods, Results, Discussion — all draw on the framing decision). Fires once per manuscript; subsequent sections skip if arc is locked and unchanged. Resolves the checklist-vs-step contradiction flagged in the v1.8.0 review.
+- **`section-reviewer-prompt.md` Intro-Discussion symmetry rule now handles monolithic Markdown** — v1.8.0's rule assumed the Introduction was in a sibling file (correct for LaTeX `paper/sections/NN-*.tex` layouts). Monolithic Markdown manuscripts (single `.md` file with all sections) were unsupported. The rule now covers both: sibling file for LaTeX section-split layouts, earlier section in the same document for monolithic Markdown.
+- **`research-journal` logging in the narrative-arc lock step is now optional** — v1.8.0 said "Write this paragraph to `docs/eureka/journal/YYYY-MM-DD.md` (via `eureka:research-journal`)", creating a soft dependency. v1.8.1 marks it "recommended but not required" and accepts alternatives (working notes, a top comment in the manuscript entry point) — the framing decision must be captured *somewhere*, not specifically in research-journal.
+- **`narrative-guide.md` Hedged Abstract and Contribution-less Abstract anti-patterns now cross-reference `manuscript-writing`'s "Abstract written last" rule** — writing the Abstract after all other sections pass section-reviewer structurally prevents both anti-patterns (the findings are finalized, so there's nothing to hedge).
+
+### Added
+
+- **New research-brainstorming rationalization** — "I can't state an opposite-outcome headline (Q11) — it's an exploratory observational study" is now addressed in the Common Anti-Patterns table. The fix: for truly exploratory or first-of-kind studies, an honest opposite-outcome answer may be "we observed no systematic pattern"; if that is a field-informative null, frame the arc as **opportunity-driven** or **falsification-driven** rather than problem-driven. If the opposite outcome yields no reportable finding at all, flag as a design concern — the study may not be worth running.
+
+### Rationale
+
+Cleanup release addressing all 7 items from the v1.8.0 code review. High-severity (section-number regression) and medium-severity (checklist/step contradiction, fractional step numbering) items are fixed; four low-severity items (Q11 rationalization, research-journal softening, monolithic Markdown support, abstract cross-reference) are also resolved. No new features, no breaking changes.
+
 ## [1.8.0] - 2026-04-17
 
 ### Added
@@ -297,7 +316,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.8.1...HEAD
+[1.8.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.1
 [1.8.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.8.0
 [1.7.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.1
 [1.7.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.7.0

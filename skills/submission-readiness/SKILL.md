@@ -22,7 +22,7 @@ Guide completion of research work by verifying publication gates, then presentin
 - `eureka:verification-before-publication` checklist: PASS?
 - `eureka:research-reviewer` score at target threshold (≥95 for pre-submission): PASS?
 - `eureka:claims-audit`: PASS?
-- **Venue-specific framing tuned?** Confirm explicitly: does the manuscript's contribution altitude match the target venue's expected altitude? See `docs/references/narrative-guide.md` §7 for the venue altitude guide. A Nature-family contribution altitude paired with specialty-journal-tier evidence is a desk-reject risk; the inverse (specialty-journal pitch for Nature-tier evidence) undersells. If the user has not explicitly tuned framing to the target venue (or target venue changed since brainstorming), flag this gate as FAIL before proceeding.
+- **Venue-specific framing tuned?** Confirm explicitly: does the manuscript's contribution altitude match the target venue's expected altitude? See `docs/references/narrative-guide.md` section **"Venue-specific altitude tuning"** for the altitude guide. A Nature-family contribution altitude paired with specialty-journal-tier evidence is a desk-reject risk; the inverse (specialty-journal pitch for Nature-tier evidence) undersells. If the user has not explicitly tuned framing to the target venue (or target venue changed since brainstorming), flag this gate as FAIL before proceeding.
 
 **If ANY gate fails:**
 ```
@@ -193,4 +193,4 @@ Regardless of which option was chosen:
 - `eureka:using-eureka` — when research phase completion and submission decision detected
 
 **References:**
-- `docs/references/narrative-guide.md` — venue-specific altitude tuning (§7); contribution altitude vs evidence match (§2); common framing anti-patterns (§9)
+- `docs/references/narrative-guide.md` — see sections **"Venue-specific altitude tuning"**, **"Contribution altitude — 4 tiers"** (altitude-vs-evidence match), and **"Common framing anti-patterns"**

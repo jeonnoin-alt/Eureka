@@ -101,8 +101,8 @@ These do not need to be asked as direct questions — they may emerge naturally 
 7. **Has anyone published this or something sufficiently similar in the last 3 years?**
 8. **What published evidence CONTRADICTS your hypothesis?** (If you can find none, your search is biased — try harder.)
 9. **What is the exact data source, version, and preprocessing state you will use?** (Source, version tag or file hash, preprocessing pipeline version, access method. See `docs/references/data-checklist.md` §1.)
-10. **At what contribution altitude will this sit?** (Method improvement / new framework / new phenomenon / falsification — see `docs/references/narrative-guide.md` §2.) The altitude must match the evidence strength you are planning to collect. Overclaiming altitude → desk rejection; underclaiming → sold short.
-11. **What is the one-sentence story arc?** (Problem-driven / opportunity-driven / surprise-driven / falsification-driven — see `docs/references/narrative-guide.md` §3.) State the headline **both** for the predicted outcome AND for the opposite outcome. If the opposite outcome would leave you with no honest story, the study may not be worth running — or the design needs reframing.
+10. **At what contribution altitude will this sit?** (Method improvement / new framework / new phenomenon / falsification — see `docs/references/narrative-guide.md` section **"Contribution altitude — 4 tiers"**.) The altitude must match the evidence strength you are planning to collect. Overclaiming altitude → desk rejection; underclaiming → sold short.
+11. **What is the one-sentence story arc?** (Problem-driven / opportunity-driven / surprise-driven / falsification-driven — see `docs/references/narrative-guide.md` section **"Story arc patterns — 4 shapes"**.) State the headline **both** for the predicted outcome AND for the opposite outcome. If the opposite outcome would leave you with no honest story, the study may not be worth running — or the design needs reframing.
 
 ## Examining the Literature Gap (Step 3 Detail)
 
@@ -222,6 +222,7 @@ Wait for the user's response. If they request changes, make them and re-run the 
 | "Let me just run a pilot first" | A pilot IS an experiment | Design the pilot too. Define what you'll learn from it, what threshold leads to proceeding, and what stops the project. |
 | "I already know what the answer will be" | Confirmation bias | State what you'd expect if the hypothesis is WRONG. If you can't, the hypothesis isn't falsifiable. |
 | "The effect is obvious — we don't need a power analysis" | Overconfidence in effect size | Run the power analysis anyway. "Obvious" effects often shrink on replication. |
+| "I can't state an opposite-outcome headline (Q11) — it's an exploratory observational study" | Q11 may still have an honest answer even for exploratory work | For exploratory or first-of-kind studies, the opposite outcome may be "we observed no systematic pattern / no coherent story emerged". If that is the honest alternative AND the study is worth running anyway (e.g., because even a null pattern is a field-informative result), frame the arc as **opportunity-driven** or **falsification-driven** rather than problem-driven. If the opposite outcome is truly that the study yields no reportable finding, flag this as a design concern — the study may not be worth the effort. |
 
 ## Integration
 
@@ -229,4 +230,4 @@ Wait for the user's response. If they request changes, make them and re-run the 
 - **Invokes:** `eureka:hypothesis-first` (after design approval)
 - **Does NOT invoke:** Any experiment execution, data analysis, or implementation skill
 - **Reference:** `docs/references/data-checklist.md` — data provenance, preprocessing, leakage taxonomy, missing value handling
-- **Reference:** `docs/references/narrative-guide.md` — contribution altitude (§2) and story arc patterns (§3) for questions 10-11
+- **Reference:** `docs/references/narrative-guide.md` — sections **"Contribution altitude — 4 tiers"** and **"Story arc patterns — 4 shapes"** for questions 10-11

@@ -38,7 +38,7 @@ You MUST create a task for each of these and complete them in order:
 
 1. **Determine manuscript structure** — ask the user: what sections does this paper have? What format (LaTeX, Markdown)? What target journal?
 2. **Verify prerequisites per section** — check which sections can be written now (see Prerequisites Gate below)
-3. **Lock the narrative arc (Discovery-Adjusted Framing)** — before writing the first section, run the Step 2.5 checkpoint to confirm or revise the altitude and story arc committed at brainstorming, now that results exist (see Per-Section Workflow § Step 2.5)
+3. **Lock the narrative arc (Discovery-Adjusted Framing)** — before writing any section, run the checkpoint (Per-Section Workflow Step 3) to confirm or revise the altitude and story arc committed at brainstorming, now that results exist. Fires once per manuscript.
 4. **Write sections in prerequisite order** — start with the earliest-ready section
 5. **Per section**: write → inline self-check → dispatch `section-reviewer` → fix → approve
 6. **Write Abstract last** — only after all other sections pass review
@@ -132,13 +132,13 @@ Before writing, read:
 - Result files relevant to this section
 - The bibliography file (to know what references are available)
 
-### Step 2.5: Lock the narrative arc (Discovery-Adjusted Framing)
+### Step 3: Lock the narrative arc (Discovery-Adjusted Framing)
 
 <HARD-GATE>
-Before writing the FIRST section of the paper, run this checkpoint. For subsequent sections, skip if the arc is already locked and unchanged. Do NOT write Introduction or Discussion before this lock is committed — they are the two sections most affected by framing drift.
+Run this checkpoint **once per manuscript**, before writing **any** section (Introduction, Methods, Results, Discussion — all draw on the framing decision). For subsequent sections within the same manuscript, skip this step if the arc is already locked and unchanged. If you revisit the framing mid-manuscript, re-run this checkpoint and document the revision in the research journal.
 </HARD-GATE>
 
-The brainstorming design document committed to a contribution altitude (method improvement / new framework / new phenomenon / falsification) and a story arc (problem-driven / opportunity-driven / surprise-driven / falsification-driven). See `docs/references/narrative-guide.md` §2 and §3. Now that results exist, verify the original framing still fits — or discovery-adjust.
+The brainstorming design document committed to a contribution altitude (method improvement / new framework / new phenomenon / falsification) and a story arc (problem-driven / opportunity-driven / surprise-driven / falsification-driven). See `docs/references/narrative-guide.md` — sections **"Contribution altitude — 4 tiers"** and **"Story arc patterns — 4 shapes"**. Now that results exist, verify the original framing still fits — or discovery-adjust.
 
 Run this 5-question check:
 
@@ -146,7 +146,7 @@ Run this 5-question check:
 2. **Frame match** — does the original hypothesis (from the design doc) capture that finding? Or is a side finding stronger than the primary outcome?
 3. **Arc fit** — does the original story arc (predicted in brainstorming) still work given what you actually found? If the prediction was confirmed → original arc likely stands. If a surprise came out → the arc may need to shift to surprise-driven or falsification-driven.
 4. **Altitude validity** — is the altitude claimed in the design doc still defensible given the evidence collected? Flag altitude-evidence mismatch now, not at reviewer desk.
-5. **Commit** — state in one paragraph: final altitude, final arc, one-sentence contribution statement. Write this paragraph to `docs/eureka/journal/YYYY-MM-DD.md` (via `eureka:research-journal`) as the framing decision for this manuscript. All section writing flows from it.
+5. **Commit** — state in one paragraph: final altitude, final arc, one-sentence contribution statement. **Recommended but not required**: log this paragraph via `eureka:research-journal` (typically to `docs/eureka/journal/YYYY-MM-DD.md`) so the framing decision is traceable across sessions and audit. If you don't journal, at minimum paste the paragraph into your working notes or commit it as a top comment in `main.tex`/the manuscript entry point — the decision must be captured *somewhere* so future you (or a co-author) can see what was locked and why. All section writing flows from it.
 
 **HARKing guardrail** — re-framing is not HARKing. The rule:
 
@@ -159,13 +159,13 @@ Run this 5-question check:
 
 Pre-registration constrains the **hypothesis**; it does not constrain the **story**. Report the hypothesis faithfully in Methods and Results. Frame the paper around whatever the data actually shows.
 
-See `docs/references/narrative-guide.md` §4 for the full Discovery-Adjusted Framing workflow, §5 for negative-result reframing (null → informative constraint), and §7 for venue-specific altitude tuning if target venue has shifted since brainstorming.
+See `docs/references/narrative-guide.md` — sections **"Discovery-Adjusted Framing"** for the full workflow, **"Negative result reframing"** (null → informative constraint), and **"Venue-specific altitude tuning"** if target venue has shifted since brainstorming.
 
-### Step 3: Write the section
+### Step 4: Write the section
 
 Follow the Writing Discipline Rules above. Write the complete section.
 
-### Step 4: Inline self-check
+### Step 5: Inline self-check
 
 Before dispatching the reviewer, do a quick pass:
 - [ ] Every factual claim has a citation
@@ -176,7 +176,7 @@ Before dispatching the reviewer, do a quick pass:
 - [ ] No `TODO`, `XXX`, `[citation needed]`, placeholder content
 - [ ] Section only discusses completed work (no "expected to show" in Results)
 
-### Step 5: Dispatch `section-reviewer` subagent
+### Step 6: Dispatch `section-reviewer` subagent
 
 After the inline self-check passes, dispatch a fresh subagent for independent review:
 
@@ -190,14 +190,14 @@ After the inline self-check passes, dispatch a fresh subagent for independent re
 3. Dispatch via the Task tool (`general-purpose` subagent)
 4. Wait for the reviewer to return `Status: Approved` or `Status: Issues Found`
 
-### Step 6: Act on reviewer feedback
+### Step 7: Act on reviewer feedback
 
 - **`Status: Approved`** → move to the next section
 - **`Status: Issues Found`** → fix each issue. Re-dispatch the reviewer. Repeat until `Approved`.
 
 If the reviewer flags the same issue twice, escalate to the user.
 
-### Step 7: Move to next section
+### Step 8: Move to next section
 
 After the current section passes review, move to the next section whose prerequisite is met. Continue until all sections are complete.
 
@@ -278,7 +278,7 @@ The user specifies their format at the start of the writing session (or in `CLAU
 - **Reference:** `docs/references/statistical-guide.md` (for Results section reporting standards)
 - **Reference:** `docs/references/latex-guide.md` (for LaTeX conventions: main.tex template, section files, BibTeX, math notation, figures)
 - **Reference:** `docs/references/figure-guide.md` (for figure design conventions: chart-type selection, typography, colorblind-safe palettes, journal-specific export specs)
-- **Reference:** `docs/references/narrative-guide.md` (for Step 2.5 Discovery-Adjusted Framing, narrative arc selection, Intro-Discussion symmetry, and venue-specific altitude tuning)
+- **Reference:** `docs/references/narrative-guide.md` (for Step 3 Discovery-Adjusted Framing, narrative arc selection, Intro-Discussion symmetry, and venue-specific altitude tuning)
 
 ## Skill Type
 

@@ -1,6 +1,6 @@
 # Narrative Guide
 
-This is a reference document, not a skill. It provides lookup material for **manuscript framing** — contribution altitude, story arc patterns, discovery-adjusted framing, negative-result reframing, Intro-Discussion symmetry, and venue-specific altitude tuning. Referenced by `eureka:research-brainstorming` (initial positioning), `eureka:manuscript-writing` (discovery-adjusted framing at Step 2.5), and `eureka:submission-readiness` (venue tuning).
+This is a reference document, not a skill. It provides lookup material for **manuscript framing** — contribution altitude, story arc patterns, discovery-adjusted framing, negative-result reframing, Intro-Discussion symmetry, and venue-specific altitude tuning. Referenced by `eureka:research-brainstorming` (initial positioning, questions 10-11), `eureka:manuscript-writing` (narrative-arc lock step, before any section is written), and `eureka:submission-readiness` (venue tuning).
 
 **Core premise**: the same results, framed differently, can be published at top-tier venues or desk-rejected. Framing is **judgment** — Eureka does not enforce it with iron laws, but provides checkpoints at the three phases where framing decisions are made.
 
@@ -11,7 +11,7 @@ This is a reference document, not a skill. It provides lookup material for **man
 | Phase | Skill that invokes this | What to look up |
 |---|---|---|
 | **Initial design** (pre-data) | `eureka:research-brainstorming` questions 10-11 | §2 (altitude), §3 (arc) |
-| **Post-results, pre-writing** | `eureka:manuscript-writing` Step 2.5 | §4 (discovery-adjustment), §5 (negative reframing) |
+| **Post-results, pre-writing** | `eureka:manuscript-writing` narrative-arc lock step | §4 (discovery-adjustment), §5 (negative reframing) |
 | **Pre-submission** | `eureka:submission-readiness` venue check | §7 (venue altitude), §9 (anti-patterns) |
 | **Writing Discussion/Conclusion** | `eureka:manuscript-writing` section-reviewer | §6 (Intro-Discussion symmetry) |
 | **Stuck** ("paper feels flat") | `eureka:whats-next` | §4, §8 (worked examples), §9 (anti-patterns) |
@@ -62,7 +62,7 @@ Every paper has a shape. Picking the right arc up front prevents Intro-Discussio
 
 ## 4. Discovery-adjusted framing — the post-results pivot
 
-The most important framing phase is **after results exist, before writing begins**. The interesting story is often not what was originally hypothesized. This is where `manuscript-writing` Step 2.5 fires.
+The most important framing phase is **after results exist, before writing begins**. The interesting story is often not what was originally hypothesized. This is where `manuscript-writing`'s narrative-arc lock step fires (before any section is written).
 
 ### Checklist
 
@@ -86,7 +86,7 @@ Discovery-adjustment is **not** HARKing. The rule: **pre-registration constrains
 
 **Test for HARKing vs honest reframing:** if a reader of the Methods section sees the pre-registered hypothesis clearly, and the Results report exactly what that hypothesis predicted (pass or fail, faithfully), then a reframe in the Intro/Discussion is honest narrative. If the Methods retroactively describes an analysis you didn't pre-register, that's HARKing.
 
-### Concrete workflow (Step 2.5 of `manuscript-writing`)
+### Concrete workflow (narrative-arc lock step in `manuscript-writing`)
 
 1. Re-read the approved design document — note the altitude + arc brainstorming committed to
 2. Scan actual result files — note the strongest finding and whether it matches the prediction
@@ -218,10 +218,10 @@ Patterns that reliably trigger reviewer / editor rejection. Check your draft aga
 | **Triple contribution** | Intro lists 3 contributions, only 1 is substantive | Pick the strongest; demote the others to Methods or drop entirely |
 | **Altitude mismatch** | "New phenomenon" claim with N=12 single-cohort evidence | Drop altitude OR add replication before submission |
 | **Discussion drift** | Discussion introduces claims/contributions absent from Intro | Fix Intro OR fix Discussion (see §6) |
-| **Hedged abstract** | "Our results suggest that perhaps X may contribute to Y" | State the finding directly; hedging in Abstract is desk-reject |
+| **Hedged abstract** | "Our results suggest that perhaps X may contribute to Y" | State the finding directly; hedging in Abstract is desk-reject. Related: `eureka:manuscript-writing` enforces "Abstract written last" (after all other sections pass section-reviewer) — writing the Abstract last avoids hedging because the finalized findings are known |
 | **Jargon opening** | First sentence requires 3 domain-specific terms | Open at non-specialist altitude; ramp to specifics |
 | **No-question Intro** | Intro recites background but never poses a specific research question | Force a single sentence: "We ask whether…" or "Here we test…" |
-| **Contribution-less Abstract** | Abstract describes methods and results but never names the contribution | Add a "Our contribution is…" sentence |
+| **Contribution-less Abstract** | Abstract describes methods and results but never names the contribution | Add a "Our contribution is…" sentence. See also `eureka:manuscript-writing` — Abstract written last, after all section-reviewer passes, so the contribution is finalized when the Abstract is composed |
 | **Venue-abstract mismatch** | Nature-audience Abstract submitted to IEEE venue (or vice versa) | Re-pitch Abstract per §7 for the target venue |
 | **Arc mismatch to result** | Problem-driven opening but the result is a surprise | Rewrite Intro to surprise-driven arc (§3); surprise is wasted if not set up |
 | **Negative result as failure** | "Our method did not work" | Apply §5 reframing — informative constraint, not failure |

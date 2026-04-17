@@ -2,7 +2,7 @@
   "name": "eureka",
   "displayName": "Eureka",
   "description": "Research rigor skills for Claude Code and other AI coding agents: hypothesis pre-registration, statistical rigor, claims audit, and reproducibility gates for scientific workflows",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "author": {
     "name": "jeonnoin-alt"
   },
