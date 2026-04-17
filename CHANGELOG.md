@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-04-17
+
+### Added
+
+- **`docs/references/latex-guide.md`** — New reference document covering LaTeX conventions for research manuscript writing. Same pattern as `statistical-guide.md` and `data-checklist.md` — lookup-oriented, not a skill. Sections cover: when to use LaTeX vs alternatives, recommended `main.tex` structure with common research-paper packages, section file organization (`paper/sections/NN-sectionname.tex`), BibTeX conventions (key format `FirstAuthorYear`, DOI mandatory, preprint-to-published replacement), natbib citation commands, math notation table (vectors bold lowercase, matrices bold uppercase, scalars italic), figure/table commands (`booktabs` tables, colorblind-safe palettes, script-generated figures enforced by `claims-audit`), abbreviation rules (spell out independently in abstract and main text), LaTeX compile workflow (`latexmk -pdf`), section-specific LaTeX patterns (contribution lists, equations, algorithms, limitations), common mistakes to avoid, and journal-specific conversion at submission time. Generalized from the neuroscience-specific conventions in a reference project — all domain-specific terminology removed.
+
+### Changed
+
+- **`manuscript-writing` SKILL.md** — Format Agnosticism section now recommends LaTeX as the default for STEM research targeting top-tier journals (Nature family, Science family, Cell family, Brain, NeuroImage, JAMA, IEEE Transactions). Markdown and other formats remain fully supported. The skill links to the new `docs/references/latex-guide.md` for users who choose LaTeX. Integration section adds a reference line for the LaTeX guide alongside the existing reference to `statistical-guide.md`.
+
+### Rationale
+
+Eureka v1.4.0's `manuscript-writing` skill was format-agnostic — it supported LaTeX, Markdown, and other formats equally, with no opinion on which to use. But in practice, most top-tier STEM journals accept or require LaTeX submissions, BibTeX is the de facto standard for citation management in the sciences, and the section-file split pattern (`paper/sections/NN-sectionname.tex`) aligns naturally with the per-section writing workflow this skill enforces. "No opinion" meant users got abstract guidance rather than concrete conventions. This release keeps the format-agnostic principle (humanities, preprint-first workflows, and Word-mandated collaborations are all still supported) but adds a strong LaTeX default recommendation and a concrete conventions reference for users who choose LaTeX.
+
 ## [1.4.1] - 2026-04-16
 
 ### Changed
@@ -189,7 +203,8 @@ The install command argument is now case-sensitive: `Eureka`, not `eureka`.
 
 Eureka's plugin architecture, SessionStart hook mechanism, rigid-vs-flexible skill distinction, rationalization tables, red-flag checklists, iron laws, and subagent review pattern are directly modeled on [Superpowers](https://github.com/obra/superpowers) by Jesse Vincent.
 
-[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/jeonnoin-alt/Eureka/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.5.0
 [1.4.1]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.1
 [1.4.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.4.0
 [1.3.0]: https://github.com/jeonnoin-alt/Eureka/releases/tag/v1.3.0

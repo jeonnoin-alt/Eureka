@@ -207,6 +207,10 @@ This skill works with any manuscript format:
 | **Markdown** | `[@key]`, `(Author, Year)` | `[Figure 1](#fig-1)`, inline links | `.md` |
 | **Other** | Inline `(Author, Year)` | Manual references | varies |
 
+**For STEM research targeting top-tier journals** (Nature family, Science family, Cell family, Brain, NeuroImage, JAMA, IEEE Transactions, etc.), **LaTeX is the recommended default**. Most top journals accept LaTeX submissions, BibTeX is the de facto citation management standard, and the section-file split pattern (`paper/sections/NN-sectionname.tex`) aligns naturally with this skill's per-section workflow. Use Markdown or other formats if your target venue requires them or your workflow is preprint-first / blog-style.
+
+See `docs/references/latex-guide.md` for LaTeX conventions: `main.tex` template, section file structure, BibTeX key format, citation commands, math notation, figure/table commands, abbreviation rules, and the compile workflow.
+
 The user specifies their format at the start of the writing session (or in `CLAUDE.md`). The discipline rules apply regardless — only the syntax changes.
 
 ## Common Rationalizations
@@ -240,6 +244,7 @@ The user specifies their format at the start of the writing session (or in `CLAU
 - **Transitions to:** `eureka:claims-audit` (after all sections + Abstract complete)
 - **Pairs with:** `eureka:research-journal` (capture writing decisions), `eureka:whats-next` (if stuck on which section to write next)
 - **Reference:** `docs/references/statistical-guide.md` (for Results section reporting standards)
+- **Reference:** `docs/references/latex-guide.md` (for LaTeX conventions: main.tex template, section files, BibTeX, math notation, figures)
 
 ## Skill Type
 
