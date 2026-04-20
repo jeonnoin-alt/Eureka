@@ -1,5 +1,47 @@
 # Eureka
 
+> **Scientific TDD for AI coding agents.** Pre-registration before data. Claims-audit before submission. Works on Claude Code, Cursor, Gemini CLI, Codex, and OpenCode.
+
+Your AI agent writes code like a disciplined engineer. Now make it **do research like a disciplined scientist** — register hypotheses before data, audit every claim against source files, detect preemption before submission, enforce figure-legend reporting, score rigor across 7 dimensions.
+
+```text
+design      →  register    →  plan        →  execute  →  review  →  novelty  →  audit       →  verify   →  submit
+(9 Qs +     (immutable     (contingency                 (7-dim    check     (every number  (fresh
+ altitude)   YAML +         inheritance                  scoring +  against   traces; every   re-run;
+             INDEX)         from reg)                    anchors)   recent    figure from     freshness
+                                                                    literature) script)         hashes)
+```
+
+**Who this is for:**
+
+- Researchers using AI coding agents for analysis, writing, or reviewing — and who care whether the paper would survive peer review
+- Labs wanting to enforce pre-registration, claims audit, and reproducibility **without** the discipline being human labor
+- Teams using Claude Code / Cursor / Gemini CLI / Codex / OpenCode who want a research-workflow analog to testing frameworks
+
+**Quickstart (Claude Code):**
+
+```bash
+/plugin marketplace add jeonnoin-alt/Eureka
+/plugin install Eureka
+# Start any research conversation — skills auto-trigger based on intent
+```
+
+**What makes Eureka different:**
+
+- **16 skills + 8 subagents** covering the full research lifecycle. Skills auto-trigger on research intent; subagents dispatch for fresh-eyes review
+- **First computational subagent** (`traceability-auditor`) — regex-extracts every quantitative claim in your manuscript and diffs against `results/` files. No more 23-numbers-by-hand.
+- **External novelty gate** — catches preemption in the 6-12 months between design approval and submission. 96/100 internal rigor doesn't mean the field didn't move.
+- **Registration lifecycle** — amendment vs supersede vs new-registration decision tree, HARKing severity spectrum (6 tiers), data-discovery feedback workflow, machine-readable `INDEX.md` chain
+- **7-dimension research-reviewer** with worked scoring anchors per sub-criterion for inter-run reliability
+- **Multi-locale** — Korean trigger phrases, ambient-language announcements; skill body stays English for portability
+- **Ships as markdown + skills + subagents** — no daemon, no API key, no data leaves your session
+
+Detailed docs: [Skills Library](#skills-library) · [Reference Documents](#reference-documents) · [Consumer Paths](#consumer-paths-docseureka-in-your-project)
+
+---
+
+## What it is
+
 Eureka is a complete research rigor workflow for your coding agents, built on top of a set of composable "skills" and some initial instructions that make sure your agent uses them.
 
 It is the research-workflow counterpart to [Superpowers](https://github.com/obra/superpowers) — same plugin architecture, same skill system, same "rigid discipline through mandatory skills" philosophy. Where Superpowers enforces test-driven development and code review for software, Eureka enforces hypothesis pre-registration, statistical rigor, claims auditing, and reproducibility for scientific work.
