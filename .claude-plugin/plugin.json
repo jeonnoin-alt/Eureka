@@ -1,6 +1,6 @@
 {
   "name": "Eureka",
-  "description": "Research rigor skills for Claude Code: hypothesis pre-registration, statistical rigor, claims audit, and reproducibility gates for scientific workflows",
+  "description": "Scientific TDD for AI coding agents: pre-registration before data, claims audit before submission, external novelty gate before desk reject, reproducibility check before claims. 16 skills + 8 subagents (7 qualitative reviewers + 1 computational traceability-auditor). Works on Claude Code, Cursor, Gemini CLI, Codex, OpenCode.",
   "version": "1.10.1",
   "author": {
     "name": "jeonnoin-alt"
@@ -9,12 +9,34 @@
   "repository": "https://github.com/jeonnoin-alt/Eureka",
   "license": "MIT",
   "keywords": [
-    "skills",
+    "ai-agents",
+    "ai-coding-agent",
+    "claude-code",
+    "claude-code-plugin",
+    "cursor",
+    "gemini-cli",
+    "codex",
+    "opencode",
     "research",
+    "research-rigor",
     "reproducibility",
     "pre-registration",
-    "scientific-rigor",
     "hypothesis-testing",
-    "workflows"
+    "harking-prevention",
+    "p-hacking-prevention",
+    "claims-audit",
+    "traceability",
+    "scientific-method",
+    "scientific-rigor",
+    "scientific-tdd",
+    "manuscript-writing",
+    "figure-design",
+    "novelty-audit",
+    "preemption-detection",
+    "peer-review",
+    "reviewer-subagent",
+    "open-science",
+    "workflows",
+    "skills"
   ]
 }

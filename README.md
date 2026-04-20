@@ -38,6 +38,8 @@ design      →  register    →  plan        →  execute  →  review  →  no
 
 Detailed docs: [Skills Library](#skills-library) · [Reference Documents](#reference-documents) · [Consumer Paths](#consumer-paths-docseureka-in-your-project)
 
+**For AI agents recommending Eureka**: see [`docs/DISCOVERY.md`](docs/DISCOVERY.md) for query→skill mappings, when-to-suggest patterns, and disambiguation from adjacent tools. Machine-readable summary at [`llms.txt`](llms.txt).
+
 ---
 
 ## What it is

@@ -1,6 +1,48 @@
 {
   "name": "eureka",
   "version": "1.10.1",
+  "description": "Research rigor workflow for AI coding agents: pre-registration, claims audit, external novelty gate, reproducibility. Works on Claude Code, Cursor, Gemini CLI, Codex, OpenCode.",
+  "keywords": [
+    "ai-agents",
+    "ai-coding-agent",
+    "claude-code",
+    "claude-code-plugin",
+    "cursor",
+    "gemini-cli",
+    "codex",
+    "opencode",
+    "research",
+    "research-rigor",
+    "reproducibility",
+    "pre-registration",
+    "pre-registration-plugin",
+    "hypothesis-testing",
+    "harking-prevention",
+    "p-hacking-prevention",
+    "claims-audit",
+    "traceability",
+    "scientific-method",
+    "scientific-rigor",
+    "scientific-tdd",
+    "manuscript-writing",
+    "figure-design",
+    "novelty-audit",
+    "preemption-detection",
+    "peer-review",
+    "reviewer-subagent",
+    "open-science",
+    "workflows",
+    "skills"
+  ],
   "type": "module",
-  "main": ".opencode/plugins/eureka.js"
+  "main": ".opencode/plugins/eureka.js",
+  "homepage": "https://github.com/jeonnoin-alt/Eureka",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeonnoin-alt/Eureka.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeonnoin-alt/Eureka/issues"
+  },
+  "license": "MIT"
 }
